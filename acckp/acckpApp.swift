@@ -1,8 +1,5 @@
 //
-//  acckpApp.swift
-//  acckp
-//
-//  Created by akp sce on 26/02/2024.
+//  Launch app
 //
 
 import SwiftUI
@@ -25,7 +22,7 @@ struct acckpApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
         .modelContainer(sharedModelContainer)
     }
