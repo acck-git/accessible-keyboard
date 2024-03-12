@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-//using Hex code for colors
+//[Using hex code for colors]
 extension Color {
   init(hex: UInt, alpha: Double = 1) {
     self.init(

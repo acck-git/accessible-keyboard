@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C537DAF2BA0EB6400C5020F /* iDummyCursor in Frameworks */ = {isa = PBXBuildFile; productRef = 5C537DAE2BA0EB6400C5020F /* iDummyCursor */; };
 		5C53DE6F2B9F647A00F51194 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5C53DE6E2B9F647A00F51194 /* README.md */; };
 		5C53DE712B9F648C00F51194 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE702B9F648C00F51194 /* Item.swift */; };
 		5C53DE732B9F65E700F51194 /* KeyboardSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE722B9F65E700F51194 /* KeyboardSubView.swift */; };
 		5C53DE7A2B9F6DCE00F51194 /* ToplineSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE792B9F6DCE00F51194 /* ToplineSubView.swift */; };
-		5C53DE7C2B9F70BA00F51194 /* KeyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE7B2B9F70BA00F51194 /* KeyData.swift */; };
-		5C53DE7E2B9F987200F51194 /* ButtonPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE7D2B9F987200F51194 /* ButtonPresets.swift */; };
+		5C53DE7C2B9F70BA00F51194 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE7B2B9F70BA00F51194 /* Data.swift */; };
+		5C53DE7E2B9F987200F51194 /* ViewPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE7D2B9F987200F51194 /* ViewPresets.swift */; };
 		5C53DE812B9FAB1A00F51194 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE802B9FAB1A00F51194 /* Utils.swift */; };
 		5C5A856A2B8C9F4100770254 /* acckpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85692B8C9F4100770254 /* acckpApp.swift */; };
 		5C5A856C2B8C9F4100770254 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A856B2B8C9F4100770254 /* MainView.swift */; };
@@ -45,8 +46,8 @@
 		5C53DE702B9F648C00F51194 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		5C53DE722B9F65E700F51194 /* KeyboardSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSubView.swift; sourceTree = "<group>"; };
 		5C53DE792B9F6DCE00F51194 /* ToplineSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToplineSubView.swift; sourceTree = "<group>"; };
-		5C53DE7B2B9F70BA00F51194 /* KeyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyData.swift; sourceTree = "<group>"; };
-		5C53DE7D2B9F987200F51194 /* ButtonPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPresets.swift; sourceTree = "<group>"; };
+		5C53DE7B2B9F70BA00F51194 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		5C53DE7D2B9F987200F51194 /* ViewPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPresets.swift; sourceTree = "<group>"; };
 		5C53DE802B9FAB1A00F51194 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		5C5A85662B8C9F4100770254 /* acckp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = acckp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A85692B8C9F4100770254 /* acckpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpApp.swift; sourceTree = "<group>"; };
@@ -65,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C537DAF2BA0EB6400C5020F /* iDummyCursor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,13 +87,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C537DAA2BA0B6FE00C5020F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5C53DE7B2B9F70BA00F51194 /* Data.swift */,
+				5C53DE702B9F648C00F51194 /* Item.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		5C53DE752B9F663000F51194 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				5C5A856B2B8C9F4100770254 /* MainView.swift */,
 				5C53DE792B9F6DCE00F51194 /* ToplineSubView.swift */,
 				5C53DE722B9F65E700F51194 /* KeyboardSubView.swift */,
-				5C53DE7D2B9F987200F51194 /* ButtonPresets.swift */,
+				5C53DE7D2B9F987200F51194 /* ViewPresets.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -120,9 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				5C5A85692B8C9F4100770254 /* acckpApp.swift */,
-				5C53DE702B9F648C00F51194 /* Item.swift */,
 				5C53DE752B9F663000F51194 /* Views */,
-				5C53DE7B2B9F70BA00F51194 /* KeyData.swift */,
+				5C537DAA2BA0B6FE00C5020F /* Models */,
 				5C53DE802B9FAB1A00F51194 /* Utils.swift */,
 				5C5A856F2B8C9F4200770254 /* Assets.xcassets */,
 				5C5A85712B8C9F4200770254 /* Preview Content */,
@@ -172,6 +182,9 @@
 			dependencies = (
 			);
 			name = acckp;
+			packageProductDependencies = (
+				5C537DAE2BA0EB6400C5020F /* iDummyCursor */,
+			);
 			productName = acckp;
 			productReference = 5C5A85662B8C9F4100770254 /* acckp.app */;
 			productType = "com.apple.product-type.application";
@@ -244,6 +257,9 @@
 				Base,
 			);
 			mainGroup = 5C5A855D2B8C9F4100770254;
+			packageReferences = (
+				5C537DAD2BA0EB6400C5020F /* XCRemoteSwiftPackageReference "iDummyCursor" */,
+			);
 			productRefGroup = 5C5A85672B8C9F4100770254 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -287,13 +303,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C53DE7E2B9F987200F51194 /* ButtonPresets.swift in Sources */,
+				5C53DE7E2B9F987200F51194 /* ViewPresets.swift in Sources */,
 				5C5A856C2B8C9F4100770254 /* MainView.swift in Sources */,
 				5C53DE712B9F648C00F51194 /* Item.swift in Sources */,
 				5C53DE812B9FAB1A00F51194 /* Utils.swift in Sources */,
 				5C53DE732B9F65E700F51194 /* KeyboardSubView.swift in Sources */,
 				5C5A856A2B8C9F4100770254 /* acckpApp.swift in Sources */,
-				5C53DE7C2B9F70BA00F51194 /* KeyData.swift in Sources */,
+				5C53DE7C2B9F70BA00F51194 /* Data.swift in Sources */,
 				5C53DE7A2B9F6DCE00F51194 /* ToplineSubView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -618,6 +634,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5C537DAD2BA0EB6400C5020F /* XCRemoteSwiftPackageReference "iDummyCursor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/benjaminsage/iDummyCursor.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5C537DAE2BA0EB6400C5020F /* iDummyCursor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C537DAD2BA0EB6400C5020F /* XCRemoteSwiftPackageReference "iDummyCursor" */;
+			productName = iDummyCursor;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5C5A855E2B8C9F4100770254 /* Project object */;
 }

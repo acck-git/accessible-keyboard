@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "idummycursor",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/benjaminsage/iDummyCursor.git",
+      "state" : {
+        "revision" : "62d55c38b52c235a9ced8e4bae6cc9449fb6b7ff",
+        "version" : "0.0.1"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -3,6 +3,27 @@
 //
 
 import SwiftUI
+import iDummyCursor
+
+//[Text field]---------------------------------
+struct TextInput: View {
+  var text: String
+  var body: some View {
+    HStack{
+      iDummyCursor().fontSize(45)
+      Text(text)
+        .lineLimit(1)
+        .foregroundColor(.black)
+        .font(.system(size: 35, weight: .heavy))
+        .padding(.trailing, -5.0)
+        .environment(\.layoutDirection,.rightToLeft)
+    }.frame(maxWidth: .infinity, minHeight: 80, alignment:.trailing)
+      .padding(.horizontal)
+      .overlay(RoundedRectangle(cornerRadius: 5)
+        .stroke(.black, lineWidth: 2))
+      .cornerRadius(5)
+  }
+}
 
 //[Letter key]---------------------------------
 struct BlackWhiteButton: View {
@@ -17,6 +38,7 @@ struct BlackWhiteButton: View {
           .stroke(.black, lineWidth: 2)
         )
     })
+    .buttonRepeatBehavior(.enabled)
     .background(.white)
     .cornerRadius(15)
   }
@@ -35,6 +57,7 @@ struct LGreenButton: View {
           .stroke(.black, lineWidth: 2)
         )
     })
+    .buttonRepeatBehavior(.enabled)
     .background(Color(hex:0xDBF7E0))
     .cornerRadius(15)
   }
@@ -81,6 +104,7 @@ struct LPurpleLongButton: View {
           .stroke(.black, lineWidth: 2)
         )
     })
+    .buttonRepeatBehavior(.enabled)
     .background(Color(hex:0xCDCCF3))
     .cornerRadius(15)
   }
@@ -99,6 +123,7 @@ struct LRedButton: View {
           .stroke(.black, lineWidth: 2)
         )
     })
+    .buttonRepeatBehavior(.enabled)
     .background(Color(hex:0xFF766E))
     .cornerRadius(15)
   }
@@ -148,6 +173,7 @@ struct LGreyImageButton: View {
 struct ButtonPresetsPreview: View {
   var body: some View {
     VStack {
+      TextInput(text: "היי")
       BlackWhiteButton(text: "א", action: {})
       LGreenButton(text: "א", action: {})
       HiddenButton()
@@ -159,7 +185,6 @@ struct ButtonPresetsPreview: View {
     }
   }
 }
-
 #Preview {
   ButtonPresetsPreview()
 }
