@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "689AFF71-2F16-44E8-BC69-0F35800A4A71",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:acckp.xcodeproj",
+      "identifier" : "5C5A85652B8C9F4100770254",
+      "name" : "acckp"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:acckp.xcodeproj",
+        "identifier" : "5C5A85772B8C9F4200770254",
+        "name" : "acckpTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:acckp.xcodeproj",
+        "identifier" : "5C5A85812B8C9F4200770254",
+        "name" : "acckpUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
