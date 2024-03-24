@@ -14,7 +14,10 @@ struct KeyboardSubView: View {
   var row4: [String] = Keys.letterRow4.reversed()
   var vowelsRow: [String] = Keys.vowelsRow.reversed()
   var extraLets: [String] = Keys.extraLetters
+  var endLets: [String] = Keys.endLetters
   var vowels: [String] = Keys.vowels
+  var extra: [Int] = [0,1,2]
+  var end: [Int] = [4]
   var body: some View {
     //[KaygVars.board container]---------------------
     VStack (spacing: 20){
@@ -47,13 +50,27 @@ struct KeyboardSubView: View {
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 4]--------------------------------
       HStack(spacing: 13.0) {
-        if [0,1,2].contains(gVars.board) {
-          LGreenButton(text: extraLets[0], action: {}).disabled(true).opacity(0.3)
+        if extra.contains(gVars.board) {
+          LGreenButton(text: extraLets[0], action: {
+            gVars.inputText += extraLets[0]
+          })
+        }
+        else if end.contains(gVars.board){
+          LGreenButton(text: endLets[1], action: {
+            gVars.inputText += endLets[1]
+          })
         }
         else {
           HiddenButton()
         }
-        HiddenButton()
+        if end.contains(gVars.board){
+          LGreenButton(text: endLets[0], action: {
+            gVars.inputText += endLets[0]
+          })
+        }
+        else {
+          HiddenButton()
+        }
         ForEach(row4, id:\.self) { letter in
           BlackWhiteButton(text: letter+vowels[gVars.board], action: {
             gVars.inputText += letter+vowels[gVars.board]
@@ -63,13 +80,27 @@ struct KeyboardSubView: View {
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 5]--------------------------------
       HStack(spacing:13){
-        if [0,1,2].contains(gVars.board) {
-          LGreenButton(text: extraLets[1], action: {}).disabled(true).opacity(0.3)
+        if extra.contains(gVars.board) {
+          LGreenButton(text: extraLets[1], action:{
+            gVars.inputText += extraLets[1]
+          })
+        }
+        else if end.contains(gVars.board){
+          LGreenButton(text: endLets[3], action: {
+            gVars.inputText += endLets[3]
+          })
         }
         else {
           HiddenButton()
         }
-        HiddenButton()
+        if end.contains(gVars.board){
+          LGreenButton(text: endLets[2], action: {
+            gVars.inputText += endLets[2]
+          })
+        }
+        else {
+          HiddenButton()
+        }
         HStack(spacing: 10.0) {
           ForEach(vowelsRow.indices, id:\.self) { index in
             LYellowButton(text: vowelsRow[index], action: {
@@ -82,8 +113,15 @@ struct KeyboardSubView: View {
       }
       //[Row 6]--------------------------------
       HStack(spacing: 13.0) {
-        if [0,1,2].contains(gVars.board) {
-          LGreenButton(text: extraLets[2], action: {}).disabled(true).opacity(0.3)
+        if extra.contains(gVars.board) {
+          LGreenButton(text: extraLets[2], action: {
+            gVars.inputText += extraLets[2]
+          })
+        }
+        else if end.contains(gVars.board){
+          LGreenButton(text: endLets[4], action: {
+            gVars.inputText += endLets[4]
+          })
         }
         else {
           HiddenButton()
@@ -105,5 +143,8 @@ struct KeyboardSubView: View {
 }
 
 #Preview {
-  KeyboardSubView().environmentObject(GlobalVars())
+  KeyboardSubView().environmentObject(GlobalVars(board:0))
+}
+#Preview {
+  KeyboardSubView().environmentObject(GlobalVars(board:4))
 }
