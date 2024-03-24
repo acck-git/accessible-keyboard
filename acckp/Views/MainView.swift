@@ -6,16 +6,16 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
-  @StateObject var input = Input()
+  @StateObject var gVars = GlobalVars()
   var body: some View {
     //[Main container]---------------------
     VStack (spacing: 0.0) {
-      ToplineSubView().environmentObject(input)
+      ToplineSubView().environmentObject(gVars)
       Divider()
         .frame(height: 5.0)
         .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
         .overlay(.black)
-      KeyboardSubView(board: 0).environmentObject(input)
+      KeyboardSubView().environmentObject(gVars)
     }
     .frame(
       minWidth: 0,

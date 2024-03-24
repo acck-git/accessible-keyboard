@@ -4,7 +4,8 @@
 
 import Foundation
 
-class Input: ObservableObject {
+class GlobalVars: ObservableObject {
+  @Published var board: Int = 0
   @Published var inputText: String = ""
   var example = "טֶקסט לֶהָמחָשָה"
 }

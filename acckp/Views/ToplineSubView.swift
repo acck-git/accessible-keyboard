@@ -6,12 +6,12 @@ import SwiftUI
 import SwiftData
 
 struct ToplineSubView: View {
-  @EnvironmentObject var input: Input
+  @EnvironmentObject var gVars: GlobalVars
   var body: some View {
     //[Top line container]---------------------
     HStack(spacing:20) {
       LGreyImageButton(image: "speaker.fill", action: {}).disabled(true).opacity(0.3)
-      TextInput(text: input.inputText)
+      TextInput(text: gVars.inputText)
     }
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 20.0/*@END_MENU_TOKEN@*/)
     .padding(.vertical, 20.0)
@@ -20,5 +20,5 @@ struct ToplineSubView: View {
 }
 
 #Preview {
-  ToplineSubView().environmentObject(Input())
+  ToplineSubView().environmentObject(GlobalVars())
 }

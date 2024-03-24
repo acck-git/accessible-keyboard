@@ -6,8 +6,7 @@ import SwiftUI
 import SwiftData
 
 struct KeyboardSubView: View {
-  var board: Int
-  @EnvironmentObject var input: Input
+  @EnvironmentObject var gVars: GlobalVars
   //[Keys data]--------------------------------
   var row1: [String] = Keys.letterRow1.reversed()
   var row2: [String] = Keys.letterRow2.reversed()
@@ -17,13 +16,13 @@ struct KeyboardSubView: View {
   var extraLets: [String] = Keys.extraLetters
   var vowels: [String] = Keys.vowels
   var body: some View {
-    //[Kayboard container]---------------------
+    //[KaygVars.board container]---------------------
     VStack (spacing: 20){
       //[Row 1]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row1, id:\.self) { letter in
-          BlackWhiteButton(text: letter+vowels[board], action: {
-            input.inputText += letter+vowels[board]
+          BlackWhiteButton(text: letter+vowels[gVars.board], action: {
+            gVars.inputText += letter+vowels[gVars.board]
           })
         }
       }
@@ -31,8 +30,8 @@ struct KeyboardSubView: View {
       //[Row 2]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row2, id:\.self) { letter in
-          BlackWhiteButton(text: letter+vowels[board], action: {
-            input.inputText += letter+vowels[board]
+          BlackWhiteButton(text: letter+vowels[gVars.board], action: {
+            gVars.inputText += letter+vowels[gVars.board]
           })
         }
       }
@@ -40,15 +39,15 @@ struct KeyboardSubView: View {
       //[Row 3]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row3, id:\.self) { letter in
-          BlackWhiteButton(text: letter+vowels[board], action: {
-            input.inputText += letter+vowels[board]
+          BlackWhiteButton(text: letter+vowels[gVars.board], action: {
+            gVars.inputText += letter+vowels[gVars.board]
           })
         }
       }
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 4]--------------------------------
       HStack(spacing: 13.0) {
-        if [0,1,2].contains(board) {
+        if [0,1,2].contains(gVars.board) {
           LGreenButton(text: extraLets[0], action: {}).disabled(true).opacity(0.3)
         }
         else {
@@ -56,15 +55,15 @@ struct KeyboardSubView: View {
         }
         HiddenButton()
         ForEach(row4, id:\.self) { letter in
-          BlackWhiteButton(text: letter+vowels[board], action: {
-            input.inputText += letter+vowels[board]
+          BlackWhiteButton(text: letter+vowels[gVars.board], action: {
+            gVars.inputText += letter+vowels[gVars.board]
           })
         }
       }
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 5]--------------------------------
       HStack(spacing:13){
-        if [0,1,2].contains(board) {
+        if [0,1,2].contains(gVars.board) {
           LGreenButton(text: extraLets[1], action: {}).disabled(true).opacity(0.3)
         }
         else {
@@ -72,8 +71,10 @@ struct KeyboardSubView: View {
         }
         HiddenButton()
         HStack(spacing: 10.0) {
-          ForEach(vowelsRow, id:\.self) { vowel in
-            LYellowButton(text: vowel, action: {}).disabled(true).opacity(0.3)
+          ForEach(vowelsRow.indices, id:\.self) { index in
+            LYellowButton(text: vowelsRow[index], action: {
+              gVars.board = vowelsRow.count - index - 1
+            })
           }
         }
         .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
@@ -81,7 +82,7 @@ struct KeyboardSubView: View {
       }
       //[Row 6]--------------------------------
       HStack(spacing: 13.0) {
-        if [0,1,2].contains(board) {
+        if [0,1,2].contains(gVars.board) {
           LGreenButton(text: extraLets[2], action: {}).disabled(true).opacity(0.3)
         }
         else {
@@ -89,10 +90,10 @@ struct KeyboardSubView: View {
         }
         LRedButton(text: "מחק מילה", action: {}).disabled(true).opacity(0.3)
         LRedButton(text: "מחק תו", action: {
-          input.inputText = String(input.inputText.dropLast())
+          gVars.inputText = String(gVars.inputText.dropLast())
         })
         LPurpleLongButton(text: "רווח", action: {
-          input.inputText += " "
+          gVars.inputText += " "
         })
         LBlueImageButton(image: "gear", action: {}).disabled(true).opacity(0.3)
       }
@@ -104,8 +105,5 @@ struct KeyboardSubView: View {
 }
 
 #Preview {
-  KeyboardSubView(board: 0).environmentObject(Input())
-}
-#Preview {
-  KeyboardSubView(board: 4).environmentObject(Input())
+  KeyboardSubView().environmentObject(GlobalVars())
 }
