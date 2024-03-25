@@ -1,5 +1,5 @@
 //
-//  UI tests
+//  UI tests (black box testing)
 //
 
 import XCTest
@@ -14,17 +14,23 @@ final class acckpUITests: XCTestCase {
   let vowels = ["\u{05B8}", "\u{05B4}י", "\u{05B6}", "וֹ", "", "וּ"]
   let vowelsRow = ["\u{05B8}  ", "\u{05B4}י  ", "\u{05B6}  ", "וֹ", " ", "וּ"]
   
+  //Runs before every test
   override func setUpWithError() throws {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
     
-    // In UI tests it is usually best to stop immediately when a failure occurs.
-    continueAfterFailure = false
-    
-    // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+    continueAfterFailure = false //stops after failure
   }
-  
+  //Runs after every test
   override func tearDownWithError() throws {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    //Clearing textbox after every run
+    let app = XCUIApplication()
+    let textbox = app.staticTexts["textbox"]
+    XCTAssertTrue(textbox.exists, "Textbox wasn't found")
+    let deleteButton = app.buttons["מחק תו"]
+    while ((textbox.label == "") == false) {
+      print(textbox.label)
+      deleteButton.tap()
+    }
+    XCTAssertEqual(textbox.label, "" ,"Couldn't clear textbox")
   }
   
   func testFirstBoard() throws {
@@ -36,7 +42,16 @@ final class acckpUITests: XCTestCase {
     XCTAssertTrue(textbox.exists, "Textbox wasn't found")
     XCTAssertEqual(textbox.label, "" ,"Textbox isn't empty")
     
-    let board: Int = 0
+    runBoard(app: app, board: 0)
+    
+    let text = "אָבָבָּגָדָהָוָזָחָטָיָכָכָּלָמָנָסָעָפָפָּצָקָרָשָׁשָֹתָאהע"
+    XCTAssertEqual(textbox.label, text ,"Board typed the wrong letters")
+    //missing: clearing label after test
+  }
+  
+  //[Aid functions]------------------------------
+  //Press all letters in a selected board
+  func runBoard(app: XCUIApplication, board: Int){
     let boardButton = app.buttons[vowelsRow[board]]
     boardButton.tap()
     
@@ -60,7 +75,5 @@ final class acckpUITests: XCTestCase {
       let button = app.buttons[letter]
       button.tap()
     }
-    let text = "אָבָבָּגָדָהָוָזָחָטָיָכָכָּלָמָנָסָעָפָפָּצָקָרָשָׁשָֹתָאהע"
-    XCTAssertEqual(textbox.label, text ,"Board typed the wrong letters")
   }
 }
