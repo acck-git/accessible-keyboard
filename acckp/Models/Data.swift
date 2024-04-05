@@ -7,10 +7,15 @@ import Foundation
 class GlobalVars: ObservableObject {
   @Published var board: Int
   @Published var inputText: String
+  @Published var screen: Int
+  @Published var student: String
   var example = "טֶקסט לֶהָמחָשָה"
-  init(board: Int = 0, inputText: String = ""){
+  static var student_def = "תלמיד"
+  init(board: Int = 0, inputText: String = "", screen: Int = 0, student: String = student_def ){
     self.board = board
     self.inputText = inputText
+    self.screen = screen
+    self.student = student
   }
 }
 

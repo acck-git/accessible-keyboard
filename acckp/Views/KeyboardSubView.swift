@@ -133,7 +133,7 @@ struct KeyboardSubView: View {
         LPurpleLongButton(text: "רווח", action: {
           gVars.inputText += " "
         })
-        LBlueImageButton(image: "gear", action: {}).disabled(true).opacity(0.3)
+        LBlueImageButton(image: "gear", action: {gVars.screen = 1})
       }
       .padding(.horizontal, 15.0)
     }
