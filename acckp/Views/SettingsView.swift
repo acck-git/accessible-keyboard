@@ -7,13 +7,14 @@ import SwiftData
 
 struct SettingsView: View {
   @EnvironmentObject var gVars: GlobalVars
-  var students: [String] = ["תלמיד"]
-  @State var index: Int = 0
-  @State var set: String = "b"
+  //login
   @State var login: Bool = false
   @State var pass: String = ""
-  var temppass: String = "pass"
+  //images
+  @State var set: String = "a"
+  @State var subSet: Int = 0
   var vowelsRow: [String] = Keys.vowelsRow.reversed()
+  var sets: [String] = Images.sets
   var body: some View {
     //[Top line container]---------------------
     VStack(spacing: 0.0){
@@ -23,27 +24,16 @@ struct SettingsView: View {
             login = true
           }
           else{
-            if pass == temppass{
-              print("success!")
-            }
-            else{
-              print("wrong password")
-            }
+            gVars.checkPass(pass: pass)
           }
         })
         if login{
-          SecureField("הקלד סיסמה...", text: $pass)
-            .foregroundColor(.black)
-            .font(.system(size: 35, weight: .heavy))
-            .frame(width: 300, height: 80, alignment:.trailing)
-            .padding(.horizontal,6)
-            .environment(\.layoutDirection,.rightToLeft)
-            .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+          TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
         }
         HiddenButton()
           .frame(maxWidth:.infinity)
-        StudentPicker(array: students, onChange:{
-          print(gVars.student)}).environmentObject(gVars).disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+        StudentPicker(array: GlobalVars.getStudents(), onChange:{
+          print(gVars.student)}).environmentObject(gVars)
       }
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 20.0/*@END_MENU_TOKEN@*/)
       .padding(.vertical, 20.0)
@@ -58,34 +48,43 @@ struct SettingsView: View {
       VStack(spacing: 20){
         HStack(spacing: 10){
           ArrowButton(image: "arrowtriangle.left.fill",action: {
-            index += 6
-            if index > 6{
-              index = 0
+            subSet += 6
+            if subSet > 6{
+              subSet = 0
             }
           })
           VStack(spacing:20){
             HStack(spacing: 20){
               ForEach((1...3).reversed(), id: \.self){ i in
-                ImageButton(image: set+String(index+i), action: {})
+                ImageButton(image: set+String(subSet+i), action: {
+                  gVars.image = set+String(subSet+i)
+                  gVars.screen = GlobalVars.screens.main
+                  gVars.inputText = ""
+                })
               }
             }
             HStack(spacing: 20){
               ForEach((4...6).reversed(), id: \.self){ i in
-                ImageButton(image: set+String(index+i), action:{})
+                ImageButton(image: set+String(subSet+i), action:{
+                  gVars.image = set+String(subSet+i)
+                  gVars.screen = GlobalVars.screens.main
+                  gVars.inputText = ""
+                })
               }
             }
           }
           ArrowButton(image: "arrowtriangle.right.fill",action: {
-            index -= 6
-            if index < 0{
-              index = 6
+            subSet -= 6
+            if subSet < 0{
+              subSet = 6
             }
           })
         }
         HStack(spacing: 10.0) {
           ForEach(vowelsRow.indices, id:\.self) { index in
-            LYellowButton(text: vowelsRow[index], action: {
-              gVars.board = vowelsRow.count - index - 1
+            VowelButton(text: vowelsRow[index], action: {
+              set = sets[vowelsRow.count - index - 1]
+              subSet = 0
             })
           }
         }
@@ -94,8 +93,8 @@ struct SettingsView: View {
         HStack(spacing:13){
           HiddenButton()
             .frame(maxWidth:.infinity)
-          LBlueImageButton(image: "arrowshape.right", action: {
-            gVars.screen = 0})
+          SettingsButton(image: "arrowshape.right", action: {
+            gVars.screen = GlobalVars.screens.main})
         }.padding(.horizontal,15)
       }
       .frame(maxWidth:.infinity,maxHeight:.infinity)

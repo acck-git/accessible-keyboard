@@ -13,7 +13,7 @@
 		5C53DE732B9F65E700F51194 /* KeyboardSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE722B9F65E700F51194 /* KeyboardSubView.swift */; };
 		5C53DE7A2B9F6DCE00F51194 /* ToplineSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE792B9F6DCE00F51194 /* ToplineSubView.swift */; };
 		5C53DE7C2B9F70BA00F51194 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE7B2B9F70BA00F51194 /* Data.swift */; };
-		5C53DE7E2B9F987200F51194 /* ViewPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE7D2B9F987200F51194 /* ViewPresets.swift */; };
+		5C53DE7E2B9F987200F51194 /* MainPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE7D2B9F987200F51194 /* MainPresets.swift */; };
 		5C53DE812B9FAB1A00F51194 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C53DE802B9FAB1A00F51194 /* Utils.swift */; };
 		5C5A856A2B8C9F4100770254 /* acckpApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85692B8C9F4100770254 /* acckpApp.swift */; };
 		5C5A856C2B8C9F4100770254 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A856B2B8C9F4100770254 /* MainView.swift */; };
@@ -23,6 +23,7 @@
 		5C5A85872B8C9F4200770254 /* acckpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85862B8C9F4200770254 /* acckpUITests.swift */; };
 		5C5A85892B8C9F4200770254 /* acckpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */; };
 		5C7FF77B2BBFD4D400BB0FF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */; };
+		5CC996A52BD57F5B001FFE57 /* SettingsPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +49,7 @@
 		5C53DE722B9F65E700F51194 /* KeyboardSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSubView.swift; sourceTree = "<group>"; };
 		5C53DE792B9F6DCE00F51194 /* ToplineSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToplineSubView.swift; sourceTree = "<group>"; };
 		5C53DE7B2B9F70BA00F51194 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
-		5C53DE7D2B9F987200F51194 /* ViewPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPresets.swift; sourceTree = "<group>"; };
+		5C53DE7D2B9F987200F51194 /* MainPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresets.swift; sourceTree = "<group>"; };
 		5C53DE802B9FAB1A00F51194 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		5C5A85662B8C9F4100770254 /* acckp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = acckp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A85692B8C9F4100770254 /* acckpApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpApp.swift; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 		5C5A85862B8C9F4200770254 /* acckpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpUITests.swift; sourceTree = "<group>"; };
 		5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresets.swift; sourceTree = "<group>"; };
 		5CD75FED2BB0BB1700F2F6C3 /* acckp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = acckp.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,7 +108,8 @@
 				5C53DE792B9F6DCE00F51194 /* ToplineSubView.swift */,
 				5C53DE722B9F65E700F51194 /* KeyboardSubView.swift */,
 				5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */,
-				5C53DE7D2B9F987200F51194 /* ViewPresets.swift */,
+				5C53DE7D2B9F987200F51194 /* MainPresets.swift */,
+				5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -308,9 +311,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C53DE7E2B9F987200F51194 /* ViewPresets.swift in Sources */,
+				5C53DE7E2B9F987200F51194 /* MainPresets.swift in Sources */,
 				5C5A856C2B8C9F4100770254 /* MainView.swift in Sources */,
 				5C53DE712B9F648C00F51194 /* Item.swift in Sources */,
+				5CC996A52BD57F5B001FFE57 /* SettingsPresets.swift in Sources */,
 				5C7FF77B2BBFD4D400BB0FF1 /* SettingsView.swift in Sources */,
 				5C53DE812B9FAB1A00F51194 /* Utils.swift in Sources */,
 				5C53DE732B9F65E700F51194 /* KeyboardSubView.swift in Sources */,

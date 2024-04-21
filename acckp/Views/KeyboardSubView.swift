@@ -24,7 +24,7 @@ struct KeyboardSubView: View {
       //[Row 1]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row1, id:\.self) { letter in
-          BlackWhiteButton(text: letter+vowels[gVars.board], action: {
+          LetterButton(text: letter+vowels[gVars.board], action: {
             gVars.inputText += letter+vowels[gVars.board]
           })
         }
@@ -33,7 +33,7 @@ struct KeyboardSubView: View {
       //[Row 2]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row2, id:\.self) { letter in
-          BlackWhiteButton(text: letter+vowels[gVars.board], action: {
+          LetterButton(text: letter+vowels[gVars.board], action: {
             gVars.inputText += letter+vowels[gVars.board]
           })
         }
@@ -42,7 +42,7 @@ struct KeyboardSubView: View {
       //[Row 3]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row3, id:\.self) { letter in
-          BlackWhiteButton(text: letter+vowels[gVars.board], action: {
+          LetterButton(text: letter+vowels[gVars.board], action: {
             gVars.inputText += letter+vowels[gVars.board]
           })
         }
@@ -51,12 +51,12 @@ struct KeyboardSubView: View {
       //[Row 4]--------------------------------
       HStack(spacing: 13.0) {
         if extra.contains(gVars.board) {
-          LGreenButton(text: extraLets[0], action: {
+          ExtraLetterButton(text: extraLets[0], action: {
             gVars.inputText += extraLets[0]
           })
         }
         else if end.contains(gVars.board){
-          LGreenButton(text: endLets[1], action: {
+          ExtraLetterButton(text: endLets[1], action: {
             gVars.inputText += endLets[1]
           })
         }
@@ -64,7 +64,7 @@ struct KeyboardSubView: View {
           HiddenButton()
         }
         if end.contains(gVars.board){
-          LGreenButton(text: endLets[0], action: {
+          ExtraLetterButton(text: endLets[0], action: {
             gVars.inputText += endLets[0]
           })
         }
@@ -72,7 +72,7 @@ struct KeyboardSubView: View {
           HiddenButton()
         }
         ForEach(row4, id:\.self) { letter in
-          BlackWhiteButton(text: letter+vowels[gVars.board], action: {
+          LetterButton(text: letter+vowels[gVars.board], action: {
             gVars.inputText += letter+vowels[gVars.board]
           })
         }
@@ -81,12 +81,12 @@ struct KeyboardSubView: View {
       //[Row 5]--------------------------------
       HStack(spacing:13){
         if extra.contains(gVars.board) {
-          LGreenButton(text: extraLets[1], action:{
+          ExtraLetterButton(text: extraLets[1], action:{
             gVars.inputText += extraLets[1]
           })
         }
         else if end.contains(gVars.board){
-          LGreenButton(text: endLets[3], action: {
+          ExtraLetterButton(text: endLets[3], action: {
             gVars.inputText += endLets[3]
           })
         }
@@ -94,7 +94,7 @@ struct KeyboardSubView: View {
           HiddenButton()
         }
         if end.contains(gVars.board){
-          LGreenButton(text: endLets[2], action: {
+          ExtraLetterButton(text: endLets[2], action: {
             gVars.inputText += endLets[2]
           })
         }
@@ -103,7 +103,7 @@ struct KeyboardSubView: View {
         }
         HStack(spacing: 10.0) {
           ForEach(vowelsRow.indices, id:\.self) { index in
-            LYellowButton(text: vowelsRow[index], action: {
+            VowelButton(text: vowelsRow[index], action: {
               gVars.board = vowelsRow.count - index - 1
             })
           }
@@ -114,26 +114,36 @@ struct KeyboardSubView: View {
       //[Row 6]--------------------------------
       HStack(spacing: 13.0) {
         if extra.contains(gVars.board) {
-          LGreenButton(text: extraLets[2], action: {
+          ExtraLetterButton(text: extraLets[2], action: {
             gVars.inputText += extraLets[2]
           })
         }
         else if end.contains(gVars.board){
-          LGreenButton(text: endLets[4], action: {
+          ExtraLetterButton(text: endLets[4], action: {
             gVars.inputText += endLets[4]
           })
         }
         else {
           HiddenButton()
         }
-        LRedButton(text: "מחק מילה", action: {}).disabled(true).opacity(0.3)
-        LRedButton(text: "מחק תו", action: {
+        DeleteButton(text: "מחק מילה", action: {
+          if gVars.inputText.last == " "{
+            while gVars.inputText.last == " "{
+              gVars.inputText = String(gVars.inputText.dropLast())
+            }
+          }
+          gVars.inputText = String(gVars.inputText.components(separatedBy: " ").dropLast().joined(separator: " "))
+          if gVars.inputText != ""{
+            gVars.inputText += " "
+          }
+        })
+        DeleteButton(text: "מחק תו", action: {
           gVars.inputText = String(gVars.inputText.dropLast())
         })
-        LPurpleLongButton(text: "רווח", action: {
+        SpaceButton(text: "רווח", action: {
           gVars.inputText += " "
         })
-        LBlueImageButton(image: "gear", action: {gVars.screen = 1})
+        SettingsButton(image: "gear", action: {gVars.screen = GlobalVars.screens.settings})
       }
       .padding(.horizontal, 15.0)
     }
