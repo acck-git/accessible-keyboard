@@ -30,7 +30,7 @@ struct TeacherLoginInput: View {
     SecureField(placeholder, text: $text)
       .foregroundColor(.black)
       .font(.system(size: 35, weight: .heavy))
-      .frame(width: 300, height: 80, alignment:.trailing)
+      .frame(width: 300, height: 80, alignment: .trailing)
       .padding(.horizontal,6)
       .environment(\.layoutDirection,.rightToLeft)
       .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
@@ -144,7 +144,7 @@ struct SettingsPresetsPreview: View {
   var body: some View {
     VStack {
       TeacherLoginButton(text: "כניסת מורה", action: {})
-      ArrowButton(image:"arrowtriangle.left.fill",action:{})
+      ArrowButton(image:"arrowtriangle.left.fill",action: {})
       ImageButton(image:"a1", action: {})
       TinyImageButton(image:"a1", action: {})
       ImageSubmitButton(image: "checkmark", action: {})

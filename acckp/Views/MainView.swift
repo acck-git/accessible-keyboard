@@ -16,12 +16,7 @@ struct MainView: View {
       VStack (spacing: 0.0) {
         LetterButton(text: "Teacher page", action: {})
       }
-      .frame(
-        minWidth: 0,
-        maxWidth: .infinity,
-        minHeight: 0,
-        maxHeight: .infinity
-      )
+      .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
       .padding(.vertical, -22.0)
       
@@ -34,22 +29,14 @@ struct MainView: View {
           .overlay(.black)
         KeyboardSubView().environmentObject(gVars)
       }
-        .frame(
-          minWidth: 0,
-          maxWidth: .infinity,
-          minHeight: 0,
-          maxHeight: .infinity
-        )
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
         .padding(.vertical, -22.0)
-      if gVars.imageZoom{
-        main.overlay(MassiveImageButton(image: gVars.image, action: {
-          gVars.imageZoom = false
-        }))
+      if gVars.imageZoom { main
+          .overlay(MassiveImageButton(
+            image: gVars.image, action: { gVars.imageZoom = false }))
       }
-      else{
-        main
-      }
+      else { main }
     }
   }
 }

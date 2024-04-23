@@ -18,7 +18,7 @@ struct TextInput: View {
         .padding(.trailing, -5.0)
         .environment(\.layoutDirection,.rightToLeft)
         .accessibilityIdentifier("textbox")
-    }.frame(maxWidth: .infinity, minHeight: 80, alignment:.trailing)
+    }.frame(maxWidth: .infinity, minHeight: 80, alignment: .trailing)
       .padding(.horizontal)
       .overlay(RoundedRectangle(cornerRadius: 5)
         .stroke(.black, lineWidth: 2))

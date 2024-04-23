@@ -20,24 +20,19 @@ struct SettingsView: View {
     VStack(spacing: 0.0){
       HStack(spacing: 10) {
         TeacherLoginButton(text: "כניסת מורה", action: {
-          if login == false{
-            login = true
-          }
-          else{
-            gVars.checkPass(pass: pass)
-          }
+          if login == false { login = true }
+          else { gVars.checkPass(pass: pass) }
         })
-        if login{
+        if login {
           TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
         }
-        HiddenButton()
-          .frame(maxWidth:.infinity)
-        StudentPicker(array: GlobalVars.getStudents(), onChange:{
+        HiddenButton().frame(maxWidth: .infinity)
+        StudentPicker(array: GlobalVars.getStudents(), onChange: {
           print(gVars.student)}).environmentObject(gVars)
       }
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 20.0/*@END_MENU_TOKEN@*/)
       .padding(.vertical, 20.0)
-      .frame(maxWidth:.infinity, maxHeight: 123)
+      .frame(maxWidth: .infinity, maxHeight: 123)
       
       //---------------------
       Divider()
@@ -48,10 +43,7 @@ struct SettingsView: View {
       VStack(spacing: 20){
         HStack(spacing: 10){
           ArrowButton(image: "arrowtriangle.left.fill",action: {
-            subSet += 6
-            if subSet > 6{
-              subSet = 0
-            }
+            subSet = subSet+6 > 6 ? 0 : subSet+6
           })
           VStack(spacing:20){
             HStack(spacing: 20){
@@ -65,7 +57,7 @@ struct SettingsView: View {
             }
             HStack(spacing: 20){
               ForEach((4...6).reversed(), id: \.self){ i in
-                ImageButton(image: set+String(subSet+i), action:{
+                ImageButton(image: set+String(subSet+i), action: {
                   gVars.image = set+String(subSet+i)
                   gVars.screen = GlobalVars.screens.main
                   gVars.inputText = ""
@@ -74,10 +66,7 @@ struct SettingsView: View {
             }
           }
           ArrowButton(image: "arrowtriangle.right.fill",action: {
-            subSet -= 6
-            if subSet < 0{
-              subSet = 6
-            }
+            subSet = subSet-6 < 0 ? 6 : subSet-6
           })
         }
         HStack(spacing: 10.0) {
@@ -91,8 +80,7 @@ struct SettingsView: View {
         .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
         .frame(maxWidth: 823)
         HStack(spacing:13){
-          HiddenButton()
-            .frame(maxWidth:.infinity)
+          HiddenButton().frame(maxWidth:.infinity)
           SettingsButton(image: "arrowshape.right", action: {
             gVars.screen = GlobalVars.screens.main})
         }.padding(.horizontal,15)
@@ -100,12 +88,7 @@ struct SettingsView: View {
       .frame(maxWidth:.infinity,maxHeight:.infinity)
       .background(Color(uiColor:UIColor.systemGray5))
     }
-    .frame(
-      minWidth: 0,
-      maxWidth: .infinity,
-      minHeight: 0,
-      maxHeight: .infinity
-    )
+    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
     .padding(.vertical, -22.0)
     .ignoresSafeArea(.keyboard)
