@@ -5,6 +5,7 @@
 import Foundation
 import UIKit
 import AVKit
+import SwiftData
 
 class GlobalVars: ObservableObject {
   //[App States]---------------------------------
@@ -65,23 +66,66 @@ final class Images{
   static let imgDesc = [
     "a1":"מָתָנָה"
   ]
-  static func checkSpelling(gVars: GlobalVars){
-    guard var expected = imgDesc[gVars.image] else {
+  static func checkSpelling(gVars: GlobalVars, users: [UserData], context: ModelContext){
+    if gVars.inputText.count == 0 { return }
+    guard let desc = imgDesc[gVars.image] else {
       print("Image description for \"\(gVars.image)\" not found in system.")
       gVars.image = ""
       return}
-    var recieved = gVars.inputText
-    let length = max(expected.count,recieved.count)
-    expected += String(repeating: "*", count: length - expected.count)
-    recieved += String(repeating: "*", count: length - recieved.count)
-    print(expected)
-    print(recieved)
-    let typos = zip(Array(expected),Array(recieved)).filter{$0 != $1}
-    //print(typos)
-    let typosAmount = typos.count
-    print("Typos : \(typosAmount).")
+    var expected = Array(desc)
+    //print("Input: \(gVars.inputText)")
+    let recieved = Array(gVars.inputText)
+    //print("Expected: \(expected)")
+    //print("Recieved : \(recieved)")
     
-    gVars.image = ""
+    //missing letters -> typo
+    var typosAmount = expected.count > recieved.count ? expected.count-recieved.count : 0
+    //print("Typos 1: \(typosAmount).")
+ 
+    //extra letters -> typo
+    var correct : [Character] = []
+    for rLet in recieved {
+      if expected.contains(rLet) {
+        correct.append(rLet)
+        expected.remove(at: (expected.firstIndex(of: rLet)!))
+        print (expected)
+      }
+      else { typosAmount += 1 }
+    }
+    expected = Array(desc)
+    //print("Correct : \(correct)")
+    //print("Typos 2: \(typosAmount).")
+    
+    //swapped -> typo
+    var eIndex1 = 0
+    var eIndex2 = 0
+    var cIndex = 0
+    while cIndex+1 < correct.count {
+      eIndex1 = expected.firstIndex(of: correct[cIndex])!
+      expected.remove(at: eIndex1)
+      eIndex2 = expected.firstIndex(of: correct[cIndex+1])!
+      //print("Compare: \(correct[cIndex]) \(correct[cIndex+1])")
+      if eIndex1 > eIndex2 {
+        typosAmount += 1
+      }
+      cIndex += 1
+    }
+    //print("Typos 3: \(typosAmount).")
+    
+    
+    print("Typos: \(typosAmount).")
+    
+    var user: UserData
+    if users.count == 0 {
+      user = UserData(student: gVars.student)
+      context.insert(user)
+    }
+    else { user = users.last! }
+    user.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: expected.count, typos: typosAmount)
+    
+    
+    //gVars.image = ""
+    gVars.inputText = ""
   }
 }
 //[Letters data]----------------------------------

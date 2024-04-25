@@ -7,6 +7,8 @@ import SwiftData
 
 struct ToplineSubView: View {
   @EnvironmentObject var gVars: GlobalVars
+  @Environment(\.modelContext) var context
+  @Query var users: [UserData]
   var body: some View {
     //[Top line container]---------------------
     if gVars.image == "" {
@@ -21,7 +23,7 @@ struct ToplineSubView: View {
     else {
       HStack(spacing:10) {
         ImageSubmitButton(image:"checkmark",action: {
-          Images.checkSpelling(gVars: gVars)
+          Images.checkSpelling(gVars: gVars, users: users, context: context)
         })
         TinyImageButton(image: gVars.image, action: {
           gVars.imageZoom = true

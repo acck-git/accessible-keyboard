@@ -22,6 +22,7 @@
 		5C5A857D2B8C9F4200770254 /* acckpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A857C2B8C9F4200770254 /* acckpTests.swift */; };
 		5C5A85872B8C9F4200770254 /* acckpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85862B8C9F4200770254 /* acckpUITests.swift */; };
 		5C5A85892B8C9F4200770254 /* acckpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */; };
+		5C7A546A2BDA647E008FC5AA /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7A54692BDA647E008FC5AA /* UserData.swift */; };
 		5C7FF77B2BBFD4D400BB0FF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */; };
 		5CC996A52BD57F5B001FFE57 /* SettingsPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		5C5A85822B8C9F4200770254 /* acckpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = acckpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A85862B8C9F4200770254 /* acckpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpUITests.swift; sourceTree = "<group>"; };
 		5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5C7A54692BDA647E008FC5AA /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresets.swift; sourceTree = "<group>"; };
 		5CD75FED2BB0BB1700F2F6C3 /* acckp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = acckp.xctestplan; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				5C53DE7B2B9F70BA00F51194 /* Data.swift */,
 				5C53DE702B9F648C00F51194 /* Item.swift */,
+				5C7A54692BDA647E008FC5AA /* UserData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				5C7FF77B2BBFD4D400BB0FF1 /* SettingsView.swift in Sources */,
 				5C53DE812B9FAB1A00F51194 /* Utils.swift in Sources */,
 				5C53DE732B9F65E700F51194 /* KeyboardSubView.swift in Sources */,
+				5C7A546A2BDA647E008FC5AA /* UserData.swift in Sources */,
 				5C5A856A2B8C9F4100770254 /* acckpApp.swift in Sources */,
 				5C53DE7C2B9F70BA00F51194 /* Data.swift in Sources */,
 				5C53DE7A2B9F6DCE00F51194 /* ToplineSubView.swift in Sources */,
