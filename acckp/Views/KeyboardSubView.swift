@@ -95,7 +95,7 @@ struct KeyboardSubView: View {
         else { HiddenButton() }
         HStack(spacing: 10.0) {
           ForEach(vowelsRow.indices, id:\.self) { index in
-            VowelButton(text: vowelsRow[index], action: {
+            VowelButton(image: vowelsRow[index], action: {
               gVars.board = vowelsRow.count - index - 1
             })
           }

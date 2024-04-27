@@ -8,22 +8,28 @@ import AVKit
 import SwiftData
 
 class GlobalVars: ObservableObject {
+  static var container: ModelContainer?
   //[App States]---------------------------------
   enum screens {case main, settings, teacher}
   @Published var screen: screens
   @Published var board: Int
   @Published var inputText: String
   @Published var student: String
+  @Published var user: UserData?
   @Published var image: String
   @Published var imageZoom: Bool = false
   var example = "טֶקסט לֶהָמחָשָה"
   //default values
-  init(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = ""){
+  init(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") {
     self.board = board
     self.inputText = inputText
     self.screen = screen
     self.student = student
     self.image = image
+    Task {
+      await loginStudent(student: student)
+      
+    }
   }
   //[Typing]-------------------------------------
   var syntheziser = AVSpeechSynthesizer()
@@ -59,6 +65,28 @@ class GlobalVars: ObservableObject {
     //will load existing students in the future
     return [student_def]
   }
+  
+  @MainActor func loginStudent(student: String) {
+    let context = GlobalVars.container!.mainContext
+    let query = FetchDescriptor<UserData>(
+      predicate: #Predicate { user in
+        user.student == student
+      }
+    )
+    let users: [UserData] = try! context.fetch(query)
+    if users.count == 0 {
+      print("not found")
+      print(student)
+      user = UserData(student: student)
+      print("created")
+      context.insert(user!)
+      print("added")
+    }
+    else {
+      user = users.last!
+      print("found")
+    }
+  }
 }
 //[Images data]----------------------------------
 final class Images{
@@ -66,7 +94,7 @@ final class Images{
   static let imgDesc = [
     "a1":"מָתָנָה"
   ]
-  static func checkSpelling(gVars: GlobalVars, users: [UserData], context: ModelContext){
+  static func checkSpelling(gVars: GlobalVars){
     if gVars.inputText.count == 0 { return }
     guard let desc = imgDesc[gVars.image] else {
       print("Image description for \"\(gVars.image)\" not found in system.")
@@ -81,7 +109,7 @@ final class Images{
     //missing letters -> typo
     var typosAmount = expected.count > recieved.count ? expected.count-recieved.count : 0
     //print("Typos 1: \(typosAmount).")
- 
+    
     //extra letters -> typo
     var correct : [Character] = []
     for rLet in recieved {
@@ -115,14 +143,9 @@ final class Images{
     
     print("Typos: \(typosAmount).")
     
-    var user: UserData
-    if users.count == 0 {
-      user = UserData(student: gVars.student)
-      context.insert(user)
-    }
-    else { user = users.last! }
-    user.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: expected.count, typos: typosAmount)
     
+    gVars.user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: expected.count, typos: typosAmount)
+    print("updated")
     
     //gVars.image = ""
     gVars.inputText = ""
@@ -137,7 +160,8 @@ final class Keys {
   static let extraLetters = ["א" ,"ה" ,"ע"]
   static let endLetters = ["ך" ,"ם" ,"ן" ,"ף" ,"ץ"]
   static let vowels = ["\u{05B8}", "\u{05B4}י", "\u{05B6}", "ו\u{05B9}", "", "ו\u{05BC}"]
-  static let vowelsRow = ["\u{05B8}  ", "\u{05B4}י  ", "\u{05B6}  ", "ו\u{05B9}", " ", "ו\u{05BC}"]
+  //static let vowelsRow = ["\u{05B8}  ", "\u{05B4}י  ", "\u{05B6}  ", "ו\u{05B9}", " ", "ו\u{05BC}"]
+  static let vowelsRow = ["a", "b", "c", "d", "e", "f"]
   static let noVowel = "\u{05B0}"
   static let fakeNoVowel = "\u{05B6}"
 }

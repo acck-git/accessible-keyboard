@@ -72,13 +72,14 @@ struct HiddenButton: View {
 }
 //[Vowel key]----------------------------------
 struct VowelButton: View {
-  var text: String
+  var image: String
   var action: (() -> Void)
   var body: some View {
-    Button(action: action, label: { Text(text)
+    Button(action: action, label: { Image(image)
+        .resizable()
+        .scaledToFit()
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         .frame(maxWidth: .infinity, maxHeight: 95)
-        .foregroundColor(.black)
-        .font(.system(size: 35, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 50)
           .stroke(.black, lineWidth: 2)
         )
@@ -171,7 +172,14 @@ struct MainPresetsPreview: View {
       LetterButton(text: "א", action: {})
       ExtraLetterButton(text: "א", action: {})
       //HiddenButton()
-      VowelButton(text: "א", action: {})
+      HStack(spacing: 10.0) {
+        VowelButton(image: "a", action: {})
+        VowelButton(image: "b", action: {})
+        VowelButton(image: "c", action: {})
+        VowelButton(image: "d", action: {})
+        VowelButton(image: "e", action: {})
+        VowelButton(image: "f", action: {})
+      }.padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/).frame(maxWidth: 823)
       SpaceButton(text: "א", action: {})
       DeleteButton(text: "א", action: {})
       SettingsButton(image: "gear", action: {})

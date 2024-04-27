@@ -71,7 +71,7 @@ struct SettingsView: View {
         }
         HStack(spacing: 10.0) {
           ForEach(vowelsRow.indices, id:\.self) { index in
-            VowelButton(text: vowelsRow[index], action: {
+            VowelButton(image: vowelsRow[index], action: {
               set = sets[vowelsRow.count - index - 1]
               subSet = 0
             })

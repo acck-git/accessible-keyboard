@@ -6,7 +6,8 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
-  @StateObject var gVars = GlobalVars(image: "a1")
+  @StateObject var gVars = GlobalVars()
+  
   var body: some View {
     //[Main container]---------------------
     switch gVars.screen{
