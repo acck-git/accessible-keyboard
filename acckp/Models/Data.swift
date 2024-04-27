@@ -28,11 +28,15 @@ class GlobalVars: ObservableObject {
     self.image = image
     Task {
       await loginStudent(student: student)
-      
+    }
+    syntheziser = AVSpeechSynthesizer()
+    if AVAudioSession.sharedInstance().category != .playback {
+      do { try AVAudioSession.sharedInstance().setCategory(.playback) }
+      catch { print(error) }
     }
   }
   //[Typing]-------------------------------------
-  var syntheziser = AVSpeechSynthesizer()
+  var syntheziser: AVSpeechSynthesizer?
   @IBAction func type(text: String, tts: Bool){
     self.inputText += text
     if !tts { return }
@@ -45,7 +49,7 @@ class GlobalVars: ObservableObject {
     utterance.rate = 0.5
     utterance.volume = 1
     utterance.voice = AVSpeechSynthesisVoice(language: "he-IL")
-    syntheziser.speak(utterance)
+    syntheziser!.speak(utterance)
   }
   
   //[Teacher Login]-------------------------------
