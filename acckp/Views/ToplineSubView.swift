@@ -7,8 +7,6 @@ import SwiftData
 
 struct ToplineSubView: View {
   @EnvironmentObject var gVars: GlobalVars
-  @Environment(\.modelContext) var context
-  @Query var users: [UserData]
   var body: some View {
     //[Top line container]---------------------
     if gVars.image == "" {
