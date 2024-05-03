@@ -4,9 +4,10 @@
 
 import Foundation
 import UIKit
-import AVKit
 import SwiftData
+import AVKit
 
+var syntheziser = AVSpeechSynthesizer()
 class GlobalVars: ObservableObject {
   static var container: ModelContainer?
   //[App States]---------------------------------
@@ -29,39 +30,57 @@ class GlobalVars: ObservableObject {
     Task {
       await loginStudent(student: student)
     }
-    syntheziser = AVSpeechSynthesizer()
-    if AVAudioSession.sharedInstance().category != .playback {
-      do { try AVAudioSession.sharedInstance().setCategory(.playback) }
-      catch { print(error) }
+    do {
+      try AVAudioSession.sharedInstance().setCategory(.playback)
+      try AVAudioSession.sharedInstance().setActive(true)
     }
+    catch { print(error) }
+    
+    //syntheziser = AVSpeechSynthesizer()
   }
   //[Typing]-------------------------------------
-  var syntheziser: AVSpeechSynthesizer?
+  
   @IBAction func type(text: String, tts: Bool){
     self.inputText += text
     if !tts { return }
     var txt = text
     if txt == "א" || txt == "ה" || txt == "ע"{ txt += Keys.fakeNoVowel }
     else if self.board == 4 { txt += Keys.noVowel }
-    print(txt)
+    //print(txt)
     
     let utterance = AVSpeechUtterance(string: txt)
     utterance.rate = 0.5
     utterance.volume = 1
     utterance.voice = AVSpeechSynthesisVoice(language: "he-IL")
-    syntheziser!.speak(utterance)
+    syntheziser.speak(utterance)
   }
   
   //[Teacher Login]-------------------------------
   var temppass: [String] = ["pass","teach", "dev"]
-  func checkPass(pass: String){
+  func checkPass(pass: String) -> (Bool,String) {
+    //return false -> hides textfield
+    //return true -> keeps textfield visible
+    var correct = true
+    var message = ""
     switch temppass.firstIndex(of: pass){
-    case 0: print("Correct password.")
-    case 1: screen = screens.teacher
+    case 0: 
+      message = "Correct password."
+      print(message)
+    case 1:
+      //Teacher screen redirect
+      screen = screens.teacher
+    case 2:
+      //Dev export
+      message = "Exported user."
+      print(message)
+      user!.printUser()
     default:
-      screen = screen
-      print("Wrong password.")
+      //Incorrect password
+      message = "Wrong password."
+      print(message)
+      correct = false
     }
+    return (!correct,message)
   }
   //[Student Login]-------------------------------
   static var student_def = "תלמיד"
@@ -191,7 +210,7 @@ final class Images{
       if expected.contains(rLet) {
         correct.append(rLet)
         expected.remove(at: (expected.firstIndex(of: rLet)!))
-        print (expected)
+        //print (expected)
       }
       else { typosAmount += 1 }
     }
@@ -218,9 +237,10 @@ final class Images{
     
     print("Typos: \(typosAmount).")
     
-    
-    gVars.user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: expected.count, typos: typosAmount)
+    gVars.user!.printUser()
+    gVars.user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: desc.count, typos: typosAmount)
     print("updated")
+    gVars.user!.printUser()
     
     gVars.image = ""
     gVars.inputText = ""

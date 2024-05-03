@@ -19,15 +19,31 @@ class UserData {
   func update(correct_words: Int = 0, total_letters: Int = 0, typos: Int = 0) {
     //today already saved
     if stats.count > 0 && stats.last?.day == getDate(){
-      //stats[stats.count-1] = updateDay(stats: stats.last!, correct_words: correct_words, total_letters: total_letters, typos: typos)
+      stats[stats.count-1] = updateDay(stats: stats.last!, correct_words: correct_words, total_letters: total_letters, typos: typos)
       print("updating")
     }
     //new entry for today
     else {
-      //self.stats.append(dayStats(correct_words: correct_words, total_letters: total_letters, typos: typos))
+      self.stats.append(dayStats(correct_words: correct_words, total_letters: total_letters, typos: typos))
       print("creating")
     }
-    //print(stats.last!)
+    print(stats.last!)
+  }
+  func printUser(){
+    print("=================================================================")
+    print("Student: \(student)")
+    if stats.count > 0 {
+      for stat in stats {
+        print("==================")
+        print("Day: \(stat.day)")
+        print("Total words: \(stat.total_words)")
+        print("Correct words: \(stat.correct_words)")
+        print("Total letters: \(stat.total_letters)")
+        print("Typos: \(stat.typos)")
+      }
+    }
+    else { print("No stats saved.") }
+    print("=================================================================")
   }
 }
 //single entry

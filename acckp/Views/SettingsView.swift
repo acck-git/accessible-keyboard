@@ -10,25 +10,31 @@ struct SettingsView: View {
   //login
   @State var login: Bool = false
   @State var pass: String = ""
+  @State var alert: Bool = false
+  @State var alertMessage = ""
   //images
   @State var set: String = "a"
   @State var subSet: Int = 0
   var vowelsRow: [String] = Keys.vowelsRow.reversed()
   var sets: [String] = Images.sets
   var body: some View {
-    //[Top line container]---------------------
+    //[Settings container]---------------------
     VStack(spacing: 0.0){
       HStack(spacing: 10) {
         TeacherLoginButton(text: "כניסת מורה", action: {
           if login == false { login = true }
-          else { gVars.checkPass(pass: pass) }
+          else { 
+            (login,alertMessage) = gVars.checkPass(pass: pass)
+            if alertMessage != "" { alert = true }
+            pass = ""
+          }
         })
         if login {
           TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
         }
         HiddenButton().frame(maxWidth: .infinity)
         StudentPicker(array: GlobalVars.getStudents(), onChange: {
-          print(gVars.student)}).environmentObject(gVars)
+          print(gVars.student)}).environmentObject(gVars).hidden()
       }
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 20.0/*@END_MENU_TOKEN@*/)
       .padding(.vertical, 20.0)
@@ -92,6 +98,7 @@ struct SettingsView: View {
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
     .padding(.vertical, -22.0)
     .ignoresSafeArea(.keyboard)
+    .alert(alertMessage, isPresented: $alert, actions: {})
   }
 }
 
