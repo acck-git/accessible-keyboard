@@ -21,7 +21,7 @@ struct ToplineSubView: View {
     else {
       HStack(spacing:10) {
         ImageSubmitButton(image:"checkmark",action: {
-          Images.checkSpelling(gVars: gVars)
+          gVars.checkSpelling()
         })
         TinyImageButton(image: gVars.image, action: {
           gVars.imageZoom = true

@@ -148,8 +148,11 @@ struct SettingsPresetsPreview: View {
       ImageButton(image:"a1", action: {})
       TinyImageButton(image:"a1", action: {})
       ImageSubmitButton(image: "checkmark", action: {})
-      //MassiveImageButton(image: "a1", action: {})
     }
+    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+    .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
+    .padding(.vertical, -22.0)
+    //.overlay(MassiveImageButton(image: "a1", action: {}))
   }
 }
 #Preview {

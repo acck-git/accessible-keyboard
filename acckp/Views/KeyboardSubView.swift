@@ -8,14 +8,14 @@ import SwiftData
 struct KeyboardSubView: View {
   @EnvironmentObject var gVars: GlobalVars
   //[Keys data]--------------------------------
-  var row1: [String] = Keys.letterRow1.reversed()
-  var row2: [String] = Keys.letterRow2.reversed()
-  var row3: [String] = Keys.letterRow3.reversed()
-  var row4: [String] = Keys.letterRow4.reversed()
-  var vowelsRow: [String] = Keys.vowelsRow.reversed()
-  var extraLets: [String] = Keys.extraLetters
-  var endLets: [String] = Keys.endLetters
-  var vowels: [String] = Keys.vowels
+  var row1: [String] = StaticData.letterRow1.reversed()
+  var row2: [String] = StaticData.letterRow2.reversed()
+  var row3: [String] = StaticData.letterRow3.reversed()
+  var row4: [String] = StaticData.letterRow4.reversed()
+  var vowelsRow: [String] = StaticData.vowelsRow.reversed()
+  var extraLets: [String] = StaticData.extraLetters
+  var endLets: [String] = StaticData.endLetters
+  var vowels: [String] = StaticData.vowels
   var extra: [Int] = [0,1,2]
   var end: [Int] = [4]
   var body: some View {
@@ -133,7 +133,9 @@ struct KeyboardSubView: View {
         SpaceButton(text: "רווח", action: {
           gVars.inputText += " "
         })
-        SettingsButton(image: "gear", action: {gVars.screen = GlobalVars.screens.settings})
+        SettingsButton(image: "gear", action: {
+          gVars.screen = GlobalVars.screens.settings
+        })
       }
       .padding(.horizontal, 15.0)
     }

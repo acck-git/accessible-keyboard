@@ -15,15 +15,15 @@ struct SettingsView: View {
   //images
   @State var set: String = "a"
   @State var subSet: Int = 0
-  var vowelsRow: [String] = Keys.vowelsRow.reversed()
-  var sets: [String] = Images.sets
+  var vowelsRow: [String] = StaticData.vowelsRow.reversed()
+  var sets: [String] = StaticData.sets
   var body: some View {
     //[Settings container]---------------------
     VStack(spacing: 0.0){
       HStack(spacing: 10) {
         TeacherLoginButton(text: "כניסת מורה", action: {
           if login == false { login = true }
-          else { 
+          else {
             (login,alertMessage) = gVars.checkPass(pass: pass)
             if alertMessage != "" { alert = true }
             pass = ""
@@ -40,12 +40,12 @@ struct SettingsView: View {
       .padding(.vertical, 20.0)
       .frame(maxWidth: .infinity, maxHeight: 123)
       
-      //---------------------
+      //-----------------------
       Divider()
         .frame(height: 5.0)
         .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
         .overlay(.black)
-      //------------------
+      //-----------------------
       VStack(spacing: 20){
         HStack(spacing: 10){
           ArrowButton(image: "arrowtriangle.left.fill",action: {

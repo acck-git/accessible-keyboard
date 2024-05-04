@@ -6,30 +6,57 @@ import Foundation
 import SwiftData
 
 @Model
+//[Single user data]-----------------------------
 class UserData {
   var student: String
   var stats: [dayStats]
   init(student: String, stats: [dayStats] = []) {
-    print("creating")
     self.student = student
     self.stats = stats
-    print(self.student)
-    print(self.stats)
   }
+  //Update stats
   func update(correct_words: Int = 0, total_letters: Int = 0, typos: Int = 0) {
-    //today already saved
+    //Today already saved
     if stats.count > 0 && stats.last?.day == getDate(){
       stats[stats.count-1] = updateDay(stats: stats.last!, correct_words: correct_words, total_letters: total_letters, typos: typos)
-      print("updating")
-    }
-    //new entry for today
+      print("Updating today's stats.")
+    }//Today wasn't saved yet (new entry for today)
     else {
       self.stats.append(dayStats(correct_words: correct_words, total_letters: total_letters, typos: typos))
-      print("creating")
+      print("Creating stats for today.")
     }
-    print(stats.last!)
   }
-  func printUser(){
+  //Create json from data
+  func fetchJSON() -> Data {
+    var statsJSON: [[String: Any]] = []
+    for stat in stats {
+      statsJSON.append([
+        "day":stat.day,
+        "total_words":stat.total_words,
+        "correct_words":stat.correct_words,
+        "total_letters":stat.total_letters,
+        "typos":stat.typos,
+      ])
+    }
+    let json = try? JSONSerialization.data(withJSONObject: ["student":student,"stats":statsJSON], options: .prettyPrinted)
+    printUser()
+    return json!
+  }
+  
+  //Export data as json
+  func exportJSON() -> String {
+    let json = fetchJSON()
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    let url = paths[0].appendingPathComponent("ACCKPstats.JSON")
+    var message = "Exported user to\n\(url)"
+    
+    do { try json.write(to: url) }
+    catch { message = "Failed to export user." }
+    return message
+  }
+  
+  //Print data as JSON
+  func printUser() {
     print("=================================================================")
     print("Student: \(student)")
     if stats.count > 0 {
@@ -46,7 +73,8 @@ class UserData {
     print("=================================================================")
   }
 }
-//single entry
+
+//[Single day stats]-----------------------------
 struct dayStats: Codable {
   var day: String
   var total_words: Int
@@ -63,7 +91,7 @@ struct dayStats: Codable {
   }
 }
 
-//update single entry
+//[Update day stats]------------------------------
 func updateDay(stats: dayStats, correct_words: Int = 0, total_letters: Int = 0, typos: Int = 0) -> dayStats {
   let day = stats.day
   let total_words = stats.total_words + 1
@@ -73,13 +101,3 @@ func updateDay(stats: dayStats, correct_words: Int = 0, total_letters: Int = 0, 
   
   return dayStats(day: day, total_words: total_words, correct_words: correct_words, total_letters: total_letters, typos: typos)
 }
-//get today's date as a string
-func getDate() -> String {
-  let today = Date()
-  let formatter = DateFormatter()
-  formatter.dateFormat = "yyyy-MM-dd"
-  return formatter.string(from: today)
-}
-
-
-

@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-//[Using hex code for colors]
+//Using hex code for colors
 extension Color {
   init(hex: UInt, alpha: Double = 1) {
     self.init(
@@ -15,4 +15,12 @@ extension Color {
       opacity: alpha
     )
   }
+}
+
+//Get today's date as a string
+func getDate() -> String {
+  let today = Date()
+  let formatter = DateFormatter()
+  formatter.dateFormat = "yyyy-MM-dd"
+  return formatter.string(from: today)
 }

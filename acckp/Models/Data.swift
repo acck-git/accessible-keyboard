@@ -8,45 +8,42 @@ import SwiftData
 import AVKit
 
 var syntheziser = AVSpeechSynthesizer()
+//[Global vars & funcs]--------------------------
 class GlobalVars: ObservableObject {
   static var container: ModelContainer?
-  //[App States]---------------------------------
+  //App states
   enum screens {case main, settings, teacher}
-  @Published var screen: screens
-  @Published var board: Int
-  @Published var inputText: String
-  @Published var student: String
-  @Published var user: UserData?
-  @Published var image: String
-  @Published var imageZoom: Bool = false
-  var example = "טֶקסט לֶהָמחָשָה"
-  //default values
+  @Published var screen: screens          //currently displayed screen (uses enum)
+  @Published var board: Int               //currently displayed vowels board
+  @Published var inputText: String        //displayed text in text input (main screen)
+  @Published var student: String          //name of the logged in user
+  @Published var user: UserData?          //object of the logged in user
+  @Published var image: String            //currently selected image (image typing mode)
+  @Published var imageZoom: Bool = false  //show overlay of selected image
+  //Default values
+  static let example = "טֶקסט לֶהָמחָשָה"
+  static let student_def = "תלמיד"
   init(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") {
     self.board = board
     self.inputText = inputText
     self.screen = screen
     self.student = student
     self.image = image
-    Task {
-      await loginStudent(student: student)
-    }
+    Task { await loginStudent(student: student) }
     do {
       try AVAudioSession.sharedInstance().setCategory(.playback)
       try AVAudioSession.sharedInstance().setActive(true)
     }
     catch { print(error) }
-    
-    //syntheziser = AVSpeechSynthesizer()
   }
-  //[Typing]-------------------------------------
   
+  //[Typing]-------------------------------------
   @IBAction func type(text: String, tts: Bool){
     self.inputText += text
     if !tts { return }
     var txt = text
-    if txt == "א" || txt == "ה" || txt == "ע"{ txt += Keys.fakeNoVowel }
-    else if self.board == 4 { txt += Keys.noVowel }
-    //print(txt)
+    if txt == "א" || txt == "ה" || txt == "ע"{ txt += StaticData.fakeNoVowel }
+    else if self.board == 4 { txt += StaticData.noVowel }
     
     let utterance = AVSpeechUtterance(string: txt)
     utterance.rate = 0.5
@@ -56,14 +53,14 @@ class GlobalVars: ObservableObject {
   }
   
   //[Teacher Login]-------------------------------
-  var temppass: [String] = ["pass","teach", "dev"]
+  var temppass: [String] = ["passcheck", "teacherpage", "acckpdev"]
   func checkPass(pass: String) -> (Bool,String) {
     //return false -> hides textfield
     //return true -> keeps textfield visible
     var correct = true
     var message = ""
     switch temppass.firstIndex(of: pass){
-    case 0: 
+    case 0:
       message = "Correct password."
       print(message)
     case 1:
@@ -71,9 +68,8 @@ class GlobalVars: ObservableObject {
       screen = screens.teacher
     case 2:
       //Dev export
-      message = "Exported user."
+      message = user!.exportJSON()
       print(message)
-      user!.printUser()
     default:
       //Incorrect password
       message = "Wrong password."
@@ -82,13 +78,14 @@ class GlobalVars: ObservableObject {
     }
     return (!correct,message)
   }
+  
   //[Student Login]-------------------------------
-  static var student_def = "תלמיד"
-  static func getStudents() -> [String]{
+  static func getStudents() -> [String] {
     //will load existing students in the future
     return [student_def]
   }
   
+  //Get object for selected username (or create new)
   @MainActor func loginStudent(student: String) {
     let context = GlobalVars.container!.mainContext
     let query = FetchDescriptor<UserData>(
@@ -98,21 +95,81 @@ class GlobalVars: ObservableObject {
     )
     let users: [UserData] = try! context.fetch(query)
     if users.count == 0 {
-      print("not found")
-      print(student)
       user = UserData(student: student)
-      print("created")
       context.insert(user!)
-      print("added")
+      print("Created user \(student).")
     }
     else {
       user = users.last!
-      print("found")
+      print("Loaded user \(student).")
     }
   }
+  
+  //[Images data]--------------------------------
+  func checkSpelling(){
+    //[Calculate typos]--------------------------
+    if inputText.count == 0 { return }
+    guard let desc = StaticData.imgDesc[image] else {
+      print("Image description for \"\(image)\" not found in system.")
+      image = ""
+      return}
+    var expected = Array(desc)
+    let recieved = Array(inputText)
+    
+    //missing letters -> typo
+    var typosAmount = expected.count > recieved.count ? expected.count-recieved.count : 0
+    
+    //extra letters -> typo
+    var correct : [Character] = []
+    for rLet in recieved {
+      if expected.contains(rLet) {
+        correct.append(rLet)
+        expected.remove(at: (expected.firstIndex(of: rLet)!))
+      }
+      else { typosAmount += 1 }
+    }
+    expected = Array(desc)
+    
+    //swapped -> typo
+    var eIndex1 = 0
+    var eIndex2 = 0
+    var cIndex = 0
+    while cIndex+1 < correct.count {
+      eIndex1 = expected.firstIndex(of: correct[cIndex])!
+      expected.remove(at: eIndex1)
+      eIndex2 = expected.firstIndex(of: correct[cIndex+1])!
+      if eIndex1 > eIndex2 {
+        typosAmount += 1
+      }
+      cIndex += 1
+    }
+    print("Typos: \(typosAmount).")
+    
+    //[Update user]------------------------------
+    user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: desc.count, typos: typosAmount)
+    print("Updated user \(user!).")
+    user!.printUser()
+    
+    //[Clear selected image]---------------------
+    image = ""
+    inputText = ""
+  }
 }
-//[Images data]----------------------------------
-final class Images{
+
+//[Static data]----------------------------------
+final class StaticData {
+  //[Keys]---------------------------------------
+  static let letterRow1 = ["א" ,"ב" ,"ב\u{05BC}", "ג" ,"ד" ,"ה" ,"ו"]
+  static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ" ,"כ\u{05BC}", "ל"]
+  static let letterRow3 = ["מ" ,"נ" ,"ס" ,"ע" ,"פ" ,"פ\u{05BC}", "צ"]
+  static let letterRow4 = ["ק" ,"ר" ,"ש\u{05C1}", "ש\u{05C2}", "ת"]
+  static let extraLetters = ["א" ,"ה" ,"ע"]
+  static let endLetters = ["ך" ,"ם" ,"ן" ,"ף" ,"ץ"]
+  static let vowels = ["\u{05B8}", "\u{05B4}י", "\u{05B6}", "ו\u{05B9}", "", "ו\u{05BC}"]
+  static let vowelsRow = ["a", "b", "c", "d", "e", "f"]
+  static let noVowel = "\u{05B0}"
+  static let fakeNoVowel = "\u{05B6}"
+  //[Images]-------------------------------------
   static let sets = ["a","b","c","d","e","f"]
   static let imgDesc = [
     "a1":"מָתָנָה",
@@ -188,76 +245,4 @@ final class Images{
     "f11":"חוּלצָה",
     "f12":"דוּבִּי"
   ]
-  static func checkSpelling(gVars: GlobalVars){
-    if gVars.inputText.count == 0 { return }
-    guard let desc = imgDesc[gVars.image] else {
-      print("Image description for \"\(gVars.image)\" not found in system.")
-      gVars.image = ""
-      return}
-    var expected = Array(desc)
-    //print("Input: \(gVars.inputText)")
-    let recieved = Array(gVars.inputText)
-    //print("Expected: \(expected)")
-    //print("Recieved : \(recieved)")
-    
-    //missing letters -> typo
-    var typosAmount = expected.count > recieved.count ? expected.count-recieved.count : 0
-    //print("Typos 1: \(typosAmount).")
-    
-    //extra letters -> typo
-    var correct : [Character] = []
-    for rLet in recieved {
-      if expected.contains(rLet) {
-        correct.append(rLet)
-        expected.remove(at: (expected.firstIndex(of: rLet)!))
-        //print (expected)
-      }
-      else { typosAmount += 1 }
-    }
-    expected = Array(desc)
-    //print("Correct : \(correct)")
-    //print("Typos 2: \(typosAmount).")
-    
-    //swapped -> typo
-    var eIndex1 = 0
-    var eIndex2 = 0
-    var cIndex = 0
-    while cIndex+1 < correct.count {
-      eIndex1 = expected.firstIndex(of: correct[cIndex])!
-      expected.remove(at: eIndex1)
-      eIndex2 = expected.firstIndex(of: correct[cIndex+1])!
-      //print("Compare: \(correct[cIndex]) \(correct[cIndex+1])")
-      if eIndex1 > eIndex2 {
-        typosAmount += 1
-      }
-      cIndex += 1
-    }
-    //print("Typos 3: \(typosAmount).")
-    
-    
-    print("Typos: \(typosAmount).")
-    
-    gVars.user!.printUser()
-    gVars.user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: desc.count, typos: typosAmount)
-    print("updated")
-    gVars.user!.printUser()
-    
-    gVars.image = ""
-    gVars.inputText = ""
-  }
 }
-//[Letters data]----------------------------------
-final class Keys {
-  static let letterRow1 = ["א" ,"ב" ,"ב\u{05BC}", "ג" ,"ד" ,"ה" ,"ו"]
-  static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ" ,"כ\u{05BC}", "ל"]
-  static let letterRow3 = ["מ" ,"נ" ,"ס" ,"ע" ,"פ" ,"פ\u{05BC}", "צ"]
-  static let letterRow4 = ["ק" ,"ר" ,"ש\u{05C1}", "ש\u{05C2}", "ת"]
-  static let extraLetters = ["א" ,"ה" ,"ע"]
-  static let endLetters = ["ך" ,"ם" ,"ן" ,"ף" ,"ץ"]
-  static let vowels = ["\u{05B8}", "\u{05B4}י", "\u{05B6}", "ו\u{05B9}", "", "ו\u{05BC}"]
-  //static let vowelsRow = ["\u{05B8}  ", "\u{05B4}י  ", "\u{05B6}  ", "ו\u{05B9}", " ", "ו\u{05BC}"]
-  static let vowelsRow = ["a", "b", "c", "d", "e", "f"]
-  static let noVowel = "\u{05B0}"
-  static let fakeNoVowel = "\u{05B6}"
-}
-
