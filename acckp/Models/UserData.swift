@@ -43,18 +43,6 @@ class UserData {
     return json!
   }
   
-  //Export data as json
-  func exportJSON() -> String {
-    let json = fetchJSON()
-    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    let url = paths[0].appendingPathComponent("ACCKPstats.JSON")
-    var message = "Exported user to\n\(url)"
-    
-    do { try json.write(to: url) }
-    catch { message = "Failed to export user." }
-    return message
-  }
-  
   //Print data as JSON
   func printUser() {
     print("=================================================================")

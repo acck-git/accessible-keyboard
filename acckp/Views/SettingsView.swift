@@ -12,20 +12,29 @@ struct SettingsView: View {
   @State var pass: String = ""
   @State var alert: Bool = false
   @State var alertMessage = ""
+  @State var json:Data = Data()
   //images
   @State var set: String = "a"
   @State var subSet: Int = 0
   var vowelsRow: [String] = StaticData.vowelsRow.reversed()
   var sets: [String] = StaticData.sets
   var body: some View {
+    if !json.isEmpty {
+      ShareLink(
+          "Save File",
+          item: json,
+          preview: SharePreview("title.json")
+      )
+    }
     //[Settings container]---------------------
     VStack(spacing: 0.0){
       HStack(spacing: 10) {
         TeacherLoginButton(text: "כניסת מורה", action: {
           if login == false { login = true }
           else {
-            (login,alertMessage) = gVars.checkPass(pass: pass)
+            (login,alertMessage,json) = gVars.checkPass(pass: pass)
             if alertMessage != "" { alert = true }
+            
             pass = ""
           }
         })
@@ -101,6 +110,8 @@ struct SettingsView: View {
     .alert(alertMessage, isPresented: $alert, actions: {})
   }
 }
+
+
 
 #Preview {
   SettingsView().environmentObject(GlobalVars())

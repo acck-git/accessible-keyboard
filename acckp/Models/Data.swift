@@ -53,12 +53,13 @@ class GlobalVars: ObservableObject {
   }
   
   //[Teacher Login]-------------------------------
-  var temppass: [String] = ["passcheck", "teacherpage", "acckpdev"]
-  func checkPass(pass: String) -> (Bool,String) {
+  var temppass: [String] = ["passcheck", "teacherpage", "dev"]
+  func checkPass(pass: String) -> (Bool,String,Data) {
     //return false -> hides textfield
     //return true -> keeps textfield visible
     var correct = true
     var message = ""
+    var json:Data = Data()
     switch temppass.firstIndex(of: pass){
     case 0:
       message = "Correct password."
@@ -68,15 +69,16 @@ class GlobalVars: ObservableObject {
       screen = screens.teacher
     case 2:
       //Dev export
-      message = user!.exportJSON()
-      print(message)
+      //message = user!.exportJSON()
+      json = user!.fetchJSON()
+      //print(message)
     default:
       //Incorrect password
       message = "Wrong password."
       print(message)
       correct = false
     }
-    return (!correct,message)
+    return (!correct,message,json)
   }
   
   //[Student Login]-------------------------------

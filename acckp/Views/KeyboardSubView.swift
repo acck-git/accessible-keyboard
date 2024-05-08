@@ -93,15 +93,34 @@ struct KeyboardSubView: View {
           })
         }
         else { HiddenButton() }
-        HStack(spacing: 10.0) {
-          ForEach(vowelsRow.indices, id:\.self) { index in
-            VowelButton(image: vowelsRow[index], action: {
-              gVars.board = vowelsRow.count - index - 1
-            })
-          }
-        }
-        .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
-        .frame(maxWidth: 823)
+        //HStack(spacing: 10.0) {
+        //  ForEach(vowelsRow.indices, id:\.self) { index in
+        //    VowelButton(image: vowelsRow[index], action: {
+        //      gVars.board = vowelsRow.count - index - 1
+        //    })
+        //  }
+          HiddenButton()
+          VowelButton(image: vowelsRow[0], action: {
+            gVars.board = vowelsRow.count - 0 - 1
+          })
+          VowelButton(image: vowelsRow[1], action: {
+            gVars.board = vowelsRow.count - 1 - 1
+          })
+          VowelButton(image: vowelsRow[2], action: {
+            gVars.board = vowelsRow.count - 2 - 1
+          })
+          VowelButton(image: vowelsRow[3], action: {
+            gVars.board = vowelsRow.count - 3 - 1
+          })
+          VowelButton(image: vowelsRow[4], action: {
+            gVars.board = vowelsRow.count - 4 - 1
+          })
+          VowelButton(image: vowelsRow[5], action: {
+            gVars.board = vowelsRow.count - 5 - 1
+          })
+        //}
+        //.padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
+        //.frame(width: 823)
       }
       //[Row 6]--------------------------------
       HStack(spacing: 13.0) {
@@ -137,9 +156,9 @@ struct KeyboardSubView: View {
           gVars.screen = GlobalVars.screens.settings
         })
       }
-      .padding(.horizontal, 15.0)
     }
     .frame(maxWidth: .infinity,maxHeight: .infinity)
+    .padding(.horizontal, 15.0)
     .background(Color(uiColor:UIColor.systemGray5))
   }
 }

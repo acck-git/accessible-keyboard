@@ -31,7 +31,7 @@ struct LetterButton: View {
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Text(text)
-        .frame(width: 155, height: 95)
+        .frame(maxWidth: .infinity, maxHeight: 95)
         .foregroundColor(.black)
         .font(.system(size: 35, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 15)
@@ -49,7 +49,7 @@ struct ExtraLetterButton: View {
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Text(text)
-        .frame(width: 155, height: 95)
+        .frame(maxWidth: .infinity, maxHeight: 95)
         .foregroundColor(.black)
         .font(.system(size: 35, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 15)
@@ -65,7 +65,7 @@ struct ExtraLetterButton: View {
 struct HiddenButton: View {
   var body: some View {
     Button(action: {}, label: { Text("")
-        .frame(width: 155, height: 95)
+        .frame(maxWidth: .infinity, maxHeight: 95)
     })
     .hidden()
   }
