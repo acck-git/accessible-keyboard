@@ -7,7 +7,7 @@ import SwiftData
 
 struct KeyboardSubView: View {
   @EnvironmentObject var gVars: GlobalVars
-  var screenwidth:CGFloat = UIScreen.main.bounds.width - 32.0
+  var screenwidth:CGFloat = UIScreen.main.bounds.width
   //[Keys data]--------------------------------
   var row1: [String] = StaticData.letterRow1.reversed()
   var row2: [String] = StaticData.letterRow2.reversed()
@@ -77,26 +77,30 @@ struct KeyboardSubView: View {
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 5]--------------------------------
       HStack(spacing:13){
-        HStack(){
-          if extra.contains(gVars.board) {
-            ExtraLetterButton(text: extraLets[1], action: {
-              gVars.type(text: extraLets[1], tts: true)
-            })
+        HStack(spacing: 13){
+          HStack(){
+            if extra.contains(gVars.board) {
+              ExtraLetterButton(text: extraLets[1], action: {
+                gVars.type(text: extraLets[1], tts: true)
+              })
+            }
+            else if end.contains(gVars.board){
+              ExtraLetterButton(text: endLets[3], action: {
+                gVars.type(text: endLets[3], tts: true)
+              })
+            }
+            else { HiddenButton() }
           }
-          else if end.contains(gVars.board){
-            ExtraLetterButton(text: endLets[3], action: {
-              gVars.type(text: endLets[3], tts: true)
-            })
+          HStack(){
+            if end.contains(gVars.board){
+              ExtraLetterButton(text: endLets[2], action: {
+                gVars.type(text: endLets[2], tts: true)
+              })
+            }
+            else { HiddenButton() }
           }
-          else { HiddenButton() }
-          if end.contains(gVars.board){
-            ExtraLetterButton(text: endLets[2], action: {
-              gVars.type(text: endLets[2], tts: true)
-            })
-          }
-          else { HiddenButton() }
         }
-        .frame(width: screenwidth * (2/7))
+        .frame(width: (screenwidth * (2/7)) - (screenwidth * 0.01))
         
         ForEach(vowelsRow.indices, id:\.self) { index in
           VowelButton(image: vowelsRow[index], action: {
@@ -120,7 +124,7 @@ struct KeyboardSubView: View {
           }
           else { HiddenButton() }
         }
-        .frame(width: screenwidth * (1/7))
+        .frame(width: (screenwidth * (1/7)) - (screenwidth * 0.01))
         DeleteButton(text: "מחק מילה", action: {
           if gVars.inputText.last == " "{
             while gVars.inputText.last == " "{
