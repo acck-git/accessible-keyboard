@@ -7,6 +7,7 @@ import SwiftData
 
 struct KeyboardSubView: View {
   @EnvironmentObject var gVars: GlobalVars
+  var screenwidth:CGFloat = UIScreen.main.bounds.width - 32.0
   //[Keys data]--------------------------------
   var row1: [String] = StaticData.letterRow1.reversed()
   var row2: [String] = StaticData.letterRow2.reversed()
@@ -76,65 +77,50 @@ struct KeyboardSubView: View {
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 5]--------------------------------
       HStack(spacing:13){
-        if extra.contains(gVars.board) {
-          ExtraLetterButton(text: extraLets[1], action: {
-            gVars.type(text: extraLets[1], tts: true)
+        HStack(){
+          if extra.contains(gVars.board) {
+            ExtraLetterButton(text: extraLets[1], action: {
+              gVars.type(text: extraLets[1], tts: true)
+            })
+          }
+          else if end.contains(gVars.board){
+            ExtraLetterButton(text: endLets[3], action: {
+              gVars.type(text: endLets[3], tts: true)
+            })
+          }
+          else { HiddenButton() }
+          if end.contains(gVars.board){
+            ExtraLetterButton(text: endLets[2], action: {
+              gVars.type(text: endLets[2], tts: true)
+            })
+          }
+          else { HiddenButton() }
+        }
+        .frame(width: screenwidth * (2/7))
+        
+        ForEach(vowelsRow.indices, id:\.self) { index in
+          VowelButton(image: vowelsRow[index], action: {
+            gVars.board = vowelsRow.count - index - 1
           })
         }
-        else if end.contains(gVars.board){
-          ExtraLetterButton(text: endLets[3], action: {
-            gVars.type(text: endLets[3], tts: true)
-          })
-        }
-        else { HiddenButton() }
-        if end.contains(gVars.board){
-          ExtraLetterButton(text: endLets[2], action: {
-            gVars.type(text: endLets[2], tts: true)
-          })
-        }
-        else { HiddenButton() }
-        //HStack(spacing: 10.0) {
-        //  ForEach(vowelsRow.indices, id:\.self) { index in
-        //    VowelButton(image: vowelsRow[index], action: {
-        //      gVars.board = vowelsRow.count - index - 1
-        //    })
-        //  }
-          HiddenButton()
-          VowelButton(image: vowelsRow[0], action: {
-            gVars.board = vowelsRow.count - 0 - 1
-          })
-          VowelButton(image: vowelsRow[1], action: {
-            gVars.board = vowelsRow.count - 1 - 1
-          })
-          VowelButton(image: vowelsRow[2], action: {
-            gVars.board = vowelsRow.count - 2 - 1
-          })
-          VowelButton(image: vowelsRow[3], action: {
-            gVars.board = vowelsRow.count - 3 - 1
-          })
-          VowelButton(image: vowelsRow[4], action: {
-            gVars.board = vowelsRow.count - 4 - 1
-          })
-          VowelButton(image: vowelsRow[5], action: {
-            gVars.board = vowelsRow.count - 5 - 1
-          })
-        //}
-        //.padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
-        //.frame(width: 823)
+        
       }
       //[Row 6]--------------------------------
       HStack(spacing: 13.0) {
-        if extra.contains(gVars.board) {
-          ExtraLetterButton(text: extraLets[2], action: {
-            gVars.type(text: extraLets[2], tts: true)
-          })
+        HStack(){
+          if extra.contains(gVars.board) {
+            ExtraLetterButton(text: extraLets[2], action: {
+              gVars.type(text: extraLets[2], tts: true)
+            })
+          }
+          else if end.contains(gVars.board) {
+            ExtraLetterButton(text: endLets[4], action: {
+              gVars.type(text: endLets[4], tts: true)
+            })
+          }
+          else { HiddenButton() }
         }
-        else if end.contains(gVars.board) {
-          ExtraLetterButton(text: endLets[4], action: {
-            gVars.type(text: endLets[4], tts: true)
-          })
-        }
-        else { HiddenButton() }
+        .frame(width: screenwidth * (1/7))
         DeleteButton(text: "מחק מילה", action: {
           if gVars.inputText.last == " "{
             while gVars.inputText.last == " "{
