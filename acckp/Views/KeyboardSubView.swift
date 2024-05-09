@@ -78,7 +78,7 @@ struct KeyboardSubView: View {
       //[Row 5]--------------------------------
       HStack(spacing:13){
         HStack(spacing: 13){
-          HStack(){
+          //HStack(){
             if extra.contains(gVars.board) {
               ExtraLetterButton(text: extraLets[1], action: {
                 gVars.type(text: extraLets[1], tts: true)
@@ -90,18 +90,18 @@ struct KeyboardSubView: View {
               })
             }
             else { HiddenButton() }
-          }
-          HStack(){
+          //}
+         // HStack(){
             if end.contains(gVars.board){
               ExtraLetterButton(text: endLets[2], action: {
                 gVars.type(text: endLets[2], tts: true)
               })
             }
             else { HiddenButton() }
-          }
+        //  }
         }
-        .frame(width: (screenwidth * (2/7)) - (screenwidth * 0.01))
-        
+        .frame(width: (screenwidth * (2/7)) - 19)
+        .padding(.horizontal, 3.0)
         ForEach(vowelsRow.indices, id:\.self) { index in
           VowelButton(image: vowelsRow[index], action: {
             gVars.board = vowelsRow.count - index - 1
@@ -124,7 +124,8 @@ struct KeyboardSubView: View {
           }
           else { HiddenButton() }
         }
-        .frame(width: (screenwidth * (1/7)) - (screenwidth * 0.01))
+        .frame(width: (screenwidth * (1/7)) - 16)
+        .padding(.horizontal, 3.0)
         DeleteButton(text: "מחק מילה", action: {
           if gVars.inputText.last == " "{
             while gVars.inputText.last == " "{
