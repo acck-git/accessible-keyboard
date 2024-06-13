@@ -110,11 +110,15 @@ class GlobalVars: ObservableObject {
   //[Images data]--------------------------------
   func checkSpelling(){
     //[Calculate typos]--------------------------
-    if inputText.count == 0 { return }
+    if inputText.count == 0 { 
+      image = ""
+      return
+    }
     guard let desc = StaticData.imgDesc[image] else {
       print("Image description for \"\(image)\" not found in system.")
       image = ""
-      return}
+      return
+    }
     var expected = Array(desc)
     let recieved = Array(inputText)
     
@@ -160,6 +164,8 @@ class GlobalVars: ObservableObject {
 
 //[Static data]----------------------------------
 final class StaticData {
+  static let screenwidth:CGFloat = UIScreen.main.bounds.width
+  static let screenheight:CGFloat = UIScreen.main.bounds.height
   //[Keys]---------------------------------------
   static let letterRow1 = ["א" ,"ב" ,"ב\u{05BC}", "ג" ,"ד" ,"ה" ,"ו"]
   static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ" ,"כ\u{05BC}", "ל"]

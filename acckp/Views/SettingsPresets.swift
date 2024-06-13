@@ -86,8 +86,12 @@ struct ImageButton: View {
         .scaledToFit()
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .frame(width: 210, height: 210)
+        .overlay(RoundedRectangle(cornerRadius: 0)
+          .stroke(.black, lineWidth: 2)
+        )
     })
     .background(.white)
+    .cornerRadius(0)
   }
 }
 //[Tiny Image Button]----------------------------------

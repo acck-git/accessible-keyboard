@@ -5,6 +5,7 @@
 import SwiftUI
 import SwiftData
 
+
 struct MainView: View {
   @StateObject var gVars = GlobalVars()
   @State var alert: Bool = false
@@ -25,6 +26,8 @@ struct MainView: View {
     default:
       let main = VStack (spacing: 0.0) {
         ToplineSubView().environmentObject(gVars)
+          .frame(height: StaticData.screenheight * (1/7))
+          .padding(.vertical, 0.0)
         //-----------------------
         Divider()
           .frame(height: 5.0)
@@ -35,7 +38,7 @@ struct MainView: View {
       }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
-        .padding(.vertical, -22.0)
+        .padding(.vertical, 0.0)
       if gVars.imageZoom { main
         .overlay(MassiveImageButton(
           image: gVars.image, action: { gVars.imageZoom = false })

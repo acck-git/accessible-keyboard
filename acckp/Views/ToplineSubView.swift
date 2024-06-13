@@ -11,12 +11,11 @@ struct ToplineSubView: View {
     //[Top line container]---------------------
     if gVars.image == "" {
       HStack(spacing:20) {
-        //TTSButton(image: "speaker.fill", action: {}).disabled(true).opacity(0.3)
+        TTSButton(image: "speaker.fill", action: {}).disabled(false)
+          .padding(.leading, 20.0)
         TextInput(text: gVars.inputText)
-          .padding(/*@START_MENU_TOKEN@*/.horizontal, 20.0/*@END_MENU_TOKEN@*/)
-          .padding(.vertical, 20.0)
-          .frame(maxWidth: .infinity, maxHeight: 123)
       }
+      .padding(.trailing, 20.0)
     }
     else {
       HStack(spacing:10) {
@@ -26,13 +25,12 @@ struct ToplineSubView: View {
         TinyImageButton(image: gVars.image, action: {
           gVars.imageZoom = true
         })
-        //TTSButton(image: "speaker.fill", action: {}).disabled(true).opacity(0.3)
+        TTSButton(image: "speaker.fill", action: {}).disabled(false)
+          .padding(.trailing, 15.0)
         TextInput(text: gVars.inputText)
       }
       
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 20.0/*@END_MENU_TOKEN@*/)
-      .padding(.vertical, 20.0)
-      .frame(maxWidth: .infinity, maxHeight: 123)
     }
   }
 }

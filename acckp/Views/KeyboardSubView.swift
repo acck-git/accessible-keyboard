@@ -7,7 +7,6 @@ import SwiftData
 
 struct KeyboardSubView: View {
   @EnvironmentObject var gVars: GlobalVars
-  var screenwidth:CGFloat = UIScreen.main.bounds.width
   //[Keys data]--------------------------------
   var row1: [String] = StaticData.letterRow1.reversed()
   var row2: [String] = StaticData.letterRow2.reversed()
@@ -100,7 +99,7 @@ struct KeyboardSubView: View {
             else { HiddenButton() }
         //  }
         }
-        .frame(width: (screenwidth * (2/7)) - 19)
+        .frame(width: (StaticData.screenwidth * (2/7)) - 19)
         .padding(.horizontal, 3.0)
         ForEach(vowelsRow.indices, id:\.self) { index in
           VowelButton(image: vowelsRow[index], action: {
@@ -124,7 +123,7 @@ struct KeyboardSubView: View {
           }
           else { HiddenButton() }
         }
-        .frame(width: (screenwidth * (1/7)) - 16)
+        .frame(width: (StaticData.screenwidth * (1/7)) - 16)
         .padding(.horizontal, 3.0)
         DeleteButton(text: "מחק מילה", action: {
           if gVars.inputText.last == " "{
@@ -150,6 +149,7 @@ struct KeyboardSubView: View {
     }
     .frame(maxWidth: .infinity,maxHeight: .infinity)
     .padding(.horizontal, 15.0)
+    .padding(.top, 20)
     .background(Color(uiColor:UIColor.systemGray5))
   }
 }

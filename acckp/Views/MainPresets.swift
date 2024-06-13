@@ -31,7 +31,7 @@ struct LetterButton: View {
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Text(text)
-        .frame(maxWidth: .infinity, maxHeight: 95)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .foregroundColor(.black)
         .font(.system(size: 35, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 15)
@@ -49,7 +49,7 @@ struct ExtraLetterButton: View {
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Text(text)
-        .frame(maxWidth: .infinity, maxHeight: 95)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .foregroundColor(.black)
         .font(.system(size: 35, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 15)
@@ -65,7 +65,7 @@ struct ExtraLetterButton: View {
 struct HiddenButton: View {
   var body: some View {
     Button(action: {}, label: { Text("")
-        .frame(maxWidth: .infinity, maxHeight: 95)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     })
     .hidden()
   }
@@ -79,7 +79,7 @@ struct VowelButton: View {
         .resizable()
         .scaledToFit()
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .frame(maxWidth: .infinity, maxHeight: 95)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(RoundedRectangle(cornerRadius: 50)
           .stroke(.black, lineWidth: 2)
         )
@@ -94,7 +94,7 @@ struct SpaceButton: View {
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Text(text)
-        .frame(maxWidth: .infinity, maxHeight: 95)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .foregroundColor(.black)
         .font(.system(size: 35))
         .overlay(RoundedRectangle(cornerRadius: 15)
@@ -112,7 +112,8 @@ struct DeleteButton: View {
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Text(text)
-        .frame(width: 180, height: 95)
+        .frame(width: 180)
+        .frame(maxHeight: .infinity)
         .foregroundColor(.black)
         .font(.system(size: 35))
         .overlay(RoundedRectangle(cornerRadius: 15)

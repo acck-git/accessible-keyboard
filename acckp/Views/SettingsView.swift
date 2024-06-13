@@ -45,9 +45,10 @@ struct SettingsView: View {
         StudentPicker(array: GlobalVars.getStudents(), onChange: {
           print(gVars.student)}).environmentObject(gVars).hidden()
       }
+      .frame(maxWidth: .infinity)
+      .frame(height: StaticData.screenheight * (1/7))
       .padding(/*@START_MENU_TOKEN@*/.horizontal, 20.0/*@END_MENU_TOKEN@*/)
-      .padding(.vertical, 20.0)
-      .frame(maxWidth: .infinity, maxHeight: 123)
+      .padding(.vertical, 0.0)
       
       //-----------------------
       Divider()
@@ -56,7 +57,7 @@ struct SettingsView: View {
         .overlay(.black)
       //-----------------------
       VStack(spacing: 20){
-        HStack(spacing: 10){
+        HStack(spacing: 20){
           ArrowButton(image: "arrowtriangle.left.fill",action: {
             subSet = subSet+6 > 6 ? 0 : subSet+6
           })
@@ -92,8 +93,9 @@ struct SettingsView: View {
             })
           }
         }
-        .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
-        .frame(maxWidth: 823)
+        .frame(height: StaticData.screenheight * 1/9)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 20.0)
         HStack(spacing:13){
           HiddenButton().frame(maxWidth:.infinity)
           SettingsButton(image: "arrowshape.right", action: {
@@ -101,11 +103,11 @@ struct SettingsView: View {
         }.padding(.horizontal,15)
       }
       .frame(maxWidth:.infinity,maxHeight:.infinity)
+      .padding(.top, 20)
       .background(Color(uiColor:UIColor.systemGray5))
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
-    .padding(.vertical, -22.0)
     .ignoresSafeArea(.keyboard)
     .alert(alertMessage, isPresented: $alert, actions: {})
   }
