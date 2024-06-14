@@ -85,7 +85,7 @@ struct ImageButton: View {
         .resizable()
         .scaledToFit()
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-        .frame(width: 210, height: 210)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(RoundedRectangle(cornerRadius: 0)
           .stroke(.black, lineWidth: 2)
         )

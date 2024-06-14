@@ -11,7 +11,9 @@ struct ToplineSubView: View {
     //[Top line container]---------------------
     if gVars.image == "" {
       HStack(spacing:20) {
-        TTSButton(image: "speaker.fill", action: {}).disabled(false)
+        TTSButton(image: "speaker.fill", action: {
+          gVars.speak()
+        })
           .padding(.leading, 20.0)
         TextInput(text: gVars.inputText)
       }
@@ -25,7 +27,9 @@ struct ToplineSubView: View {
         TinyImageButton(image: gVars.image, action: {
           gVars.imageZoom = true
         })
-        TTSButton(image: "speaker.fill", action: {}).disabled(false)
+        TTSButton(image: "speaker.fill", action: {
+          gVars.speak()
+        })
           .padding(.trailing, 15.0)
         TextInput(text: gVars.inputText)
       }

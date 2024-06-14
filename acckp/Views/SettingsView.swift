@@ -81,6 +81,7 @@ struct SettingsView: View {
               }
             }
           }
+          .frame(maxHeight: .infinity)
           ArrowButton(image: "arrowtriangle.right.fill",action: {
             subSet = subSet-6 < 0 ? 6 : subSet-6
           })
@@ -96,18 +97,22 @@ struct SettingsView: View {
         .frame(height: StaticData.screenheight * 1/9)
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20.0)
-        HStack(spacing:13){
+        HStack(){
           HiddenButton().frame(maxWidth:.infinity)
           SettingsButton(image: "arrowshape.right", action: {
             gVars.screen = GlobalVars.screens.main})
-        }.padding(.horizontal,15)
+        }
+          .frame(height: StaticData.screenheight/9)
       }
       .frame(maxWidth:.infinity,maxHeight:.infinity)
       .padding(.top, 20)
+      .padding(.bottom, 10)
+      .padding(.horizontal, 20)
       .background(Color(uiColor:UIColor.systemGray5))
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
+    
     .ignoresSafeArea(.keyboard)
     .alert(alertMessage, isPresented: $alert, actions: {})
   }

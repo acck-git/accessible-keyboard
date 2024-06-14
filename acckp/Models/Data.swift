@@ -37,16 +37,23 @@ class GlobalVars: ObservableObject {
     catch { print(error) }
   }
   
-  //[Typing]-------------------------------------
+  //[TTS]-------------------------------------
   @IBAction func type(text: String, tts: Bool){
     self.inputText += text
     if !tts { return }
-    var txt = text
-    if txt == "א" || txt == "ה" || txt == "ע"{ txt += StaticData.fakeNoVowel }
-    else if self.board == 4 { txt += StaticData.noVowel }
+    let txt = text
+    if txt == "א" || txt == "ה" || txt == "ע" || self.board == 4 { return }
     
     let utterance = AVSpeechUtterance(string: txt)
     utterance.rate = 0.5
+    utterance.volume = 1
+    utterance.voice = AVSpeechSynthesisVoice(language: "he-IL")
+    syntheziser.speak(utterance)
+  }
+
+  @IBAction func speak(){
+    let utterance = AVSpeechUtterance(string: self.inputText)
+    utterance.rate = 0.3
     utterance.volume = 1
     utterance.voice = AVSpeechSynthesisVoice(language: "he-IL")
     syntheziser.speak(utterance)
@@ -167,9 +174,13 @@ final class StaticData {
   static let screenwidth:CGFloat = UIScreen.main.bounds.width
   static let screenheight:CGFloat = UIScreen.main.bounds.height
   //[Keys]---------------------------------------
-  static let letterRow1 = ["א" ,"ב" ,"ב\u{05BC}", "ג" ,"ד" ,"ה" ,"ו"]
-  static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ" ,"כ\u{05BC}", "ל"]
-  static let letterRow3 = ["מ" ,"נ" ,"ס" ,"ע" ,"פ" ,"פ\u{05BC}", "צ"]
+  //static let letterRow1 = ["א" ,"ב" ,"ב\u{05BC}", "ג" ,"ד" ,"ה" ,"ו"]
+  //static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ" ,"כ\u{05BC}", "ל"]
+  //static let letterRow3 = ["מ" ,"נ" ,"ס" ,"ע" ,"פ" ,"פ\u{05BC}", "צ"]
+  //static let letterRow4 = ["ק" ,"ר" ,"ש\u{05C1}", "ש\u{05C2}", "ת"]
+  static let letterRow1 = ["א" ,"ב\u{05BC}" ,"ב", "ג" ,"ד" ,"ה" ,"ו"]
+  static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ\u{05BC}" ,"כ", "ל"]
+  static let letterRow3 = ["מ" ,"נ" ,"ס" ,"ע" ,"פ\u{05BC}" ,"פ", "צ"]
   static let letterRow4 = ["ק" ,"ר" ,"ש\u{05C1}", "ש\u{05C2}", "ת"]
   static let extraLetters = ["א" ,"ה" ,"ע"]
   static let endLetters = ["ך" ,"ם" ,"ן" ,"ף" ,"ץ"]

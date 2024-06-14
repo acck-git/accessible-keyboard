@@ -150,6 +150,7 @@ struct KeyboardSubView: View {
     .frame(maxWidth: .infinity,maxHeight: .infinity)
     .padding(.horizontal, 15.0)
     .padding(.top, 20)
+    .padding(.bottom, 10)
     .background(Color(uiColor:UIColor.systemGray5))
   }
 }
