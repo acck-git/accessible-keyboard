@@ -16,6 +16,8 @@ struct MainView: View {
       SettingsView().environmentObject(gVars)
     case GlobalVars.screens.teacher:
       TeacherView().environmentObject(gVars)
+        .ignoresSafeArea(.keyboard)
+        
       
     default:
       let main = VStack (spacing: 0.0) {

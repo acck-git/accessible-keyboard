@@ -63,7 +63,8 @@ class UserData {
 }
 
 //[Single day stats]-----------------------------
-struct dayStats: Codable {
+struct dayStats: Codable, Identifiable {
+  var id = UUID()
   var day: String
   var total_words: Int
   var correct_words: Int

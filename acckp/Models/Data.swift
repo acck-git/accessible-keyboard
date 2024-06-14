@@ -119,6 +119,10 @@ class GlobalVars: ObservableObject {
     }
   }
   
+  func getStats() -> [dayStats] {
+    return self.user!.stats
+  }
+  
   //[Images data]--------------------------------
   func checkSpelling(){
     //[Calculate typos]--------------------------

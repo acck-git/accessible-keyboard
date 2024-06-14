@@ -112,7 +112,6 @@ struct SettingsView: View {
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
-    
     .ignoresSafeArea(.keyboard)
     .alert(alertMessage, isPresented: $alert, actions: {})
   }
