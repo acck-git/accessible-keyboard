@@ -182,6 +182,63 @@ struct StudentEditInput: View {
       .background(Color(.white))
   }
 }
+//[Save key]---------------------------------
+struct SaveButton: View {
+  var text: String
+  var action: (() -> Void)
+  var body: some View {
+    Button(action: action, label: { Text(text)
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+        .frame(maxHeight: .infinity)
+        .foregroundColor(.black)
+        .font(.system(size: 25))
+        .overlay(RoundedRectangle(cornerRadius: 15)
+          .stroke(.black, lineWidth: 2)
+        )
+    })
+    .buttonRepeatBehavior(.enabled)
+    .background(Color(.white))
+    .cornerRadius(15)
+  }
+}
+//[DeleteTeacher key]---------------------------------
+struct DeleteTeacherButton: View {
+  var text: String
+  var action: (() -> Void)
+  var body: some View {
+    Button(action: action, label: { Text(text)
+        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+        .frame(maxHeight: .infinity)
+        .foregroundColor(.black)
+        .font(.system(size: 25))
+        .overlay(RoundedRectangle(cornerRadius: 15)
+          .stroke(.black, lineWidth: 2)
+        )
+    })
+    .buttonRepeatBehavior(.enabled)
+    .background(Color(hex:0xFF766E))
+    .cornerRadius(15)
+  }
+}
+struct ToggleBoard: View {
+  var text: String
+  @Binding var ison: Bool
+  var onChange: (() -> Void)
+  var body: some View {
+    Toggle(isOn: $ison) {
+      Text(text)
+    }
+    .onChange(of: ison){onChange()}
+    .environment(\.layoutDirection,.rightToLeft)
+    .frame(width: StaticData.screenwidth/6)
+    .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+    .font(.system(size: 25))
+    //.frame(minHeight: 30)
+    .padding(.horizontal,10)
+    .padding(.vertical, 5)
+    .background(Color(.systemGray6))
+  }
+}
 
 //------------------------------------------------
 //preview stuff
