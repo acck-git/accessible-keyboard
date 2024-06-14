@@ -42,8 +42,8 @@ struct SettingsView: View {
           TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
         }
         HiddenButton().frame(maxWidth: .infinity)
-        StudentPicker(array: GlobalVars.getStudents(), onChange: {
-          print(gVars.student)}).environmentObject(gVars).hidden()
+        StudentPicker(array: GlobalVars.getStudents(add:false), onChange: {
+          print(gVars.student)}).environmentObject(gVars)
       }
       .frame(maxWidth: .infinity)
       .frame(height: StaticData.screenheight * (1/7))

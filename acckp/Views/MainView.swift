@@ -15,13 +15,7 @@ struct MainView: View {
     case GlobalVars.screens.settings:
       SettingsView().environmentObject(gVars)
     case GlobalVars.screens.teacher:
-      VStack (spacing: 0.0) {
-        LetterButton(text: "Teacher page", action: {alert = true})
-      }
-      .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-      .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
-      .padding(.vertical, -22.0)
-      .alert("Nothing to display here.", isPresented: $alert, actions: {})
+      TeacherView().environmentObject(gVars)
       
     default:
       let main = VStack (spacing: 0.0) {

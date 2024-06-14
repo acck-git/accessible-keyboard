@@ -46,17 +46,41 @@ struct StudentPicker: View {
     ) {
       ForEach(array, id:\.self) {
         Text($0)
+          .font(.largeTitle)
       }
     }
     .onChange(of: gVars.student){onChange()}
-    .font(.system(size: 200, weight: .heavy))
-    .scaleEffect(2.0)
+    .scaleEffect(2)
     .pickerStyle(.menu)
     .accentColor(.black)
-    .frame(width: 400.0, height: 80, alignment: .center)
-    .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+    .frame(width: 400, height: 80, alignment: .center)
+    .border(Color.black)
   }
 }
+//[Student Picker Teacher]---------------------------------
+struct StudentPickerTeacher: View {
+  var array: [String]
+  var onChange: (() -> Void)
+  @EnvironmentObject var gVars: GlobalVars
+  var body: some View {
+    Picker(selection: $gVars.student_edit, label: Text("Picker")
+    ) {
+      ForEach(array, id:\.self) {
+        Text($0)
+          .font(.largeTitle)
+      }
+    }
+    .onChange(of: gVars.student_edit){onChange()}
+    .scaleEffect(1.5)
+    .pickerStyle(.menu)
+    .accentColor(.black)
+    .frame(height: 40, alignment: .center)
+    .frame(maxWidth: .infinity)
+    .background(Color.white)
+    .border(Color.black)
+  }
+}
+
 //[Arrow Button]----------------------------------
 struct ArrowButton: View {
   var image: String
@@ -141,17 +165,36 @@ struct ImageSubmitButton: View {
     .cornerRadius(50)
   }
 }
+struct StudentEditInput: View {
+  var placeholder: String
+  @Binding var text: String
+  var body: some View {
+    TextField(placeholder, text: $text)
+      .environment(\.layoutDirection,.rightToLeft)
+      .foregroundColor(.black)
+      .font(.system(size: 20, weight: .heavy))
+      .frame(height: 40, alignment: .trailing)
+      .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+      .padding(.horizontal,6)
+      .overlay(RoundedRectangle(cornerRadius: 5)
+        .stroke(.black, lineWidth: 2)
+      )
+      .background(Color(.white))
+  }
+}
 
 //------------------------------------------------
 //preview stuff
 struct SettingsPresetsPreview: View {
   var body: some View {
     VStack {
-      TeacherLoginButton(text: "כניסת מורה", action: {})
-      ArrowButton(image:"arrowtriangle.left.fill",action: {})
-      ImageButton(image:"a1", action: {})
-      TinyImageButton(image:"a1", action: {})
-      ImageSubmitButton(image: "checkmark", action: {})
+      //TeacherLoginButton(text: "כניסת מורה", action: {})
+      //ArrowButton(image:"arrowtriangle.left.fill",action: {})
+      //ImageButton(image:"a1", action: {})
+      //TinyImageButton(image:"a1", action: {})
+      //ImageSubmitButton(image: "checkmark", action: {})
+      StudentPicker(array: GlobalVars.getStudents(add:false), onChange: {}).environmentObject(GlobalVars())
+      StudentPickerTeacher(array: GlobalVars.getStudents(add:true), onChange: {}).environmentObject(GlobalVars())
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)

@@ -16,6 +16,7 @@ class GlobalVars: ObservableObject {
   @Published var screen: screens          //currently displayed screen (uses enum)
   @Published var board: Int               //currently displayed vowels board
   @Published var inputText: String        //displayed text in text input (main screen)
+  @Published var student_edit: String = ""
   @Published var student: String          //name of the logged in user
   @Published var user: UserData?          //object of the logged in user
   @Published var image: String            //currently selected image (image typing mode)
@@ -23,6 +24,7 @@ class GlobalVars: ObservableObject {
   //Default values
   static let example = "טֶקסט לֶהָמחָשָה"
   static let student_def = "תלמיד"
+  static let student_new = "תלמיד חדש"
   init(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") {
     self.board = board
     self.inputText = inputText
@@ -50,7 +52,7 @@ class GlobalVars: ObservableObject {
     utterance.voice = AVSpeechSynthesisVoice(language: "he-IL")
     syntheziser.speak(utterance)
   }
-
+  
   @IBAction func speak(){
     let utterance = AVSpeechUtterance(string: self.inputText)
     utterance.rate = 0.3
@@ -60,7 +62,7 @@ class GlobalVars: ObservableObject {
   }
   
   //[Teacher Login]-------------------------------
-  var temppass: [String] = ["passcheck", "teacherpage", "dev"]
+  var temppass: [String] = ["passcheck", "t", "dev"]
   func checkPass(pass: String) -> (Bool,String,Data) {
     //return false -> hides textfield
     //return true -> keeps textfield visible
@@ -89,8 +91,11 @@ class GlobalVars: ObservableObject {
   }
   
   //[Student Login]-------------------------------
-  static func getStudents() -> [String] {
+  static func getStudents(add: Bool) -> [String] {
     //will load existing students in the future
+    if add {
+      return[student_new, student_def]
+    }
     return [student_def]
   }
   
@@ -117,7 +122,7 @@ class GlobalVars: ObservableObject {
   //[Images data]--------------------------------
   func checkSpelling(){
     //[Calculate typos]--------------------------
-    if inputText.count == 0 { 
+    if inputText.count == 0 {
       image = ""
       return
     }
