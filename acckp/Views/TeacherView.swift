@@ -7,8 +7,8 @@ import SwiftData
 
 struct TeacherView: View {
   @EnvironmentObject var gVars: GlobalVars
+  @State var boards: [Bool]
   @State var NewName: String = ""
-  @State var toggleBools: [Bool] = [false, false, false, false, false, false]
   var body: some View {
     VStack(spacing:20){
       HStack (spacing: 15) {
@@ -44,10 +44,13 @@ struct TeacherView: View {
               .foregroundColor(.black)
               .font(.system(size: 20, weight: .heavy))
             StudentPickerTeacher(array: GlobalVars.getStudents(add:false), onChange: {
+                boards = gVars.getBoards()
               print(gVars.student)}).environmentObject(gVars)
             VStack(spacing:0){
               ForEach(StaticData.boardNames.indices, id:\.self) { index in
-                ToggleBoard(text: "לוח " + StaticData.boardNames[index], ison: $toggleBools[index], onChange: {})
+                ToggleBoard(text: "לוח " + StaticData.boardNames[index], ison: $boards[index], onChange: {
+                  gVars.updateBoard(index: index)
+                })
                   
               }
             }
@@ -67,7 +70,9 @@ struct TeacherView: View {
             .stroke(.black, lineWidth: 2))
       }
       HStack(){
-        SaveButton(text: "סטטיסטיקת תלמידים", action: {})
+        SaveButton(text: "סטטיסטיקת תלמידים", action: {
+          gVars.screen = GlobalVars.screens.stats
+        })
           .frame(width: StaticData.screenwidth/3)
         HiddenButton().frame(maxWidth:.infinity)
         SettingsButton(image: "arrowshape.right", action: {
@@ -83,5 +88,5 @@ struct TeacherView: View {
 }
 
 #Preview {
-  TeacherView().environmentObject(GlobalVars())
+  TeacherView(boards: GlobalVars().getBoards()).environmentObject(GlobalVars())
 }

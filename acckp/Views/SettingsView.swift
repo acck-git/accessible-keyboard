@@ -7,6 +7,7 @@ import SwiftData
 
 struct SettingsView: View {
   @EnvironmentObject var gVars: GlobalVars
+  @State var boards: [Bool]
   //login
   @State var login: Bool = false
   @State var pass: String = ""
@@ -91,7 +92,7 @@ struct SettingsView: View {
             VowelButton(image: vowelsRow[index], action: {
               set = sets[vowelsRow.count - index - 1]
               subSet = 0
-            })
+            }, enabled: boards[vowelsRow.count - index - 1])
           }
         }
         .frame(height: StaticData.screenheight * 1/9)
@@ -120,5 +121,5 @@ struct SettingsView: View {
 
 
 #Preview {
-  SettingsView().environmentObject(GlobalVars())
+  SettingsView(boards: GlobalVars().getBoards()).environmentObject(GlobalVars())
 }

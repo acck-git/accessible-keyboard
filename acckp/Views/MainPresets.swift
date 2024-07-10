@@ -74,8 +74,9 @@ struct HiddenButton: View {
 struct VowelButton: View {
   var image: String
   var action: (() -> Void)
+  var enabled: Bool
   var body: some View {
-    Button(action: action, label: { Image(image)
+    let button = Button(action: action, label: { Image(image)
         .resizable()
         .scaledToFit()
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -84,8 +85,12 @@ struct VowelButton: View {
           .stroke(.black, lineWidth: 2)
         )
     })
-    .background(Color(hex:0xFFEB99))
-    .cornerRadius(50)
+    if enabled {
+      button.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/).cornerRadius(50)
+    }
+    else {
+      button.background(Color(hex:0xFFEB99)).cornerRadius(50)
+    }
   }
 }
 //[Space key]----------------------------------
@@ -174,12 +179,12 @@ struct MainPresetsPreview: View {
       ExtraLetterButton(text: "א", action: {})
       //HiddenButton()
       HStack(spacing: 10.0) {
-        VowelButton(image: "a", action: {})
-        VowelButton(image: "b", action: {})
-        VowelButton(image: "c", action: {})
-        VowelButton(image: "d", action: {})
-        VowelButton(image: "e", action: {})
-        VowelButton(image: "f", action: {})
+        VowelButton(image: "a", action: {}, enabled: true)
+        VowelButton(image: "b", action: {}, enabled: false)
+        VowelButton(image: "c", action: {}, enabled: false)
+        VowelButton(image: "d", action: {}, enabled: false)
+        VowelButton(image: "e", action: {}, enabled: false)
+        VowelButton(image: "f", action: {}, enabled: false)
       }.padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/).frame(maxWidth: 823)
       SpaceButton(text: "א", action: {})
       DeleteButton(text: "א", action: {})

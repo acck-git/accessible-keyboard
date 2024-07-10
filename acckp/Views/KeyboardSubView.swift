@@ -7,6 +7,7 @@ import SwiftData
 
 struct KeyboardSubView: View {
   @EnvironmentObject var gVars: GlobalVars
+  @State var boards: [Bool]
   //[Keys data]--------------------------------
   var row1: [String] = StaticData.letterRow1.reversed()
   var row2: [String] = StaticData.letterRow2.reversed()
@@ -104,7 +105,7 @@ struct KeyboardSubView: View {
         ForEach(vowelsRow.indices, id:\.self) { index in
           VowelButton(image: vowelsRow[index], action: {
             gVars.board = vowelsRow.count - index - 1
-          })
+          }, enabled: boards[vowelsRow.count - index - 1])
         }
         
       }
@@ -156,8 +157,5 @@ struct KeyboardSubView: View {
 }
 
 #Preview {
-  KeyboardSubView().environmentObject(GlobalVars(board: 0))
-}
-#Preview {
-  KeyboardSubView().environmentObject(GlobalVars(board: 4))
+  KeyboardSubView(boards: GlobalVars().getBoards()).environmentObject(GlobalVars())
 }

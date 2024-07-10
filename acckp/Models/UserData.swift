@@ -10,9 +10,11 @@ import SwiftData
 class UserData {
   var student: String
   var stats: [dayStats]
-  init(student: String, stats: [dayStats] = []) {
+  var boards: [Bool]
+  init(student: String, stats: [dayStats] = [], boards: [Bool] = [true, false, false, false, false, false]) {
     self.student = student
     self.stats = stats
+    self.boards = boards
   }
   //Update stats
   func update(correct_words: Int = 0, total_letters: Int = 0, typos: Int = 0) {
@@ -25,6 +27,12 @@ class UserData {
       self.stats.append(dayStats(correct_words: correct_words, total_letters: total_letters, typos: typos))
       print("Creating stats for today.")
     }
+  }
+  //Update boards
+  func toggleBoard(index: Int = 0) {
+    //Today already saved
+    self.boards[index] = !self.boards[index]
+    print("Updated board \(index).")
   }
   //Create json from data
   func fetchJSON() -> Data {
@@ -47,9 +55,13 @@ class UserData {
   func printUser() {
     print("=================================================================")
     print("Student: \(student)")
-    if stats.count > 0 {
+    print("Boards: \(boards)")
+    
+    if stats.count < 0 {
+    //if stats.count > 0 {
       for stat in stats {
         print("==================")
+        print("ID: \(stat.id)")
         print("Day: \(stat.day)")
         print("Total words: \(stat.total_words)")
         print("Correct words: \(stat.correct_words)")
@@ -57,8 +69,25 @@ class UserData {
         print("Typos: \(stat.typos)")
       }
     }
-    else { print("No stats saved.") }
+    //else { print("No stats saved.") }
+    else { print("\(stats.count) stats saved.") }
     print("=================================================================")
+  }
+  //[Debugging]
+  func fixStats(){
+    let statsArr = self.stats
+    self.stats = []
+    for stat in statsArr {
+      self.stats.append(dayStats(correct_words: stat.correct_words, total_letters: stat.total_letters, typos: stat.typos))
+    }
+  }
+  func addStats(){
+    let stat = self.stats[stats.count-1]
+    self.stats=[]
+    self.stats.append(dayStats(day: "2024-07-06", total_words: 4, correct_words: 1, total_letters: 10, typos: 6))
+    self.stats.append(dayStats(day: "2024-07-08", total_words: 7, correct_words: 3, total_letters: 17, typos: 9))
+    self.stats.append(dayStats(day: "2024-07-09", total_words: 12, correct_words: 6, total_letters: 37, typos: 14))
+    self.stats.append(stat)
   }
 }
 

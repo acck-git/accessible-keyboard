@@ -40,5 +40,5 @@ struct ToplineSubView: View {
 }
 
 #Preview {
-  ToplineSubView().environmentObject(GlobalVars(image:"a1"))
+  ToplineSubView().environmentObject(GlobalVars())
 }

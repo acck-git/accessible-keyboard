@@ -11,12 +11,13 @@ var syntheziser = AVSpeechSynthesizer()
 //[Global vars & funcs]--------------------------
 class GlobalVars: ObservableObject {
   static var container: ModelContainer?
+  static var singleton: GlobalVars?
   //App states
-  enum screens {case main, settings, teacher}
+  enum screens {case main, settings, teacher, stats}
   @Published var screen: screens          //currently displayed screen (uses enum)
   @Published var board: Int               //currently displayed vowels board
   @Published var inputText: String        //displayed text in text input (main screen)
-  @Published var student_edit: String = ""
+  @Published var student_edit: String
   @Published var student: String          //name of the logged in user
   @Published var user: UserData?          //object of the logged in user
   @Published var image: String            //currently selected image (image typing mode)
@@ -30,6 +31,7 @@ class GlobalVars: ObservableObject {
     self.inputText = inputText
     self.screen = screen
     self.student = student
+    self.student_edit = student
     self.image = image
     Task { await loginStudent(student: student) }
     do {
@@ -38,9 +40,18 @@ class GlobalVars: ObservableObject {
     }
     catch { print(error) }
   }
+  static func get(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") -> GlobalVars {
+    if (self.singleton != nil) {
+      print("old")
+      return self.singleton!
+    }
+    print("new")
+    self.singleton = GlobalVars(board: board, inputText: inputText, screen: screen, student: student, image: image)
+    return singleton!
+  }
   
   //[TTS]-------------------------------------
-  @IBAction func type(text: String, tts: Bool){
+  @IBAction func type(text: String, tts: Bool) {
     self.inputText += text
     if !tts { return }
     let txt = text
@@ -69,6 +80,10 @@ class GlobalVars: ObservableObject {
     var correct = true
     var message = ""
     var json:Data = Data()
+    //------------------------------
+    screen = screens.teacher
+    return (!correct,message,json)
+    //------------------------------
     switch temppass.firstIndex(of: pass){
     case 0:
       message = "Correct password."
@@ -93,10 +108,11 @@ class GlobalVars: ObservableObject {
   //[Student Login]-------------------------------
   static func getStudents(add: Bool) -> [String] {
     //will load existing students in the future
+    var students = [student_def, "other"]
     if add {
-      return[student_new, student_def]
+      students.append(student_new)
     }
-    return [student_def]
+    return students
   }
   
   //Get object for selected username (or create new)
@@ -116,12 +132,19 @@ class GlobalVars: ObservableObject {
     else {
       user = users.last!
       print("Loaded user \(student).")
+      user!.printUser()
     }
   }
-  
-  func getStats() -> [dayStats] {
-    return self.user!.stats
+  //Save change to boards
+  func updateBoard(index: Int)
+  {
+    self.user!.toggleBoard(index: index)
+    self.user!.printUser()
   }
+  
+  //Get functions
+  func getStats() -> [dayStats] {return self.user!.stats}
+  func getBoards() -> [Bool] {return self.user!.boards}
   
   //[Images data]--------------------------------
   func checkSpelling(){

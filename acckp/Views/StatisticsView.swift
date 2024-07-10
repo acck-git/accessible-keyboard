@@ -8,9 +8,9 @@ import Charts
 
 struct StatisticsView: View {
   @EnvironmentObject var gVars: GlobalVars
+  @State var stats: [dayStats]
   @State var NewName: String = ""
   @State var toggleBools: [Bool] = [false, false, false, false, false, false]
-  @State var stats: [dayStats] = []
   var body: some View {
     VStack(spacing:20){
       VStack(){
@@ -59,5 +59,5 @@ struct StatisticsView: View {
 }
 
 #Preview {
-  StatisticsView().environmentObject(GlobalVars())
+  StatisticsView(stats: GlobalVars().getStats()).environmentObject(GlobalVars())
 }
