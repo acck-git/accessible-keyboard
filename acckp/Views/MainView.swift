@@ -65,13 +65,14 @@ struct MainView: View {
     .onAppear(perform: fetchUsers)
   }
   @MainActor private func fetchUsers(){
-    let query = FetchDescriptor<UserData>( )
+    let query = FetchDescriptor<UserData>()
     do {
       gVars.users = try ModelContext.fetch(query)
       print(gVars.users.count)
       let result = gVars.loginStudent()
       if result != nil {
         ModelContext.insert(result!)
+        //try ModelContext.save()
         user = result!
         print("Created user \(result!.student).")
       }
@@ -79,6 +80,7 @@ struct MainView: View {
         user = gVars.user
         print("Loaded user \(user.student).")
       }
+      user.printUser()
     }
     catch {
       fatalError("Could not create fetch users: \(error)")
@@ -87,5 +89,5 @@ struct MainView: View {
 }
 
 #Preview {
-  MainView(gVars: GlobalVars.get())
+  MainView(gVars: GlobalVars.get()).modelContainer(for: UserData.self)
 }
