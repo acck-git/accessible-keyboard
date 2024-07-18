@@ -11,10 +11,12 @@ class UserData {
   var student: String
   var stats: [dayStats]
   var boards: [Bool]
-  init(student: String, stats: [dayStats] = [], boards: [Bool] = [true, false, false, false, false, false]) {
+  var loggedIn: Bool = true
+  init(student: String, stats: [dayStats] = [], boards: [Bool] = StaticData.boards, loggedIn: Bool = false) {
     self.student = student
     self.stats = stats
     self.boards = boards
+    self.loggedIn = loggedIn
   }
   //Update stats
   func update(correct_words: Int = 0, total_letters: Int = 0, typos: Int = 0) {

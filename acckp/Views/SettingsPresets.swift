@@ -40,7 +40,7 @@ struct TeacherLoginInput: View {
 struct StudentPicker: View {
   var array: [String]
   var onChange: (() -> Void)
-  @EnvironmentObject var gVars: GlobalVars
+  @State var gVars = GlobalVars.get()
   var body: some View {
     Picker(selection: $gVars.student, label: Text("Picker")
     ) {
@@ -61,7 +61,7 @@ struct StudentPicker: View {
 struct StudentPickerTeacher: View {
   var array: [String]
   var onChange: (() -> Void)
-  @EnvironmentObject var gVars: GlobalVars
+  @State var gVars = GlobalVars.get()
   var body: some View {
     Picker(selection: $gVars.student_edit, label: Text("Picker")
     ) {
@@ -250,8 +250,8 @@ struct SettingsPresetsPreview: View {
       //ImageButton(image:"a1", action: {})
       //TinyImageButton(image:"a1", action: {})
       //ImageSubmitButton(image: "checkmark", action: {})
-      StudentPicker(array: GlobalVars.getStudents(add:false), onChange: {}).environmentObject(GlobalVars())
-      StudentPickerTeacher(array: GlobalVars.getStudents(add:true), onChange: {}).environmentObject(GlobalVars())
+      StudentPicker(array: GlobalVars.getStudents(add:false), onChange: {})
+      StudentPickerTeacher(array: GlobalVars.getStudents(add:true), onChange: {})
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)

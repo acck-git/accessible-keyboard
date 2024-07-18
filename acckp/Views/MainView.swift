@@ -7,37 +7,45 @@ import SwiftData
 
 
 struct MainView: View {
-  @StateObject var gVars = GlobalVars()
+  @Environment(\.modelContext) private var ModelContext
+  @StateObject var gVars: GlobalVars
+  @State private var user: UserData!
+  @State var boards: [Bool]
   @State var alert: Bool = false
-  init(){
-    //while (gVars.user == nil) {
-      //sleep(1)
-      //print("hi")
-    //}
+  init (gVars: GlobalVars){
+    //boards = StaticData.boards
+    _gVars = StateObject(wrappedValue: gVars)
+    if gVars != nil {
+      print("has stuff")
+      print(gVars.user)
+    }
+    else {
+      print("no stuff")
+    }
+    _boards = State(wrappedValue: gVars.getBoards())
   }
   var body: some View {
-      //[Main container]---------------------
+    //[Main container]---------------------
+    VStack (){
       switch gVars.screen{
       case GlobalVars.screens.settings:
-        SettingsView(boards: [true,false,false,false,false,false]).environmentObject(gVars)
+        SettingsView()
       case GlobalVars.screens.teacher:
-        TeacherView(boards: gVars.getBoards()).environmentObject(gVars)
-          .ignoresSafeArea(.keyboard)
+        TeacherView()
       case GlobalVars.screens.stats:
-        StatisticsView(stats: gVars.getStats()).environmentObject(gVars)
-          .ignoresSafeArea(.keyboard)
+        StatisticsView()
       default:
         let main = VStack (spacing: 0.0) {
           ToplineSubView()
             .frame(height: StaticData.screenheight * (1/7))
-            .padding(.vertical, 0.0).environmentObject(gVars)
+            .padding(.vertical, 0.0)
           //-----------------------
           Divider()
             .frame(height: 5.0)
             .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
             .overlay(.black)
           //-----------------------
-          KeyboardSubView(boards: [true,true,false,false,false,false]).environmentObject(gVars)
+          KeyboardSubView()
         }
           .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
           .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
@@ -48,10 +56,36 @@ struct MainView: View {
           )
         }
         else { main }
+      }
+    }
+    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+    .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
+    .padding(.vertical, 0.0)
+    .ignoresSafeArea(.keyboard)
+    .onAppear(perform: fetchUsers)
+  }
+  @MainActor private func fetchUsers(){
+    let query = FetchDescriptor<UserData>( )
+    do {
+      gVars.users = try ModelContext.fetch(query)
+      print(gVars.users.count)
+      let result = gVars.loginStudent()
+      if result != nil {
+        ModelContext.insert(result!)
+        user = result!
+        print("Created user \(result!.student).")
+      }
+      else {
+        user = gVars.user
+        print("Loaded user \(user.student).")
+      }
+    }
+    catch {
+      fatalError("Could not create fetch users: \(error)")
     }
   }
 }
 
 #Preview {
-  MainView()
+  MainView(gVars: GlobalVars.get())
 }

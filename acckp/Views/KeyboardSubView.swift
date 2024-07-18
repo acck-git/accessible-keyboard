@@ -6,7 +6,7 @@ import SwiftUI
 import SwiftData
 
 struct KeyboardSubView: View {
-  @EnvironmentObject var gVars: GlobalVars
+  @StateObject var gVars = GlobalVars.get()
   @State var boards: [Bool]
   //[Keys data]--------------------------------
   var row1: [String] = StaticData.letterRow1.reversed()
@@ -19,6 +19,9 @@ struct KeyboardSubView: View {
   var vowels: [String] = StaticData.vowels
   var extra: [Int] = [0,1,2]
   var end: [Int] = [4]
+  init () {
+    self.boards = StaticData.boards
+  }
   var body: some View {
     //[KaygVars.board container]---------------------
     VStack (spacing: 20){
@@ -26,6 +29,7 @@ struct KeyboardSubView: View {
       HStack(spacing: 13.0) {
         ForEach(row1, id:\.self) { letter in
           LetterButton(text: letter+vowels[gVars.board], action: {
+            print(letter+vowels[gVars.board])
             gVars.type(text: letter+vowels[gVars.board], tts: true)
           })
         }
@@ -157,5 +161,5 @@ struct KeyboardSubView: View {
 }
 
 #Preview {
-  KeyboardSubView(boards: GlobalVars().getBoards()).environmentObject(GlobalVars())
+  KeyboardSubView()
 }

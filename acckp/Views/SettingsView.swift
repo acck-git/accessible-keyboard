@@ -6,8 +6,8 @@ import SwiftUI
 import SwiftData
 
 struct SettingsView: View {
-  @EnvironmentObject var gVars: GlobalVars
-  @State var boards: [Bool]
+  @StateObject var gVars = GlobalVars.get()
+  @State var boards: [Bool] = StaticData.boards
   //login
   @State var login: Bool = false
   @State var pass: String = ""
@@ -121,5 +121,5 @@ struct SettingsView: View {
 
 
 #Preview {
-  SettingsView(boards: GlobalVars().getBoards()).environmentObject(GlobalVars())
+  SettingsView()
 }

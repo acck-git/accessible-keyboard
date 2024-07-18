@@ -86,10 +86,12 @@ struct VowelButton: View {
         )
     })
     if enabled {
-      button.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/).cornerRadius(50)
+      
+      button.background(Color(hex:0xFFEB99)).cornerRadius(50)
     }
     else {
-      button.background(Color(hex:0xFFEB99)).cornerRadius(50)
+      
+      button.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/).cornerRadius(50)
     }
   }
 }

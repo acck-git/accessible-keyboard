@@ -6,8 +6,8 @@ import SwiftUI
 import SwiftData
 
 struct TeacherView: View {
-  @EnvironmentObject var gVars: GlobalVars
-  @State var boards: [Bool]
+  @StateObject var gVars = GlobalVars.get()
+  @State var boards: [Bool] = StaticData.boards
   @State var NewName: String = ""
   var body: some View {
     VStack(spacing:20){
@@ -44,7 +44,7 @@ struct TeacherView: View {
               .foregroundColor(.black)
               .font(.system(size: 20, weight: .heavy))
             StudentPickerTeacher(array: GlobalVars.getStudents(add:false), onChange: {
-                boards = gVars.getBoards()
+              boards = StaticData.boards
               print(gVars.student)}).environmentObject(gVars)
             VStack(spacing:0){
               ForEach(StaticData.boardNames.indices, id:\.self) { index in
@@ -88,5 +88,5 @@ struct TeacherView: View {
 }
 
 #Preview {
-  TeacherView(boards: GlobalVars().getBoards()).environmentObject(GlobalVars())
+  TeacherView()
 }

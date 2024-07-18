@@ -11,7 +11,7 @@ var syntheziser = AVSpeechSynthesizer()
 //[Global vars & funcs]--------------------------
 class GlobalVars: ObservableObject {
   static var container: ModelContainer?
-  static var singleton: GlobalVars?
+  static var singleton: GlobalVars!
   //App states
   enum screens {case main, settings, teacher, stats}
   @Published var screen: screens          //currently displayed screen (uses enum)
@@ -19,38 +19,41 @@ class GlobalVars: ObservableObject {
   @Published var inputText: String        //displayed text in text input (main screen)
   @Published var student_edit: String
   @Published var student: String          //name of the logged in user
-  @Published var user: UserData?          //object of the logged in user
+  @Published var user: UserData!          //object of the logged in user
+  @Published var users: [UserData] = []
   @Published var image: String            //currently selected image (image typing mode)
   @Published var imageZoom: Bool = false  //show overlay of selected image
   //Default values
   static let example = "טֶקסט לֶהָמחָשָה"
   static let student_def = "תלמיד"
   static let student_new = "תלמיד חדש"
-  init(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") {
+  private init(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") {
     self.board = board
     self.inputText = inputText
     self.screen = screen
     self.student = student
     self.student_edit = student
     self.image = image
-    Task { await loginStudent(student: student) }
     do {
       try AVAudioSession.sharedInstance().setCategory(.playback)
       try AVAudioSession.sharedInstance().setActive(true)
     }
     catch { print(error) }
+    print("vars done")
   }
   static func get(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") -> GlobalVars {
-    if (self.singleton != nil) {
+    if (GlobalVars.singleton != nil) {
       print("old")
-      return self.singleton!
+      return GlobalVars.singleton
     }
     print("new")
-    self.singleton = GlobalVars(board: board, inputText: inputText, screen: screen, student: student, image: image)
-    return singleton!
+    GlobalVars.singleton = GlobalVars(board: board, inputText: inputText, screen: screen, student: student, image: image)
+    print("done")
+    return GlobalVars.singleton
   }
   
   //[TTS]-------------------------------------
+  //Say single letter
   @IBAction func type(text: String, tts: Bool) {
     self.inputText += text
     if !tts { return }
@@ -63,7 +66,7 @@ class GlobalVars: ObservableObject {
     utterance.voice = AVSpeechSynthesisVoice(language: "he-IL")
     syntheziser.speak(utterance)
   }
-  
+  //Say entire sentence
   @IBAction func speak(){
     let utterance = AVSpeechUtterance(string: self.inputText)
     utterance.rate = 0.3
@@ -115,9 +118,25 @@ class GlobalVars: ObservableObject {
     return students
   }
   
+  //Find logged in user
+  func loginStudent() -> UserData? {
+    for u in users {
+      if u.loggedIn {
+        user = u
+        return nil
+      }
+    }
+    user = UserData(student: GlobalVars.student_def, loggedIn: true)
+    users.append(user)
+    return user
+  }
+  
+  
+  
   //Get object for selected username (or create new)
-  @MainActor func loginStudent(student: String) {
+  @MainActor func oldgetStudent(student: String) -> UserData{
     let context = GlobalVars.container!.mainContext
+    var user: UserData
     let query = FetchDescriptor<UserData>(
       predicate: #Predicate { user in
         user.student == student
@@ -126,14 +145,15 @@ class GlobalVars: ObservableObject {
     let users: [UserData] = try! context.fetch(query)
     if users.count == 0 {
       user = UserData(student: student)
-      context.insert(user!)
+      context.insert(user)
       print("Created user \(student).")
     }
     else {
       user = users.last!
       print("Loaded user \(student).")
-      user!.printUser()
+      user.printUser()
     }
+    return user
   }
   //Save change to boards
   func updateBoard(index: Int)
@@ -143,8 +163,11 @@ class GlobalVars: ObservableObject {
   }
   
   //Get functions
-  func getStats() -> [dayStats] {return self.user!.stats}
-  func getBoards() -> [Bool] {return self.user!.boards}
+  func getStats() -> [dayStats] {return self.user.stats}
+  func getBoards() -> [Bool] {
+    //return self.user.boards
+    return StaticData.boards
+  }
   
   //[Images data]--------------------------------
   func checkSpelling(){
@@ -206,6 +229,8 @@ final class StaticData {
   static let screenwidth:CGFloat = UIScreen.main.bounds.width
   static let screenheight:CGFloat = UIScreen.main.bounds.height
   static let boardNames = ["קמץ","חיריק","סגול","חולם","עיצור","שורוק"]
+  //static let boards = [false,false,false,false,false,false]
+  static let boards = [true,true,true,true,true,true]
   //[Keys]---------------------------------------
   static let letterRow1 = ["א" ,"ב\u{05BC}" ,"ב", "ג" ,"ד" ,"ה" ,"ו"]
   static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ\u{05BC}" ,"כ", "ל"]

@@ -6,7 +6,7 @@ import SwiftUI
 import SwiftData
 
 struct ToplineSubView: View {
-  @EnvironmentObject var gVars: GlobalVars
+  @StateObject var gVars = GlobalVars.get()
   var body: some View {
     //[Top line container]---------------------
     if gVars.image == "" {
@@ -40,5 +40,5 @@ struct ToplineSubView: View {
 }
 
 #Preview {
-  ToplineSubView().environmentObject(GlobalVars())
+  ToplineSubView()
 }
