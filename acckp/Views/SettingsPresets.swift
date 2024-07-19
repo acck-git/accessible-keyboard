@@ -250,8 +250,8 @@ struct SettingsPresetsPreview: View {
       //ImageButton(image:"a1", action: {})
       //TinyImageButton(image:"a1", action: {})
       //ImageSubmitButton(image: "checkmark", action: {})
-      StudentPicker(array: GlobalVars.getStudents(add:false), onChange: {})
-      StudentPickerTeacher(array: GlobalVars.getStudents(add:true), onChange: {})
+      StudentPicker(array: ["one","two"], onChange: {})
+      StudentPickerTeacher(array: ["one","two"], onChange: {})
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)

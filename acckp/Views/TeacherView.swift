@@ -10,8 +10,8 @@ struct TeacherView: View {
   @State var boards = StaticData.boards
   @State var NewName: String = ""
   init () {
-    if gVars.user != nil {
-      _boards = State(wrappedValue: gVars.user!.boards)
+    if gVars.user_edit != nil {
+      _boards = State(wrappedValue: gVars.user_edit!.boards)
       print("not nil")
     }
     print(boards)
@@ -26,7 +26,7 @@ struct TeacherView: View {
               .lineLimit(1)
               .foregroundColor(.black)
               .font(.system(size: 20, weight: .heavy)).hidden()
-            StudentPickerTeacher(array: GlobalVars.getStudents(add:true), onChange: {
+            StudentPickerTeacher(array: gVars.getStudents(add:true), onChange: {
               print(gVars.student)}).environmentObject(gVars).hidden()
             HStack(spacing:20){
               StudentEditInput(placeholder: "הקלד שם...", text: $NewName).hidden()
@@ -51,7 +51,7 @@ struct TeacherView: View {
               .lineLimit(1)
               .foregroundColor(.black)
               .font(.system(size: 20, weight: .heavy))
-            StudentPickerTeacher(array: GlobalVars.getStudents(add:false), onChange: {
+            StudentPickerTeacher(array: gVars.getStudents(add:false), onChange: {
               print(gVars.student)}).environmentObject(gVars)
             VStack(spacing:0){
               ForEach(StaticData.boardNames.indices, id:\.self) { index in

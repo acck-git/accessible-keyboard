@@ -34,19 +34,20 @@ struct SettingsView: View {
     VStack(spacing: 0.0){
       HStack(spacing: 10) {
         TeacherLoginButton(text: "כניסת מורה", action: {
-          if login == false { login = true }
+          gVars.screen = GlobalVars.screens.stats
+          /*if login == false { login = true }
           else {
             (login,alertMessage,json) = gVars.checkPass(pass: pass)
             if alertMessage != "" { alert = true }
             
             pass = ""
-          }
+          }*/
         })
         if login {
           TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
         }
         HiddenButton().frame(maxWidth: .infinity)
-        StudentPicker(array: GlobalVars.getStudents(add:false), onChange: {
+        StudentPicker(array: gVars.getStudents(add:false), onChange: {
           print(gVars.student)})
       }
       .frame(maxWidth: .infinity)

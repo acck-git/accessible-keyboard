@@ -88,6 +88,9 @@ class UserData {
     self.stats.append(dayStats(day: "2024-07-06", total_words: 4, correct_words: 1, total_letters: 10, typos: 6))
     self.stats.append(dayStats(day: "2024-07-08", total_words: 7, correct_words: 3, total_letters: 17, typos: 9))
     self.stats.append(dayStats(day: "2024-07-09", total_words: 12, correct_words: 6, total_letters: 37, typos: 14))
+    self.stats.append(dayStats(day: "2024-07-11", total_words: 1, correct_words: 1, total_letters: 4, typos: 0))
+    self.stats.append(dayStats(day: "2024-07-15", total_words: 2, correct_words: 1, total_letters: 7, typos: 2))
+    self.stats.append(dayStats(day: "2024-07-17", total_words: 4, correct_words: 2, total_letters: 13, typos: 3))
     self.stats.append(stat)
   }
 }

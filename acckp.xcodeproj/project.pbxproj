@@ -112,10 +112,10 @@
 				5C53DE792B9F6DCE00F51194 /* ToplineSubView.swift */,
 				5C53DE722B9F65E700F51194 /* KeyboardSubView.swift */,
 				5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */,
-				5C53DE7D2B9F987200F51194 /* MainPresets.swift */,
-				5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */,
 				5C3E14112C1C3B4C003A5C91 /* TeacherView.swift */,
 				5C3E14132C1C9790003A5C91 /* StatisticsView.swift */,
+				5C53DE7D2B9F987200F51194 /* MainPresets.swift */,
+				5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -20,7 +20,8 @@ class GlobalVars: ObservableObject {
   @Published var student_edit: String
   @Published var student: String          //name of the logged in user
   @Published var user: UserData!          //object of the logged in user
-  @Published var users: [UserData] = []
+  @Published var user_edit: UserData!     //object of the user viewed by the teacher
+  @Published var users: [UserData] = []   //existing users in database
   @Published var image: String            //currently selected image (image typing mode)
   @Published var imageZoom: Bool = false  //show overlay of selected image
   //Default values
@@ -109,12 +110,11 @@ class GlobalVars: ObservableObject {
   }
   
   //[Student Login]-------------------------------
-  static func getStudents(add: Bool) -> [String] {
+  func getStudents(add: Bool) -> [String] {
     //will load existing students in the future
-    var students = [student_def, "other"]
-    if add {
-      students.append(student_new)
-    }
+    var students = users.map { $0.student }
+    if add { students.append(GlobalVars.student_new) }
+    print(students)
     return students
   }
   
@@ -123,15 +123,15 @@ class GlobalVars: ObservableObject {
     for u in users {
       if u.loggedIn {
         user = u
+        user_edit = u
         return nil
       }
     }
     user = UserData(student: GlobalVars.student_def, loggedIn: true)
+    user_edit = user
     users.append(user)
     return user
   }
-  
-  
   
   //Get object for selected username (or create new)
   @MainActor func oldgetStudent(student: String) -> UserData{
