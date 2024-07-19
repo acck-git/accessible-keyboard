@@ -16,7 +16,6 @@ struct acckpApp: App {
     }
     catch { fatalError("Could not create ModelContainer: \(error)") }
   }()
-  @StateObject var gVars = GlobalVars.get()
   var body: some Scene {
     WindowGroup {
       MainView()

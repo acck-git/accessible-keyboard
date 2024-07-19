@@ -14,7 +14,8 @@ struct ToplineSubView: View {
         TTSButton(image: "speaker.fill", action: {
           gVars.speak()
         })
-          .padding(.leading, 20.0)
+        .padding(.leading, 20.0)
+        //-----------------------
         TextInput(text: gVars.inputText)
       }
       .padding(.trailing, 20.0)
@@ -24,17 +25,19 @@ struct ToplineSubView: View {
         ImageSubmitButton(image:"checkmark",action: {
           gVars.checkSpelling()
         })
+        //-----------------------
         TinyImageButton(image: gVars.image, action: {
           gVars.imageZoom = true
         })
+        //-----------------------
         TTSButton(image: "speaker.fill", action: {
           gVars.speak()
         })
-          .padding(.trailing, 15.0)
+        .padding(.trailing, 15.0)
+        //-----------------------
         TextInput(text: gVars.inputText)
       }
-      
-      .padding(/*@START_MENU_TOKEN@*/.horizontal, 20.0/*@END_MENU_TOKEN@*/)
+      .padding(.horizontal, 20.0)
     }
   }
 }

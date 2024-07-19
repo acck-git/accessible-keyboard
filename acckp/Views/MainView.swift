@@ -9,13 +9,7 @@ import SwiftData
 struct MainView: View {
   @Environment(\.modelContext) private var ModelContext
   @ObservedObject var gVars = GlobalVars.get()
-  @State private var user: UserData!
-  @State private var boards = StaticData.boards_def
   @State var alert: Bool = false
-  init (){
-    print("init")
-    //self.boards = gVars.user.boards
-  }
   var body: some View {
     //[Main container]---------------------
     VStack (){
@@ -34,13 +28,13 @@ struct MainView: View {
           //-----------------------
           Divider()
             .frame(height: 5.0)
-            .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
+            .foregroundColor(.black)
             .overlay(.black)
           //-----------------------
           KeyboardSubView()
         }
           .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-          .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
+          .padding(.horizontal, 0.0)
           .padding(.vertical, 0.0)
         if gVars.imageZoom { main
           .overlay(MassiveImageButton(
@@ -51,12 +45,12 @@ struct MainView: View {
       }
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-    .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
-    .padding(.vertical, 0.0)
+    .padding(/*@START_MENU_TOKEN@*/.all, 0.0/*@END_MENU_TOKEN@*/)
     .ignoresSafeArea(.keyboard)
     .onAppear(perform: fetchUsers)
   }
-  @MainActor private func fetchUsers(){
+  //[Load users from database]------------
+  @MainActor private func fetchUsers() {
     let query = FetchDescriptor<UserData>()
     do {
       gVars.users = try ModelContext.fetch(query)
@@ -65,15 +59,13 @@ struct MainView: View {
       if result != nil {
         ModelContext.insert(result!)
         //try ModelContext.save()
-        user = result!
+        result!.printUser()
         print("Created user \(result!.student).")
       }
       else {
-        user = gVars.user
-        print("Loaded user \(user.student).")
+        gVars.user.printUser()
+        print("Loaded user \(gVars.student).")
       }
-      user.printUser()
-      boards = user.boards
     }
     catch {
       fatalError("Could not create fetch users: \(error)")

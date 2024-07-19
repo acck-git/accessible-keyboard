@@ -51,7 +51,6 @@ class UserData {
     printUser()
     return json!
   }
-  
   //Print data as JSON
   func printUser() {
     print("=================================================================")
@@ -59,7 +58,7 @@ class UserData {
     print("Boards: \(boards)")
     
     if stats.count < 0 {
-    //if stats.count > 0 {
+      //if stats.count > 0 {
       for stat in stats {
         print("==================")
         print("ID: \(stat.id)")
@@ -74,7 +73,8 @@ class UserData {
     else { print("\(stats.count) stats saved.") }
     print("=================================================================")
   }
-  //[Debugging]
+  //[Debugging]--------------------------------
+  //Copy stats
   func fixStats(){
     let statsArr = self.stats
     self.stats = []
@@ -82,6 +82,7 @@ class UserData {
       self.stats.append(dayStats(correct_words: stat.correct_words, total_letters: stat.total_letters, typos: stat.typos))
     }
   }
+  //Insert stats
   func addStats(){
     let stat = self.stats[stats.count-1]
     self.stats=[]

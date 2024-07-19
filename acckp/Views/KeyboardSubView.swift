@@ -23,18 +23,16 @@ struct KeyboardSubView: View {
     if gVars.user != nil { boards = gVars.user!.boards }
   }
   var body: some View {
-    //[KaygVars.board container]---------------------
+    //[Kayboard container]---------------------
     VStack (spacing: 20){
       //[Row 1]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row1, id:\.self) { letter in
           LetterButton(text: letter+vowels[gVars.board], action: {
-            print(letter+vowels[gVars.board])
             gVars.type(text: letter+vowels[gVars.board], tts: true)
           })
         }
       }
-      .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 2]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row2, id:\.self) { letter in
@@ -43,7 +41,6 @@ struct KeyboardSubView: View {
           })
         }
       }
-      .padding(.horizontal, 3.0)
       //[Row 3]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row3, id:\.self) { letter in
@@ -52,7 +49,6 @@ struct KeyboardSubView: View {
           })
         }
       }
-      .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 4]--------------------------------
       HStack(spacing: 13.0) {
         if extra.contains(gVars.board) {
@@ -78,11 +74,9 @@ struct KeyboardSubView: View {
           })
         }
       }
-      .padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/)
       //[Row 5]--------------------------------
       HStack(spacing:13){
         HStack(spacing: 13){
-          //HStack(){
           if extra.contains(gVars.board) {
             ExtraLetterButton(text: extraLets[1], action: {
               gVars.type(text: extraLets[1], tts: true)
@@ -102,14 +96,12 @@ struct KeyboardSubView: View {
           else { HiddenButton() }
         }
         .frame(width: (StaticData.screenwidth * (2/7)) - 19)
-        .padding(.horizontal, 3.0)
         ForEach(vowelsRow.indices, id:\.self) { index in
           VowelButton(image: vowelsRow[index], action: {
             print(boards)
             gVars.board = vowelsRow.count - index - 1
           }, enabled: boards[vowelsRow.count - index - 1])
         }
-        
       }
       //[Row 6]--------------------------------
       HStack(spacing: 13.0) {
@@ -127,7 +119,6 @@ struct KeyboardSubView: View {
           else { HiddenButton() }
         }
         .frame(width: (StaticData.screenwidth * (1/7)) - 16)
-        .padding(.horizontal, 3.0)
         DeleteButton(text: "מחק מילה", action: {
           if gVars.inputText.last == " "{
             while gVars.inputText.last == " "{
@@ -151,7 +142,7 @@ struct KeyboardSubView: View {
       }
     }
     .frame(maxWidth: .infinity,maxHeight: .infinity)
-    .padding(.horizontal, 15.0)
+    .padding(.horizontal, 18.0)
     .padding(.top, 20)
     .padding(.bottom, 10)
     .background(Color(uiColor:UIColor.systemGray5))

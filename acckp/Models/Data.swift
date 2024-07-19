@@ -40,16 +40,10 @@ class GlobalVars: ObservableObject {
       try AVAudioSession.sharedInstance().setActive(true)
     }
     catch { print(error) }
-    print("vars done")
   }
   static func get(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") -> GlobalVars {
-    if (GlobalVars.singleton != nil) {
-      print("old")
-      return GlobalVars.singleton
-    }
-    print("new")
+    if (GlobalVars.singleton != nil) { return GlobalVars.singleton }
     GlobalVars.singleton = GlobalVars(board: board, inputText: inputText, screen: screen, student: student, image: image)
-    print("done")
     return GlobalVars.singleton
   }
   
@@ -114,7 +108,7 @@ class GlobalVars: ObservableObject {
     //will load existing students in the future
     var students = users.map { $0.student }
     if add { students.append(GlobalVars.student_new) }
-    print(students)
+    //print(students)
     return students
   }
   
@@ -124,11 +118,13 @@ class GlobalVars: ObservableObject {
       if u.loggedIn {
         user = u
         user_edit = u
+        student = u.student
         return nil
       }
     }
     user = UserData(student: GlobalVars.student_def, loggedIn: true)
     user_edit = user
+    student = user.student
     users.append(user)
     return user
   }
@@ -161,9 +157,6 @@ class GlobalVars: ObservableObject {
     self.user!.toggleBoard(index: index, state: state)
     self.user!.printUser()
   }
-  
-  //Get functions
-  func getStats() -> [dayStats] {return self.user.stats}
   
   //[Images data]--------------------------------
   func checkSpelling(){

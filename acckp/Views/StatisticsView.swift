@@ -1,5 +1,5 @@
 //
-//  Teacher View
+//  Statistics View
 //
 
 import SwiftUI
@@ -10,14 +10,10 @@ struct StatisticsView: View {
   @ObservedObject var gVars = GlobalVars.get()
   var stats: [dayStats] = []
   init () {
-    if gVars.user != nil {
-      stats = gVars.user!.stats
-      print("not nil")
-    }
-    print(stats)
-    print("teach")
+    if gVars.user != nil { stats = gVars.user!.stats }
   }
   var body: some View {
+    //[Statistics container]-------------------
     VStack(spacing:20){
       VStack(){
         Text("סטטיסטיקה לתלמיד")
@@ -29,27 +25,28 @@ struct StatisticsView: View {
           print(gVars.student)
         })
         .frame(width: StaticData.screenwidth/3)
+        //[Stats]------------------------------
         HStack {
           VStack(spacing: 13.0) {
             if stats.count > 0 {
               Table(stats) {
-                TableColumn("שגיאות כתיב") { stat in
-                  Text(String((stat.typos/stat.total_letters)*100)+"%").font(.system(size: 25))
-                }
-                TableColumn("סה״כ אותיות") { stat in
-                  Text(String(stat.total_letters)).font(.system(size: 25))
-                }
-                
-                TableColumn("מילים נכונות") { stat in
-                  Text(String((stat.correct_words/stat.total_words)*100)+"%").font(.system(size: 25))
+                TableColumn("תאריך") { stat in
+                  Text(String(stat.day)).font(.system(size: 25))
                 }
                 TableColumn("סה״כ מילים") { stat in
                   Text(String(stat.total_words)).font(.system(size: 25))
                 }
-                TableColumn("תאריך") { stat in
-                  Text(String(stat.day)).font(.system(size: 25))
+                TableColumn("מילים נכונות") { stat in
+                  Text(String(stat.correct_words)).font(.system(size: 25))
+                }
+                TableColumn("סה״כ אותיות") { stat in
+                  Text(String(stat.total_letters)).font(.system(size: 25))
+                }
+                TableColumn("שגיאות כתיב") { stat in
+                  Text(String(stat.typos)).font(.system(size: 25))
                 }
               }
+              .environment(\.layoutDirection,.rightToLeft)
             }
             else {
               Text("לא נמצאו נתונים להצגה").font(.system(size: 25))
@@ -62,9 +59,9 @@ struct StatisticsView: View {
         .padding(.all, 20)
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
-      
       .overlay(RoundedRectangle(cornerRadius: 15)
         .stroke(.black, lineWidth: 2))
+      //[Bottom row]---------------------------
       HStack(){
         HiddenButton().frame(maxWidth:.infinity)
         SettingsButton(image: "arrowshape.right", action: {
