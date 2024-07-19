@@ -6,8 +6,8 @@ import SwiftUI
 import SwiftData
 
 struct KeyboardSubView: View {
-  @StateObject var gVars = GlobalVars.get()
-  @State var boards: [Bool]
+  @ObservedObject var gVars = GlobalVars.get()
+  var boards: [Bool] = StaticData.boards
   //[Keys data]--------------------------------
   var row1: [String] = StaticData.letterRow1.reversed()
   var row2: [String] = StaticData.letterRow2.reversed()
@@ -20,7 +20,7 @@ struct KeyboardSubView: View {
   var extra: [Int] = [0,1,2]
   var end: [Int] = [4]
   init () {
-    self.boards = StaticData.boards
+    if gVars.user != nil { boards = gVars.user!.boards }
   }
   var body: some View {
     //[KaygVars.board container]---------------------
@@ -83,31 +83,29 @@ struct KeyboardSubView: View {
       HStack(spacing:13){
         HStack(spacing: 13){
           //HStack(){
-            if extra.contains(gVars.board) {
-              ExtraLetterButton(text: extraLets[1], action: {
-                gVars.type(text: extraLets[1], tts: true)
-              })
-            }
-            else if end.contains(gVars.board){
-              ExtraLetterButton(text: endLets[3], action: {
-                gVars.type(text: endLets[3], tts: true)
-              })
-            }
-            else { HiddenButton() }
-          //}
-         // HStack(){
-            if end.contains(gVars.board){
-              ExtraLetterButton(text: endLets[2], action: {
-                gVars.type(text: endLets[2], tts: true)
-              })
-            }
-            else { HiddenButton() }
-        //  }
+          if extra.contains(gVars.board) {
+            ExtraLetterButton(text: extraLets[1], action: {
+              gVars.type(text: extraLets[1], tts: true)
+            })
+          }
+          else if end.contains(gVars.board){
+            ExtraLetterButton(text: endLets[3], action: {
+              gVars.type(text: endLets[3], tts: true)
+            })
+          }
+          else { HiddenButton() }
+          if end.contains(gVars.board){
+            ExtraLetterButton(text: endLets[2], action: {
+              gVars.type(text: endLets[2], tts: true)
+            })
+          }
+          else { HiddenButton() }
         }
         .frame(width: (StaticData.screenwidth * (2/7)) - 19)
         .padding(.horizontal, 3.0)
         ForEach(vowelsRow.indices, id:\.self) { index in
           VowelButton(image: vowelsRow[index], action: {
+            print(boards)
             gVars.board = vowelsRow.count - index - 1
           }, enabled: boards[vowelsRow.count - index - 1])
         }

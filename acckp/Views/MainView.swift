@@ -8,21 +8,13 @@ import SwiftData
 
 struct MainView: View {
   @Environment(\.modelContext) private var ModelContext
-  @StateObject var gVars: GlobalVars
+  @ObservedObject var gVars = GlobalVars.get()
   @State private var user: UserData!
-  @State var boards: [Bool]
+  @State private var boards = StaticData.boards_def
   @State var alert: Bool = false
-  init (gVars: GlobalVars){
-    //boards = StaticData.boards
-    _gVars = StateObject(wrappedValue: gVars)
-    if gVars != nil {
-      print("has stuff")
-      print(gVars.user)
-    }
-    else {
-      print("no stuff")
-    }
-    _boards = State(wrappedValue: gVars.getBoards())
+  init (){
+    print("init")
+    //self.boards = gVars.user.boards
   }
   var body: some View {
     //[Main container]---------------------
@@ -81,6 +73,7 @@ struct MainView: View {
         print("Loaded user \(user.student).")
       }
       user.printUser()
+      boards = user.boards
     }
     catch {
       fatalError("Could not create fetch users: \(error)")
@@ -89,5 +82,5 @@ struct MainView: View {
 }
 
 #Preview {
-  MainView(gVars: GlobalVars.get()).modelContainer(for: UserData.self)
+  MainView().modelContainer(for: UserData.self)
 }

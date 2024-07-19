@@ -6,7 +6,7 @@ import SwiftUI
 import SwiftData
 
 struct ToplineSubView: View {
-  @StateObject var gVars = GlobalVars.get()
+  @ObservedObject var gVars = GlobalVars.get()
   var body: some View {
     //[Top line container]---------------------
     if gVars.image == "" {

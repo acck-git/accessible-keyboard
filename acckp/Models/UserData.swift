@@ -12,7 +12,7 @@ class UserData {
   var stats: [dayStats]
   var boards: [Bool]
   var loggedIn: Bool = true
-  init(student: String, stats: [dayStats] = [], boards: [Bool] = StaticData.boards, loggedIn: Bool = false) {
+  init(student: String, stats: [dayStats] = [], boards: [Bool] = StaticData.boards_def, loggedIn: Bool = false) {
     self.student = student
     self.stats = stats
     self.boards = boards
@@ -31,9 +31,8 @@ class UserData {
     }
   }
   //Update boards
-  func toggleBoard(index: Int = 0) {
-    //Today already saved
-    self.boards[index] = !self.boards[index]
+  func toggleBoard(index: Int = 0, state: Bool = true) {
+    self.boards[index] = state
     print("Updated board \(index).")
   }
   //Create json from data

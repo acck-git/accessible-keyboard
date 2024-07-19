@@ -7,8 +7,16 @@ import SwiftData
 import Charts
 
 struct StatisticsView: View {
-  @StateObject var gVars = GlobalVars.get()
+  @ObservedObject var gVars = GlobalVars.get()
   @State var stats: [dayStats] = []
+  init () {
+    if gVars.user != nil {
+      _stats = State(wrappedValue: gVars.user!.stats)
+      print("not nil")
+    }
+    print(stats)
+    print("teach")
+  }
   var body: some View {
     VStack(spacing:20){
       VStack(){
@@ -17,24 +25,11 @@ struct StatisticsView: View {
           .foregroundColor(.black)
           .font(.system(size: 30, weight: .heavy))
         StudentPickerTeacher(array: GlobalVars.getStudents(add:false), onChange: {
-          stats = gVars.getStats()
           print(gVars.student)
-        }).environmentObject(gVars)
+        })
           .frame(width: StaticData.screenwidth/3)
         
-        Chart(stats) { stat in
-          BarMark(x: .value("Type", stat.day),
-                  y: .value("Total Words", stat.total_words))
-          .foregroundStyle(.blue)
-          .offset(x: 10)
-          
-          BarMark(x: .value("Type", ""),
-                  y: .value("Correct Words", stat.correct_words))
-          .foregroundStyle(.red)
-          .offset(x: -10)
-        }
-        .aspectRatio(1, contentMode: .fit)
-        .padding()
+        
         
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)

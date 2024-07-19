@@ -6,9 +6,17 @@ import SwiftUI
 import SwiftData
 
 struct TeacherView: View {
-  @StateObject var gVars = GlobalVars.get()
-  @State var boards: [Bool] = StaticData.boards
+  @ObservedObject var gVars = GlobalVars.get()
+  @State var boards = StaticData.boards
   @State var NewName: String = ""
+  init () {
+    if gVars.user != nil {
+      _boards = State(wrappedValue: gVars.user!.boards)
+      print("not nil")
+    }
+    print(boards)
+    print("teach")
+  }
   var body: some View {
     VStack(spacing:20){
       HStack (spacing: 15) {
@@ -17,21 +25,21 @@ struct TeacherView: View {
             Text("תלמידים")
               .lineLimit(1)
               .foregroundColor(.black)
-              .font(.system(size: 20, weight: .heavy))
+              .font(.system(size: 20, weight: .heavy)).hidden()
             StudentPickerTeacher(array: GlobalVars.getStudents(add:true), onChange: {
-              print(gVars.student)}).environmentObject(gVars)
+              print(gVars.student)}).environmentObject(gVars).hidden()
             HStack(spacing:20){
-              StudentEditInput(placeholder: "הקלד שם...", text: $NewName)
+              StudentEditInput(placeholder: "הקלד שם...", text: $NewName).hidden()
               Text("שם:")
                 .lineLimit(1)
                 .foregroundColor(.black)
-                .font(.system(size: 20, weight: .heavy))
+                .font(.system(size: 20, weight: .heavy)).hidden()
             }
             HStack(spacing:10)
             {
               DeleteTeacherButton(text: "מחק", action: {})
               SaveButton(text: "שמור", action: {})
-            }
+            }.hidden()
           }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 20)
@@ -44,12 +52,11 @@ struct TeacherView: View {
               .foregroundColor(.black)
               .font(.system(size: 20, weight: .heavy))
             StudentPickerTeacher(array: GlobalVars.getStudents(add:false), onChange: {
-              boards = StaticData.boards
               print(gVars.student)}).environmentObject(gVars)
             VStack(spacing:0){
               ForEach(StaticData.boardNames.indices, id:\.self) { index in
                 ToggleBoard(text: "לוח " + StaticData.boardNames[index], ison: $boards[index], onChange: {
-                  gVars.updateBoard(index: index)
+                  gVars.updateBoard(index: index, state: boards[index])
                 })
                   
               }

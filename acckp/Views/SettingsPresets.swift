@@ -228,7 +228,7 @@ struct ToggleBoard: View {
     Toggle(isOn: $ison) {
       Text(text)
     }
-    .onChange(of: ison){onChange()}
+    .onChange(of: ison, initial: ison){onChange()}
     .environment(\.layoutDirection,.rightToLeft)
     .frame(width: StaticData.screenwidth/6)
     .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)

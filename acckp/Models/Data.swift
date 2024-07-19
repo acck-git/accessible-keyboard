@@ -156,18 +156,14 @@ class GlobalVars: ObservableObject {
     return user
   }
   //Save change to boards
-  func updateBoard(index: Int)
+  func updateBoard(index: Int, state: Bool)
   {
-    self.user!.toggleBoard(index: index)
+    self.user!.toggleBoard(index: index, state: state)
     self.user!.printUser()
   }
   
   //Get functions
   func getStats() -> [dayStats] {return self.user.stats}
-  func getBoards() -> [Bool] {
-    //return self.user.boards
-    return StaticData.boards
-  }
   
   //[Images data]--------------------------------
   func checkSpelling(){
@@ -229,8 +225,8 @@ final class StaticData {
   static let screenwidth:CGFloat = UIScreen.main.bounds.width
   static let screenheight:CGFloat = UIScreen.main.bounds.height
   static let boardNames = ["קמץ","חיריק","סגול","חולם","עיצור","שורוק"]
-  //static let boards = [false,false,false,false,false,false]
-  static let boards = [true,true,true,true,true,true]
+  static let boards = [false,false,false,false,false,false]
+  static let boards_def = [true,false,false,false,false,false]
   //[Keys]---------------------------------------
   static let letterRow1 = ["א" ,"ב\u{05BC}" ,"ב", "ג" ,"ד" ,"ה" ,"ו"]
   static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ\u{05BC}" ,"כ", "ל"]

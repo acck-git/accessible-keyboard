@@ -6,8 +6,8 @@ import SwiftUI
 import SwiftData
 
 struct SettingsView: View {
-  @StateObject var gVars = GlobalVars.get()
-  @State var boards: [Bool] = StaticData.boards
+  @ObservedObject var gVars = GlobalVars.get()
+  var boards: [Bool] = StaticData.boards
   //login
   @State var login: Bool = false
   @State var pass: String = ""
@@ -19,6 +19,9 @@ struct SettingsView: View {
   @State var subSet: Int = 0
   var vowelsRow: [String] = StaticData.vowelsRow.reversed()
   var sets: [String] = StaticData.sets
+  init () {
+    if gVars.user != nil { boards = gVars.user!.boards }
+  }
   var body: some View {
     if !json.isEmpty {
       ShareLink(
@@ -44,7 +47,7 @@ struct SettingsView: View {
         }
         HiddenButton().frame(maxWidth: .infinity)
         StudentPicker(array: GlobalVars.getStudents(add:false), onChange: {
-          print(gVars.student)}).environmentObject(gVars)
+          print(gVars.student)})
       }
       .frame(maxWidth: .infinity)
       .frame(height: StaticData.screenheight * (1/7))
