@@ -49,7 +49,7 @@ struct StudentPicker: View {
           .font(.largeTitle)
       }
     }
-    .onChange(of: gVars.student){onChange()}
+    .onChange(of: gVars.student, initial: true){onChange()}
     .scaleEffect(2)
     .pickerStyle(.menu)
     .accentColor(.black)
@@ -70,7 +70,7 @@ struct StudentPickerTeacher: View {
           .font(.largeTitle)
       }
     }
-    .onChange(of: gVars.student_edit){onChange()}
+    .onChange(of: gVars.student_edit, initial: true){onChange()}
     .scaleEffect(1.5)
     .pickerStyle(.menu)
     .accentColor(.black)

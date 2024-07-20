@@ -24,31 +24,30 @@ struct SettingsView: View {
   }
   var body: some View {
     if !json.isEmpty {
-      ShareLink(
-        "Save File",
-        item: json,
-        preview: SharePreview("title.json")
+      ShareLink("Save File",item: json,
+                preview: SharePreview("title.json")
       )
     }
     //[Settings container]---------------------
     VStack(spacing: 0.0){
       HStack(spacing: 10) {
         TeacherLoginButton(text: "כניסת מורה", action: {
-          gVars.screen = GlobalVars.screens.stats
-          /*if login == false { login = true }
-           else {
-           (login,alertMessage,json) = gVars.checkPass(pass: pass)
-           if alertMessage != "" { alert = true }
-           
-           pass = ""
-           }*/
+          if login == false { login = true }
+          else {
+            (login,alertMessage,json) = gVars.checkPass(pass: pass)
+            if alertMessage != "" { alert = true }
+            pass = ""
+          }
         })
         if login {
           TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
         }
         HiddenButton().frame(maxWidth: .infinity)
         StudentPicker(array: gVars.getStudents(add:false), onChange: {
-          print(gVars.student)})
+          //print(gVars.student)
+          gVars.swapStudent(login: true)
+          
+        })
       }
       .frame(maxWidth: .infinity)
       .frame(height: StaticData.screenheight * (1/7))

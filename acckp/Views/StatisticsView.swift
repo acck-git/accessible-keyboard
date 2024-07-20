@@ -8,9 +8,11 @@ import Charts
 
 struct StatisticsView: View {
   @ObservedObject var gVars = GlobalVars.get()
-  var stats: [dayStats] = []
+  @State var stats: [dayStats] = []
   init () {
-    if gVars.user != nil { stats = gVars.user!.stats }
+    if gVars.user_edit != nil {
+      _stats = State(wrappedValue: gVars.user_edit!.stats)
+    }
   }
   var body: some View {
     //[Statistics container]-------------------
@@ -22,7 +24,11 @@ struct StatisticsView: View {
           .font(.system(size: 30, weight: .heavy))
           .padding(.top, 20.0)
         StudentPickerTeacher(array: gVars.getStudents(add:false), onChange: {
-          print(gVars.student)
+          //print(gVars.student_edit)
+          gVars.swapStudent(login: false)
+          if gVars.user_edit != nil {
+            stats = gVars.user_edit!.stats
+          }
         })
         .frame(width: StaticData.screenwidth/3)
         //[Stats]------------------------------

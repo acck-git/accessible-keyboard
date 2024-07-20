@@ -26,7 +26,9 @@ struct TeacherView: View {
               .foregroundColor(.black)
               .font(.system(size: 25, weight: .heavy))
             StudentPickerTeacher(array: gVars.getStudents(add:true), onChange: {
-              print(gVars.student)})
+              //print(gVars.student_edit)
+              gVars.swapStudent(login: false)
+            })
             HStack(spacing:20){
               StudentEditInput(placeholder: "הקלד שם...", text: $NewName)
               Text("שם:")
@@ -53,7 +55,13 @@ struct TeacherView: View {
               .foregroundColor(.black)
               .font(.system(size: 25, weight: .heavy))
             StudentPickerTeacher(array: gVars.getStudents(add:false), onChange: {
-              print(gVars.student)})
+              //print(gVars.student_edit)
+              gVars.swapStudent(login: false)
+              if gVars.user_edit != nil {
+                boards = gVars.user_edit!.boards
+                print(boards)
+              }
+            })
             VStack(spacing:0){
               ForEach(StaticData.boardNames.indices, id:\.self) { index in
                 ToggleBoard(text: "לוח " + StaticData.boardNames[index], ison: $boards[index], onChange: {

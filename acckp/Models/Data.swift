@@ -128,6 +128,31 @@ class GlobalVars: ObservableObject {
     users.append(user)
     return user
   }
+  //Change the selected student
+  func swapStudent(login: Bool = false){
+    for u in users {
+      if login {
+        if u.student == student{
+          u.toggleLogin(state: true)
+          self.user = u
+          self.user_edit = u
+          self.student_edit = student
+          //u.printUser()
+        }
+        else {
+          u.toggleLogin(state: false)
+          //u.printUser()
+        }
+      }
+      else {
+        if u.student == student_edit {
+          self.user_edit = u
+          u.printUser()
+          break
+        }
+      }
+    }
+  }
   
   //Get object for selected username (or create new)
   @MainActor func oldgetStudent(student: String) -> UserData{
@@ -154,8 +179,8 @@ class GlobalVars: ObservableObject {
   //Save change to boards
   func updateBoard(index: Int, state: Bool)
   {
-    self.user!.toggleBoard(index: index, state: state)
-    self.user!.printUser()
+    self.user_edit!.toggleBoard(index: index, state: state)
+    self.user_edit!.printUser()
   }
   
   //[Images data]--------------------------------

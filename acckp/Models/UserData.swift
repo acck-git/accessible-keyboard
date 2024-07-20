@@ -35,6 +35,16 @@ class UserData {
     self.boards[index] = state
     print("Updated board \(index).")
   }
+  //Update name
+  func renameStudent(student: String) {
+    self.student = student
+    print("Renamed to student \(student).")
+  }
+  //Update logged in state
+  func toggleLogin(state: Bool = false) {
+    self.loggedIn = state
+    //print("Updated user \(student).")
+  }
   //Create json from data
   func fetchJSON() -> Data {
     var statsJSON: [[String: Any]] = []
@@ -51,29 +61,32 @@ class UserData {
     printUser()
     return json!
   }
-  //Print data as JSON
+  
+  //[Debugging]--------------------------------
+  //Print data
   func printUser() {
+    let fullPrint = false
     print("=================================================================")
     print("Student: \(student)")
+    if loggedIn { print("*Logged in*") }
     print("Boards: \(boards)")
-    
-    if stats.count < 0 {
-      //if stats.count > 0 {
-      for stat in stats {
-        print("==================")
-        print("ID: \(stat.id)")
-        print("Day: \(stat.day)")
-        print("Total words: \(stat.total_words)")
-        print("Correct words: \(stat.correct_words)")
-        print("Total letters: \(stat.total_letters)")
-        print("Typos: \(stat.typos)")
+    if fullPrint {
+      if stats.count > 0 {
+        for stat in stats {
+          print("==================")
+          print("ID: \(stat.id)")
+          print("Day: \(stat.day)")
+          print("Total words: \(stat.total_words)")
+          print("Correct words: \(stat.correct_words)")
+          print("Total letters: \(stat.total_letters)")
+          print("Typos: \(stat.typos)")
+        }
       }
+      else { print("No stats saved.") }
     }
-    //else { print("No stats saved.") }
     else { print("\(stats.count) stats saved.") }
     print("=================================================================")
   }
-  //[Debugging]--------------------------------
   //Copy stats
   func fixStats(){
     let statsArr = self.stats
@@ -84,15 +97,24 @@ class UserData {
   }
   //Insert stats
   func addStats(){
-    let stat = self.stats[stats.count-1]
-    self.stats=[]
+    //let stat = self.stats[stats.count-1]
+    //self.stats=[]
     self.stats.append(dayStats(day: "2024-07-06", total_words: 4, correct_words: 1, total_letters: 10, typos: 6))
     self.stats.append(dayStats(day: "2024-07-08", total_words: 7, correct_words: 3, total_letters: 17, typos: 9))
     self.stats.append(dayStats(day: "2024-07-09", total_words: 12, correct_words: 6, total_letters: 37, typos: 14))
     self.stats.append(dayStats(day: "2024-07-11", total_words: 1, correct_words: 1, total_letters: 4, typos: 0))
     self.stats.append(dayStats(day: "2024-07-15", total_words: 2, correct_words: 1, total_letters: 7, typos: 2))
     self.stats.append(dayStats(day: "2024-07-17", total_words: 4, correct_words: 2, total_letters: 13, typos: 3))
-    self.stats.append(stat)
+    //self.stats.append(stat)
+  }
+  func addStatsNew(){
+    self.stats=[]
+    self.stats.append(dayStats(day: "2024-07-07", total_words: 1, correct_words: 0, total_letters: 3, typos: 2))
+    self.stats.append(dayStats(day: "2024-07-08", total_words: 3, correct_words: 1, total_letters: 10, typos: 3))
+    self.stats.append(dayStats(day: "2024-07-10", total_words: 5, correct_words: 3, total_letters: 23, typos: 2))
+    self.stats.append(dayStats(day: "2024-07-11", total_words: 2, correct_words: 1, total_letters: 9, typos: 1))
+    self.stats.append(dayStats(day: "2024-07-14", total_words: 7, correct_words: 3, total_letters: 27, typos: 6))
+    self.stats.append(dayStats(day: "2024-07-18", total_words: 2, correct_words: 2, total_letters: 7, typos: 0))
   }
 }
 
