@@ -74,7 +74,8 @@ struct HiddenButton: View {
 struct VowelButton: View {
   var image: String
   var action: (() -> Void)
-  var enabled: Bool
+  var enabled: Bool = false
+  var selected: Bool = false
   var body: some View {
     let button = Button(action: action, label: { Image(image)
         .resizable()
@@ -86,11 +87,15 @@ struct VowelButton: View {
         )
     })
     if enabled {
-      button.background(Color(hex:0xFFEB99)).cornerRadius(50)
+      if selected {
+        button.background(Color(hex:0xFFD119)).cornerRadius(50)
+      }
+      else {
+        button.background(Color(hex:0xFFEB99)).cornerRadius(50)
+      }
     }
     else {
-      //button.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/).cornerRadius(50)
-      button.cornerRadius(50)
+      button.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/).cornerRadius(50)
     }
   }
 }

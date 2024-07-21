@@ -37,6 +37,8 @@ struct SettingsView: View {
             (login,alertMessage,json) = gVars.checkPass(pass: pass)
             if alertMessage != "" { alert = true }
             pass = ""
+            //set = "a"
+            //subSet = 0
           }
         })
         if login {
@@ -46,6 +48,8 @@ struct SettingsView: View {
         StudentPicker(array: gVars.getStudents(add:false), onChange: {
           //print(gVars.student)
           gVars.swapStudent(login: true)
+          set = "a"
+          subSet = 0
           
         })
       }
@@ -98,7 +102,7 @@ struct SettingsView: View {
             VowelButton(image: vowelsRow[index], action: {
               set = sets[vowelsRow.count - index - 1]
               subSet = 0
-            }, enabled: boards[vowelsRow.count - index - 1])
+            }, enabled: boards[vowelsRow.count - index - 1], selected: sets[vowelsRow.count - index - 1] == set)
           }
         }
         .frame(height: StaticData.screenheight * 1/9)
@@ -119,7 +123,7 @@ struct SettingsView: View {
       .background(Color(uiColor:UIColor.systemGray5))
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-    .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
+    .padding(.horizontal, 0.0)
     .ignoresSafeArea(.keyboard)
     .alert(alertMessage, isPresented: $alert, actions: {})
   }

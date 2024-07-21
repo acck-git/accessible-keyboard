@@ -137,6 +137,9 @@ class GlobalVars: ObservableObject {
           self.user = u
           self.user_edit = u
           self.student_edit = student
+          self.board = 0
+          self.image = ""
+          self.inputText = ""
           //u.printUser()
         }
         else {

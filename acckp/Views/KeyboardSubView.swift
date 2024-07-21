@@ -100,7 +100,7 @@ struct KeyboardSubView: View {
           VowelButton(image: vowelsRow[index], action: {
             print(boards)
             gVars.board = vowelsRow.count - index - 1
-          }, enabled: boards[vowelsRow.count - index - 1])
+          }, enabled: boards[vowelsRow.count - index - 1], selected: vowelsRow.count - index - 1 == gVars.board)
         }
       }
       //[Row 6]--------------------------------

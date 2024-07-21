@@ -64,8 +64,7 @@ class UserData {
   
   //[Debugging]--------------------------------
   //Print data
-  func printUser() {
-    let fullPrint = false
+  func printUser(fullPrint: Bool = false) {
     print("=================================================================")
     print("Student: \(student)")
     if loggedIn { print("*Logged in*") }
