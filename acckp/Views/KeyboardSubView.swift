@@ -24,7 +24,7 @@ struct KeyboardSubView: View {
   }
   var body: some View {
     //[Kayboard container]---------------------
-    VStack (spacing: 20){
+    VStack (spacing: 20) {
       //[Row 1]--------------------------------
       HStack(spacing: 13.0) {
         ForEach(row1, id:\.self) { letter in
@@ -75,20 +75,20 @@ struct KeyboardSubView: View {
         }
       }
       //[Row 5]--------------------------------
-      HStack(spacing:13){
-        HStack(spacing: 13){
+      HStack(spacing:13) {
+        HStack(spacing: 13) {
           if extra.contains(gVars.board) {
             ExtraLetterButton(text: extraLets[1], action: {
               gVars.type(text: extraLets[1], tts: true)
             })
           }
-          else if end.contains(gVars.board){
+          else if end.contains(gVars.board) {
             ExtraLetterButton(text: endLets[3], action: {
               gVars.type(text: endLets[3], tts: true)
             })
           }
           else { HiddenButton() }
-          if end.contains(gVars.board){
+          if end.contains(gVars.board) {
             ExtraLetterButton(text: endLets[2], action: {
               gVars.type(text: endLets[2], tts: true)
             })
@@ -105,7 +105,7 @@ struct KeyboardSubView: View {
       }
       //[Row 6]--------------------------------
       HStack(spacing: 13.0) {
-        HStack(){
+        HStack() {
           if extra.contains(gVars.board) {
             ExtraLetterButton(text: extraLets[2], action: {
               gVars.type(text: extraLets[2], tts: true)

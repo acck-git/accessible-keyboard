@@ -21,7 +21,7 @@ class UserData {
   //Update stats
   func update(correct_words: Int = 0, total_letters: Int = 0, typos: Int = 0) {
     //Today already saved
-    if stats.count > 0 && stats.last?.day == getDate(){
+    if stats.count > 0 && stats.last?.day == getDate() {
       stats[stats.count-1] = updateDay(stats: stats.last!, correct_words: correct_words, total_letters: total_letters, typos: typos)
       print("Updating today's stats.")
     }//Today wasn't saved yet (new entry for today)
@@ -70,24 +70,21 @@ class UserData {
     if loggedIn { print("*Logged in*") }
     print("Boards: \(boards)")
     if fullPrint {
-      if stats.count > 0 {
-        for stat in stats {
-          print("==================")
-          print("ID: \(stat.id)")
-          print("Day: \(stat.day)")
-          print("Total words: \(stat.total_words)")
-          print("Correct words: \(stat.correct_words)")
-          print("Total letters: \(stat.total_letters)")
-          print("Typos: \(stat.typos)")
-        }
+      for stat in stats {
+        print("==================")
+        print("ID: \(stat.id)")
+        print("Day: \(stat.day)")
+        print("Total words: \(stat.total_words)")
+        print("Correct words: \(stat.correct_words)")
+        print("Total letters: \(stat.total_letters)")
+        print("Typos: \(stat.typos)")
       }
-      else { print("No stats saved.") }
     }
     else { print("\(stats.count) stats saved.") }
     print("=================================================================")
   }
   //Copy stats
-  func fixStats(){
+  func fixStats() {
     let statsArr = self.stats
     self.stats = []
     for stat in statsArr {
@@ -95,7 +92,7 @@ class UserData {
     }
   }
   //Insert stats
-  func addStats(){
+  func addStats() {
     //let stat = self.stats[stats.count-1]
     //self.stats=[]
     self.stats.append(dayStats(day: "2024-07-06", total_words: 4, correct_words: 1, total_letters: 10, typos: 6))
@@ -106,7 +103,7 @@ class UserData {
     self.stats.append(dayStats(day: "2024-07-17", total_words: 4, correct_words: 2, total_letters: 13, typos: 3))
     //self.stats.append(stat)
   }
-  func addStatsNew(){
+  func addStatsNew() {
     self.stats=[]
     self.stats.append(dayStats(day: "2024-07-07", total_words: 1, correct_words: 0, total_letters: 3, typos: 2))
     self.stats.append(dayStats(day: "2024-07-08", total_words: 3, correct_words: 1, total_letters: 10, typos: 3))

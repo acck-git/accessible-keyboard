@@ -12,8 +12,8 @@ struct MainView: View {
   @State var alert: Bool = false
   var body: some View {
     //[Main container]---------------------
-    VStack (){
-      switch gVars.screen{
+    VStack () {
+      switch gVars.screen {
       case GlobalVars.screens.settings:
         SettingsView()
       case GlobalVars.screens.teacher:
@@ -45,7 +45,7 @@ struct MainView: View {
       }
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-    .padding(/*@START_MENU_TOKEN@*/.all, 0.0/*@END_MENU_TOKEN@*/)
+    .padding(.all, 0.0)
     .ignoresSafeArea(.keyboard)
     .onAppear(perform: fetchUsers)
   }

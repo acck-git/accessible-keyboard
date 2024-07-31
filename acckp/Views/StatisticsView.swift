@@ -8,22 +8,24 @@ import Charts
 
 struct StatisticsView: View {
   @ObservedObject var gVars = GlobalVars.get()
+  @State var students: [String] = []
   @State var stats: [dayStats] = []
   init () {
     if gVars.user_edit != nil {
+      _students = State(wrappedValue: gVars.getStudents(add:false))
       _stats = State(wrappedValue: gVars.user_edit!.stats)
     }
   }
   var body: some View {
     //[Statistics container]-------------------
-    VStack(spacing:20){
-      VStack(){
+    VStack(spacing:20) {
+      VStack() {
         Text("סטטיסטיקה לתלמיד")
           .lineLimit(1)
           .foregroundColor(.black)
           .font(.system(size: 30, weight: .heavy))
           .padding(.top, 20.0)
-        StudentPickerTeacher(array: gVars.getStudents(add:false), onChange: {
+        StudentPickerTeacher(array: students, onChange: {
           //print(gVars.student_edit)
           gVars.swapStudent(login: false)
           if gVars.user_edit != nil {
@@ -68,7 +70,7 @@ struct StatisticsView: View {
       .overlay(RoundedRectangle(cornerRadius: 15)
         .stroke(.black, lineWidth: 2))
       //[Bottom row]---------------------------
-      HStack(){
+      HStack() {
         HiddenButton().frame(maxWidth:.infinity)
         SettingsButton(image: "arrowshape.right", action: {
           gVars.screen = GlobalVars.screens.teacher})

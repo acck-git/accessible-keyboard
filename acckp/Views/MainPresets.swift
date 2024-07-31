@@ -95,7 +95,7 @@ struct VowelButton: View {
       }
     }
     else {
-      button.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/).cornerRadius(50)
+      button.disabled(true).cornerRadius(50)
     }
   }
 }

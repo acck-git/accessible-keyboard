@@ -42,8 +42,7 @@ struct StudentPicker: View {
   var onChange: (() -> Void)
   @State var gVars = GlobalVars.get()
   var body: some View {
-    Picker(selection: $gVars.student, label: Text("Picker")
-    ) {
+    Picker(selection: $gVars.student, label: Text("Picker")) {
       ForEach(array, id:\.self) {
         Text($0)
           .font(.largeTitle)
@@ -63,8 +62,7 @@ struct StudentPickerTeacher: View {
   var onChange: (() -> Void)
   @State var gVars = GlobalVars.get()
   var body: some View {
-    Picker(selection: $gVars.student_edit, label: Text("Picker")
-    ) {
+    Picker(selection: $gVars.student_edit, label: Text("Picker")) {
       ForEach(array, id:\.self) {
         Text($0)
           .font(.largeTitle)

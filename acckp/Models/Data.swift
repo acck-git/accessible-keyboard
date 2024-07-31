@@ -6,8 +6,8 @@ import Foundation
 import UIKit
 import SwiftData
 import AVKit
-
 var syntheziser = AVSpeechSynthesizer()
+
 //[Global vars & funcs]--------------------------
 class GlobalVars: ObservableObject {
   static var container: ModelContainer?
@@ -62,7 +62,7 @@ class GlobalVars: ObservableObject {
     syntheziser.speak(utterance)
   }
   //Say entire sentence
-  @IBAction func speak(){
+  @IBAction func speak() {
     let utterance = AVSpeechUtterance(string: self.inputText)
     utterance.rate = 0.3
     utterance.volume = 1
@@ -71,18 +71,17 @@ class GlobalVars: ObservableObject {
   }
   
   //[Teacher Login]-------------------------------
-  var temppass: [String] = ["passcheck", "t", "dev"]
+  var temppass: [String] = ["passcheck", "ttt", "dev"]
   func checkPass(pass: String) -> (Bool,String,Data) {
     //return false -> hides textfield
     //return true -> keeps textfield visible
     var correct = true
     var message = ""
     var json:Data = Data()
-    //------------------------------
     screen = screens.teacher
     return (!correct,message,json)
-    //------------------------------
-    switch temppass.firstIndex(of: pass){
+    //-----------------------------------
+    switch temppass.firstIndex(of: pass) {
     case 0:
       message = "Correct password."
       print(message)
@@ -91,9 +90,7 @@ class GlobalVars: ObservableObject {
       screen = screens.teacher
     case 2:
       //Dev export
-      //message = user!.exportJSON()
       json = user!.fetchJSON()
-      //print(message)
     default:
       //Incorrect password
       message = "Wrong password."
@@ -129,7 +126,8 @@ class GlobalVars: ObservableObject {
     return user
   }
   //Change the selected student
-  func swapStudent(login: Bool = false){
+  func swapStudent(login: Bool = false) {
+    var changed = false
     for u in users {
       if login {
         if u.student == student{
@@ -141,6 +139,7 @@ class GlobalVars: ObservableObject {
           self.image = ""
           self.inputText = ""
           //u.printUser()
+          changed = true
         }
         else {
           u.toggleLogin(state: false)
@@ -151,43 +150,39 @@ class GlobalVars: ObservableObject {
         if u.student == student_edit {
           self.user_edit = u
           u.printUser()
+          changed = true
           break
         }
       }
     }
+    if !changed {
+      self.user_edit = nil
+    }
   }
   
-  //Get object for selected username (or create new)
-  @MainActor func oldgetStudent(student: String) -> UserData{
-    let context = GlobalVars.container!.mainContext
-    var user: UserData
-    let query = FetchDescriptor<UserData>(
-      predicate: #Predicate { user in
-        user.student == student
-      }
-    )
-    let users: [UserData] = try! context.fetch(query)
-    if users.count == 0 {
-      user = UserData(student: student)
-      context.insert(user)
-      print("Created user \(student).")
-    }
-    else {
-      user = users.last!
-      print("Loaded user \(student).")
-      user.printUser()
-    }
-    return user
+  //Save change to boards
+  func updateBoard(index: Int, state: Bool) {
+    if self.user_edit == nil { return }
+    self.user_edit!.toggleBoard(index: index, state: state)
+    self.user_edit!.printUser()
   }
   //Save change to boards
-  func updateBoard(index: Int, state: Bool)
-  {
-    self.user_edit!.toggleBoard(index: index, state: state)
+  func updateStudent(name: String) {
+    if self.student_edit == GlobalVars.student_new {
+      user = UserData(student: name)
+      user_edit = user
+      users.append(user)
+    }
+    else {
+      if self.user_edit == nil { return }
+      user_edit.renameStudent(student: name)
+    }
+    student_edit = name
     self.user_edit!.printUser()
   }
   
   //[Images data]--------------------------------
-  func checkSpelling(){
+  func checkSpelling() {
     //[Calculate typos]--------------------------
     if inputText.count == 0 {
       image = ""
