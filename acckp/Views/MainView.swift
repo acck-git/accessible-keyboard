@@ -68,7 +68,7 @@ struct MainView: View {
       }
     }
     catch {
-      fatalError("Could not create fetch users: \(error)")
+      fatalError("Could not fetch users: \(error)")
     }
   }
 }

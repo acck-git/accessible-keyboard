@@ -6,12 +6,14 @@ import SwiftUI
 import SwiftData
 
 struct TeacherView: View {
+  @Environment(\.modelContext) private var ModelContext
   @ObservedObject var gVars = GlobalVars.get()
   @State var boards = StaticData.boards
   @State var NewName: String = ""
   @State var students: [String] = []
   @State var students_plain: [String] = []
   @State var students_new: [String] = []
+  @State var confirm: Bool = false
   init () {
     if gVars.user_edit != nil {
       _boards = State(wrappedValue: gVars.user_edit!.boards)
@@ -47,9 +49,18 @@ struct TeacherView: View {
                 .foregroundColor(.black)
                 .font(.system(size: 20, weight: .heavy))
             }
-            HStack(spacing:10)
-            {
-              DeleteTeacherButton(text: "מחק", action: {})
+            HStack(spacing:10) {
+              DeleteTeacherButton(text: "מחק", action: {
+                deleteUser(confirm: confirm)
+                confirm = true
+              })
+              .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirm) {
+                Button("מחק", role: .destructive) {
+                  deleteUser(confirm: confirm)
+                  confirm = false
+                }} message: {
+                  Text("לא ניתן לבטל פעולה זו. המשך?")
+              }
               SaveButton(text: "שמור", action: {
                 gVars.updateStudent(name: NewName)
                 students_plain = gVars.getStudents(add:false)
@@ -72,13 +83,8 @@ struct TeacherView: View {
             StudentPickerTeacher(array: students, onChange: {
               //print(gVars.student_edit)
               gVars.swapStudent(login: false)
-              if gVars.user_edit != nil {
-                boards = gVars.user_edit!.boards
-                print(boards)
-              }
-              else {
-                boards = StaticData.boards
-              }
+              boards = gVars.user_edit != nil ? gVars.user_edit!.boards : StaticData.boards
+              //print(boards)
             })
             VStack(spacing:0) {
               ForEach(StaticData.boardNames.indices, id:\.self) { index in
@@ -120,6 +126,21 @@ struct TeacherView: View {
     .padding(.vertical, 10)
     .padding(.horizontal, 20)
     .background(Color(uiColor:UIColor.systemGray5))
+  }
+  //[Load users from database]------------
+  @MainActor private func deleteUser(confirm: Bool) {
+    if !confirm {
+      print("not delete")
+      return
+    }
+      print("Deleted user")
+    do {
+      //var user = gVars.deleteStudent()
+      //ModelContext.delete(result!)
+    }
+    catch {
+      fatalError("Could not delete user: \(error)")
+    }
   }
 }
 

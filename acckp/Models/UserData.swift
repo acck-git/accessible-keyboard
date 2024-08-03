@@ -45,6 +45,11 @@ class UserData {
     self.loggedIn = state
     //print("Updated user \(student).")
   }
+  //Update name
+  func deleteStudent(student: String) {
+    self.student = student
+    print("Renamed to student \(student).")
+  }
   //Create json from data
   func fetchJSON() -> Data {
     var statsJSON: [[String: Any]] = []
@@ -58,7 +63,7 @@ class UserData {
       ])
     }
     let json = try? JSONSerialization.data(withJSONObject: ["student":student,"stats":statsJSON], options: .prettyPrinted)
-    printUser()
+    printUser(fullPrint: true)
     return json!
   }
   

@@ -108,7 +108,6 @@ class GlobalVars: ObservableObject {
     //print(students)
     return students
   }
-  
   //Find logged in user
   func loginStudent() -> UserData? {
     for u in users {
@@ -159,7 +158,6 @@ class GlobalVars: ObservableObject {
       self.user_edit = nil
     }
   }
-  
   //Save change to boards
   func updateBoard(index: Int, state: Bool) {
     if self.user_edit == nil { return }
@@ -179,6 +177,14 @@ class GlobalVars: ObservableObject {
     }
     student_edit = name
     self.user_edit!.printUser()
+  }
+  //Save change to boards
+  func deleteStudent() -> UserData {
+    var user_del = self.user_edit
+    
+    
+    
+    return user_del!
   }
   
   //[Images data]--------------------------------
