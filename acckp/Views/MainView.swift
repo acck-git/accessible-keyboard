@@ -55,12 +55,12 @@ struct MainView: View {
     do {
       gVars.users = try ModelContext.fetch(query)
       print(gVars.users.count)
-      let result = gVars.loginStudent()
-      if result != nil {
-        ModelContext.insert(result!)
+      let user = gVars.loginStudent()
+      if user != nil {
+        ModelContext.insert(user!)
         //try ModelContext.save()
-        result!.printUser()
-        print("Created user \(result!.student).")
+        user!.printUser()
+        print("Created user \(user!.student).")
       }
       else {
         gVars.user.printUser()

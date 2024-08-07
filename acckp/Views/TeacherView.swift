@@ -9,7 +9,9 @@ struct TeacherView: View {
   @Environment(\.modelContext) private var ModelContext
   @ObservedObject var gVars = GlobalVars.get()
   @State var boards = StaticData.boards
-  @State var NewName: String = ""
+  @State var newName: String = ""
+  @FocusState var textFieldFocus: Bool
+  @FocusState var pickerFieldFocus: Bool
   @State var students: [String] = []
   @State var students_plain: [String] = []
   @State var students_new: [String] = []
@@ -41,31 +43,34 @@ struct TeacherView: View {
                 students = students_plain
               }
               gVars.swapStudent(login: false)
-            })
+            }).focused($pickerFieldFocus)
+              
             HStack(spacing:20) {
-              StudentEditInput(placeholder: "הקלד שם...", text: $NewName)
+              StudentEditInput(placeholder: "הקלד שם...", text: $newName)
+                .focused($textFieldFocus)
               Text("שם:")
                 .lineLimit(1)
                 .foregroundColor(.black)
                 .font(.system(size: 20, weight: .heavy))
             }
             HStack(spacing:10) {
-              DeleteTeacherButton(text: "מחק", action: {
-                deleteUser(confirm: confirm)
-                confirm = true
-              })
-              .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirm) {
-                Button("מחק", role: .destructive) {
-                  deleteUser(confirm: confirm)
-                  confirm = false
-                }} message: {
-                  Text("לא ניתן לבטל פעולה זו. המשך?")
+              if gVars.student_edit != GlobalVars.student_new {
+                DeleteTeacherButton(text: "מחק", action: {
+                  deleteUser()
+                  confirm = true
+                })
+                .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirm) {
+                  Button("מחק", role: .destructive) {
+                    deleteUser()
+                    confirm = false
+                  }} message: {
+                    Text("לא ניתן לבטל פעולה זו. המשך?")
+                  }
               }
               SaveButton(text: "שמור", action: {
-                gVars.updateStudent(name: NewName)
-                students_plain = gVars.getStudents(add:false)
-                students_new = gVars.getStudents(add:true)
-                students = students_plain
+                addUser()
+                newName = ""
+                textFieldFocus = false
               })
             }
           }
@@ -122,24 +127,41 @@ struct TeacherView: View {
       }
       .frame(height: StaticData.screenheight/9)
     }
+    .onChange(of: pickerFieldFocus) {
+      print(pickerFieldFocus)
+    }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(.vertical, 10)
     .padding(.horizontal, 20)
     .background(Color(uiColor:UIColor.systemGray5))
   }
-  //[Load users from database]------------
-  @MainActor private func deleteUser(confirm: Bool) {
-    if !confirm {
-      print("not delete")
-      return
+  //[Add user to database]------------
+  @MainActor private func addUser() {
+    //Rename/add new
+    let user = gVars.updateStudent(name: newName)
+    //Add new
+    if user != nil {
+      ModelContext.insert(user!)
+      //try ModelContext.save()
+      user!.printUser()
+      print("Created user \(user!.student).")
     }
+    students_plain = gVars.getStudents(add:false)
+    students_new = gVars.getStudents(add:true)
+    students = students_plain
+  }
+  //[Delete user from database]------------
+  @MainActor private func deleteUser() {
+    if !confirm { return }
+    let user = gVars.deleteStudent()
+    if user != nil {
+      ModelContext.delete(user!)
+      //try ModelContext.save()
+      user!.printUser()
       print("Deleted user")
-    do {
-      //var user = gVars.deleteStudent()
-      //ModelContext.delete(result!)
-    }
-    catch {
-      fatalError("Could not delete user: \(error)")
+      students_plain = gVars.getStudents(add:false)
+      students_new = gVars.getStudents(add:true)
+      students = students_plain
     }
   }
 }

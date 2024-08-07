@@ -165,25 +165,39 @@ class GlobalVars: ObservableObject {
     self.user_edit!.printUser()
   }
   //Save change to boards
-  func updateStudent(name: String) {
+  func updateStudent(name: String) -> UserData? {
+    var newUser: UserData?
+    //New user
     if self.student_edit == GlobalVars.student_new {
       user = UserData(student: name)
       user_edit = user
       users.append(user)
+      newUser = user
     }
+    //Update user
     else {
-      if self.user_edit == nil { return }
+      if self.user_edit == nil { return nil }
       user_edit.renameStudent(student: name)
     }
     student_edit = name
     self.user_edit!.printUser()
+    return newUser
   }
   //Save change to boards
-  func deleteStudent() -> UserData {
-    var user_del = self.user_edit
-    
-    
-    
+  func deleteStudent() -> UserData? {
+    if student_edit == GlobalVars.student_new { return nil }
+    let user_del = user_edit
+    if users.count == 1 {
+      user = UserData(student: GlobalVars.student_def)
+      return nil
+    }
+    self.users = users.filter({ $0.student != user_del!.student })
+    self.user_edit = self.users[0]
+    self.student_edit = self.user_edit.student
+    if student == user_del?.student {
+      self.student = self.users[0].student
+      self.swapStudent(login: true)
+    }
     return user_del!
   }
   
