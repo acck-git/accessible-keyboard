@@ -165,40 +165,48 @@ class GlobalVars: ObservableObject {
     self.user_edit!.printUser()
   }
   //Save change to boards
-  func updateStudent(name: String) -> UserData? {
+  func updateStudent(name: String) -> (UserData?,String,Bool) {
     var newUser: UserData?
+    var message = ""
+    //Name isn't in use
+    for u in users {
+      if u.student == name { return (nil, "שם זה כבר בשימוש.", false) }
+    }
     //New user
     if self.student_edit == GlobalVars.student_new {
       user = UserData(student: name)
       user_edit = user
       users.append(user)
       newUser = user
+      message = "משתמש נוסף בהצלחה."
     }
     //Update user
     else {
-      if self.user_edit == nil { return nil }
+      if self.user_edit == nil { return (nil,"",true) }
       user_edit.renameStudent(student: name)
+      message = "משתמש עודכן בהצלחה."
     }
     student_edit = name
     self.user_edit!.printUser()
-    return newUser
+    return (newUser,message,true)
   }
   //Save change to boards
-  func deleteStudent() -> UserData? {
-    if student_edit == GlobalVars.student_new { return nil }
+  func deleteStudent() -> (UserData?,UserData?) {
+    if student_edit == GlobalVars.student_new { return (nil,nil) }
     let user_del = user_edit
-    if users.count == 1 {
-      user = UserData(student: GlobalVars.student_def)
-      return nil
-    }
+    var def_user: UserData?
     self.users = users.filter({ $0.student != user_del!.student })
+    if users.count == 0 {
+      def_user = UserData(student: GlobalVars.student_def)
+      self.users.append(def_user!)
+    }
     self.user_edit = self.users[0]
     self.student_edit = self.user_edit.student
     if student == user_del?.student {
       self.student = self.users[0].student
       self.swapStudent(login: true)
     }
-    return user_del!
+    return (user_del!,def_user)
   }
   
   //[Images data]--------------------------------

@@ -9,7 +9,6 @@ import SwiftData
 struct MainView: View {
   @Environment(\.modelContext) private var ModelContext
   @ObservedObject var gVars = GlobalVars.get()
-  @State var alert: Bool = false
   var body: some View {
     //[Main container]---------------------
     VStack () {

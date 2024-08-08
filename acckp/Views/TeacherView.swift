@@ -8,14 +8,19 @@ import SwiftData
 struct TeacherView: View {
   @Environment(\.modelContext) private var ModelContext
   @ObservedObject var gVars = GlobalVars.get()
-  @State var boards = StaticData.boards
-  @State var newName: String = ""
+  //[User names]-------------------------------
   @FocusState var textFieldFocus: Bool
+  @State var newName: String = ""
+  @State var alert: Bool = false
+  @State var alertMessage = ""
+  @State var confirm: Bool = false
+  //[User boards]------------------------------
   @FocusState var pickerFieldFocus: Bool
+  @State var boards = StaticData.boards
+  //[Piker]------------------------------------
   @State var students: [String] = []
   @State var students_plain: [String] = []
   @State var students_new: [String] = []
-  @State var confirm: Bool = false
   init () {
     if gVars.user_edit != nil {
       _boards = State(wrappedValue: gVars.user_edit!.boards)
@@ -44,11 +49,11 @@ struct TeacherView: View {
               }
               gVars.swapStudent(login: false)
             }).focused($pickerFieldFocus)
-              
-            HStack(spacing:20) {
+            
+            HStack(spacing:10) {
               StudentEditInput(placeholder: "הקלד שם...", text: $newName)
                 .focused($textFieldFocus)
-              Text("שם:")
+              Text("שם חדש:")
                 .lineLimit(1)
                 .foregroundColor(.black)
                 .font(.system(size: 20, weight: .heavy))
@@ -58,6 +63,8 @@ struct TeacherView: View {
                 DeleteTeacherButton(text: "מחק", action: {
                   deleteUser()
                   confirm = true
+                  newName = ""
+                  textFieldFocus = false
                 })
                 .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirm) {
                   Button("מחק", role: .destructive) {
@@ -68,9 +75,10 @@ struct TeacherView: View {
                   }
               }
               SaveButton(text: "שמור", action: {
-                addUser()
-                newName = ""
-                textFieldFocus = false
+                if addUser() {
+                  newName = ""
+                  textFieldFocus = false
+                }
               })
             }
           }
@@ -134,11 +142,14 @@ struct TeacherView: View {
     .padding(.vertical, 10)
     .padding(.horizontal, 20)
     .background(Color(uiColor:UIColor.systemGray5))
+    .alert(alertMessage, isPresented: $alert, actions: {})
   }
   //[Add user to database]------------
-  @MainActor private func addUser() {
+  @MainActor private func addUser() -> Bool {
     //Rename/add new
-    let user = gVars.updateStudent(name: newName)
+    var user: UserData?
+    var clearField = false
+    (user,alertMessage,clearField) = gVars.updateStudent(name: newName)
     //Add new
     if user != nil {
       ModelContext.insert(user!)
@@ -146,23 +157,32 @@ struct TeacherView: View {
       user!.printUser()
       print("Created user \(user!.student).")
     }
-    students_plain = gVars.getStudents(add:false)
-    students_new = gVars.getStudents(add:true)
-    students = students_plain
-  }
-  //[Delete user from database]------------
-  @MainActor private func deleteUser() {
-    if !confirm { return }
-    let user = gVars.deleteStudent()
-    if user != nil {
-      ModelContext.delete(user!)
-      //try ModelContext.save()
-      user!.printUser()
-      print("Deleted user")
+    if (clearField) {
       students_plain = gVars.getStudents(add:false)
       students_new = gVars.getStudents(add:true)
       students = students_plain
     }
+    if alertMessage != "" { alert = true }
+    return clearField
+  }
+  //[Delete user from database]------------
+  @MainActor private func deleteUser() {
+    if !confirm { return }
+    let (user_del,def_user) = gVars.deleteStudent()
+    if user_del != nil {
+      ModelContext.delete(user_del!)
+      //try ModelContext.save()
+      print("Deleted user")
+    }
+    if def_user != nil {
+      ModelContext.insert(def_user!)
+      //try ModelContext.save()
+      def_user!.printUser()
+      print("Created user \(def_user!.student).")
+    }
+    students_plain = gVars.getStudents(add:false)
+    students_new = gVars.getStudents(add:true)
+    students = students_plain
   }
 }
 
