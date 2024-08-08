@@ -12,6 +12,7 @@ var syntheziser = AVSpeechSynthesizer()
 class GlobalVars: ObservableObject {
   static var container: ModelContainer?
   static var singleton: GlobalVars!
+  static var colorSet: Int?
   //App states
   enum screens {case main, settings, teacher, stats}
   @Published var screen: screens          //currently displayed screen (uses enum)
@@ -110,19 +111,25 @@ class GlobalVars: ObservableObject {
   }
   //Find logged in user
   func loginStudent() -> UserData? {
+    var login_user: UserData?
     for u in users {
       if u.loggedIn {
         user = u
         user_edit = u
         student = u.student
+        GlobalVars.colorSet = u.colorSet
         return nil
       }
     }
-    user = UserData(student: GlobalVars.student_def, loggedIn: true)
+    if login_user != nil {
+      login_user = UserData(student: GlobalVars.student_def, loggedIn: true)
+      user = login_user
+      users.append(user)
+    }
     user_edit = user
     student = user.student
-    users.append(user)
-    return user
+    GlobalVars.colorSet = user.colorSet
+    return login_user
   }
   //Change the selected student
   func swapStudent(login: Bool = false) {
@@ -268,6 +275,16 @@ class GlobalVars: ObservableObject {
 final class StaticData {
   static let screenwidth:CGFloat = UIScreen.main.bounds.width
   static let screenheight:CGFloat = UIScreen.main.bounds.height
+  //[Color]--------------------------------------
+  static let vowel_col = [0xFFEB99,0xB38F00,0xFFEB99,0xB38F00]
+  static let board_col = [0xFFD119,0x806600,0xFFD119,0x806600]
+  static let space_col = [0xCDCCF3,0x3E3C96,0xCDCCF3,0x3E3C96]
+  static let red_col = [0xFF766E,0x99231D,0xFF766E,0x99231D]
+  static let extra_col = [0xDBF7E0,0x359846,0xDBF7E0,0x359846]
+  static let settings_col = [0xCCE4FF,0x0055B3,0xCCE4FF,0x0055B3]
+  static let bg1_col = [0xFFFFFF,0x000000,0xFFEB99,0x000000]
+  static let bg2_col = [0xE2E2E2,0x1E1E1E,0xFFCC00,0x1E1E1E]
+  static  let text_col = [0x000000,0xFFFFFF,0x000000,0xFFCC00]
   static let boardNames = ["קמץ","חיריק","סגול","חולם","עיצור","שורוק"]
   static let boards = [false,false,false,false,false,false]
   static let boards_def = [true,false,false,false,false,false]
