@@ -145,7 +145,7 @@ struct KeyboardSubView: View {
     .padding(.horizontal, 18.0)
     .padding(.top, 20)
     .padding(.bottom, 10)
-    .background(Color(uiColor:UIColor.systemGray5))
+    .background(Color(hex:StaticData.bg2_col[gVars.colorSet]))
   }
 }
 

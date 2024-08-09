@@ -11,14 +11,14 @@ struct TeacherLoginButton: View {
   var body: some View {
     Button(action: action, label: { Text(text)
         .frame(width: 155, height: 80)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .font(.system(size: 30, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 5)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
     .buttonRepeatBehavior(.enabled)
-    .background(.white)
+    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
     .cornerRadius(5)
   }
 }
@@ -28,12 +28,12 @@ struct TeacherLoginInput: View {
   @Binding var text: String
   var body: some View {
     SecureField(placeholder, text: $text)
-      .foregroundColor(.black)
+      .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
       .font(.system(size: 35, weight: .heavy))
       .frame(width: 300, height: 80, alignment: .trailing)
       .padding(.horizontal,6)
       .environment(\.layoutDirection,.rightToLeft)
-      .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+      .border(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
   }
 }
 //[Student Picker]---------------------------------
@@ -51,9 +51,9 @@ struct StudentPicker: View {
     .onChange(of: gVars.student, initial: true){onChange()}
     .scaleEffect(2)
     .pickerStyle(.menu)
-    .accentColor(.black)
+    .accentColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
     .frame(width: 400, height: 80, alignment: .center)
-    .border(Color.black)
+    .border(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
   }
 }
 //[Student Picker Teacher]---------------------------------
@@ -71,11 +71,11 @@ struct StudentPickerTeacher: View {
     .onChange(of: gVars.student_edit, initial: true){onChange()}
     .scaleEffect(1.5)
     .pickerStyle(.menu)
-    .accentColor(.black)
+    .accentColor(Color(hex:StaticData.text_col[0]))
     .frame(height: 40, alignment: .center)
     .frame(maxWidth: .infinity)
-    .background(Color.white)
-    .border(Color.black)
+    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
+    .border(Color(hex:StaticData.text_col[0]))
   }
 }
 
@@ -89,12 +89,12 @@ struct ArrowButton: View {
         .scaledToFit()
         .padding(EdgeInsets(top: -10.0, leading: 20.0, bottom: -10.0, trailing: 20.0))
         .frame(width: 95, height: 200)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .overlay(RoundedRectangle(cornerRadius: 50)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
-    .background(Color(uiColor:UIColor.systemGray5))
+    .background(Color(hex:StaticData.bg2_col[GlobalVars.get().colorSet]))
     .cornerRadius(50)
   }
 }
@@ -109,10 +109,10 @@ struct ImageButton: View {
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(RoundedRectangle(cornerRadius: 0)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
-    .background(.white)
+    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
     .cornerRadius(0)
   }
 }
@@ -127,7 +127,7 @@ struct TinyImageButton: View {
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .frame(width: 100, height: 100)
     })
-    .background(.white)
+    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
   }
 }
 //[Massive Image Button]-------------------------------
@@ -141,7 +141,7 @@ struct MassiveImageButton: View {
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     })
-    .background(.white)
+    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
   }
 }
 //[Submit Image Button]---------------------------------
@@ -154,30 +154,52 @@ struct ImageSubmitButton: View {
         .scaledToFit()
         .padding(EdgeInsets(top: 20.0, leading: 20.0, bottom: 20.0, trailing: 20.0))
         .frame(width: 80, height: 80)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .overlay(RoundedRectangle(cornerRadius: 50)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
-    .background(Color(hex:0x65C466))
+    .background(Color(hex:StaticData.confirm_col[GlobalVars.get().colorSet]))
     .cornerRadius(50)
   }
 }
+//[Login Button]---------------------------------
+struct ColorButton: View {
+  var text: String
+  var set: Int
+  var body: some View {
+    Button(action: {
+      GlobalVars.get().updateColor(colorSet: set)
+    }, label: { Text(text)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foregroundColor(Color(hex:StaticData.text_col[set]))
+        .font(.system(size: 45, weight: .heavy))
+        .overlay(RoundedRectangle(cornerRadius: 5)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
+        )
+    })
+    .buttonRepeatBehavior(.enabled)
+    .background(Color(hex:StaticData.bg1_col[set]))
+    .cornerRadius(5)
+  }
+}
+
+//[Rename students]------------------------------------
 struct StudentEditInput: View {
   var placeholder: String
   @Binding var text: String
   var body: some View {
     TextField(placeholder, text: $text)
       .environment(\.layoutDirection,.rightToLeft)
-      .foregroundColor(.black)
+      .foregroundColor(Color(hex:StaticData.text_col[0]))
       .font(.system(size: 20, weight: .heavy))
       .frame(height: 40, alignment: .trailing)
-      .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+      .frame(maxWidth: .infinity)
       .padding(.horizontal,6)
       .overlay(RoundedRectangle(cornerRadius: 5)
-        .stroke(.black, lineWidth: 2)
+        .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
       )
-      .background(Color(.white))
+      .background(Color(hex:StaticData.bg1_col[0]))
   }
 }
 //[Save key]---------------------------------
@@ -186,16 +208,16 @@ struct SaveButton: View {
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Text(text)
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+        .frame(maxWidth: .infinity)
         .frame(maxHeight: .infinity)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .font(.system(size: 25))
         .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
         )
     })
     .buttonRepeatBehavior(.enabled)
-    .background(Color(.white))
+    .background(Color(hex:StaticData.bg1_col[0]))
     .cornerRadius(15)
   }
 }
@@ -205,16 +227,16 @@ struct DeleteTeacherButton: View {
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Text(text)
-        .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+        .frame(maxWidth: .infinity)
         .frame(maxHeight: .infinity)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .font(.system(size: 25))
         .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
         )
     })
     .buttonRepeatBehavior(.enabled)
-    .background(Color(hex:0xFF766E))
+    .background(Color(hex:StaticData.delete_col[0]))
     .cornerRadius(15)
   }
 }
@@ -229,31 +251,39 @@ struct ToggleBoard: View {
     .onChange(of: ison, initial: ison){onChange()}
     .environment(\.layoutDirection,.rightToLeft)
     .frame(width: StaticData.screenwidth/6)
-    .frame(maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+    .frame(maxHeight: .infinity)
     .font(.system(size: 25))
-    //.frame(minHeight: 30)
     .padding(.horizontal,10)
     .padding(.vertical, 5)
-    .background(Color(.systemGray6))
+    .background(Color(hex:StaticData.bg2_col[0]))
   }
 }
 
 //------------------------------------------------
 //preview stuff
 struct SettingsPresetsPreview: View {
+  @State var pass: String = ""
   var body: some View {
     VStack {
       //TeacherLoginButton(text: "כניסת מורה", action: {})
+      TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
       //ArrowButton(image:"arrowtriangle.left.fill",action: {})
       //ImageButton(image:"a1", action: {})
       //TinyImageButton(image:"a1", action: {})
       //ImageSubmitButton(image: "checkmark", action: {})
       StudentPicker(array: ["one","two"], onChange: {})
       StudentPickerTeacher(array: ["one","two"], onChange: {})
+      HStack(spacing: 20) {
+        ColorButton(text: "טקסט", set:0)
+        ColorButton(text: "טקסט", set:1)
+        ColorButton(text: "טקסט", set:2)
+        ColorButton(text: "טקסט", set:3)
+      }.frame(height: StaticData.screenheight/9)
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-    .padding(/*@START_MENU_TOKEN@*/.horizontal, 0.0/*@END_MENU_TOKEN@*/)
+    .padding(.horizontal, 0.0)
     .padding(.vertical, -22.0)
+    .background(Color(hex:StaticData.bg1_col[1]))
     //.overlay(MassiveImageButton(image: "a1", action: {}))
   }
 }

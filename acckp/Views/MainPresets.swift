@@ -13,7 +13,7 @@ struct TextInput: View {
       iDummyCursor().fontSize(45)
       Text(text)
         .lineLimit(1)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .font(.system(size: 35, weight: .heavy))
         .padding(.trailing, -5.0)
         .environment(\.layoutDirection,.rightToLeft)
@@ -21,7 +21,7 @@ struct TextInput: View {
     }.frame(maxWidth: .infinity, minHeight: 80, alignment: .trailing)
       .padding(.horizontal)
       .overlay(RoundedRectangle(cornerRadius: 5)
-        .stroke(.black, lineWidth: 2))
+        .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2))
       .cornerRadius(5)
   }
 }
@@ -32,14 +32,14 @@ struct LetterButton: View {
   var body: some View {
     Button(action: action, label: { Text(text)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .font(.system(size: 35, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
     .buttonRepeatBehavior(.enabled)
-    .background(.white)
+    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
     .cornerRadius(15)
   }
 }
@@ -50,14 +50,14 @@ struct ExtraLetterButton: View {
   var body: some View {
     Button(action: action, label: { Text(text)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .font(.system(size: 35, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
     .buttonRepeatBehavior(.enabled)
-    .background(Color(hex:0xDBF7E0))
+    .background(Color(hex:StaticData.extra_col[GlobalVars.get().colorSet]))
     .cornerRadius(15)
   }
 }
@@ -83,15 +83,15 @@ struct VowelButton: View {
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(RoundedRectangle(cornerRadius: 50)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
     if enabled {
       if selected {
-        button.background(Color(hex:0xFFD119)).cornerRadius(50)
+        button.background(Color(hex:StaticData.board_col[GlobalVars.get().colorSet])).cornerRadius(50)
       }
       else {
-        button.background(Color(hex:0xFFEB99)).cornerRadius(50)
+        button.background(Color(hex:StaticData.vowel_col[GlobalVars.get().colorSet])).cornerRadius(50)
       }
     }
     else {
@@ -106,14 +106,14 @@ struct SpaceButton: View {
   var body: some View {
     Button(action: action, label: { Text(text)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .font(.system(size: 35))
         .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
     .buttonRepeatBehavior(.enabled)
-    .background(Color(hex:0xCDCCF3))
+    .background(Color(hex:StaticData.space_col[GlobalVars.get().colorSet]))
     .cornerRadius(15)
   }
 }
@@ -125,14 +125,14 @@ struct DeleteButton: View {
     Button(action: action, label: { Text(text)
         .frame(width: 180)
         .frame(maxHeight: .infinity)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .font(.system(size: 35))
         .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
     .buttonRepeatBehavior(.enabled)
-    .background(Color(hex:0xFF766E))
+    .background(Color(hex:StaticData.delete_col[GlobalVars.get().colorSet]))
     .cornerRadius(15)
   }
 }
@@ -146,12 +146,12 @@ struct SettingsButton: View {
         .scaledToFit()
         .padding(EdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0))
         .frame(width: 95, height: 95)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .overlay(RoundedRectangle(cornerRadius: 50)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
-    .background(Color(hex:0xCCE4FF))
+    .background(Color(hex:StaticData.settings_col[GlobalVars.get().colorSet]))
     .cornerRadius(50)
   }
 }
@@ -165,12 +165,12 @@ struct TTSButton: View {
         .scaledToFit()
         .padding(EdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0))
         .frame(width: 80, height: 80)
-        .foregroundColor(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
         .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(.black, lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
-    .background(.white)
+    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
     .cornerRadius(15)
   }
 }
@@ -196,7 +196,7 @@ struct MainPresetsPreview: View {
       DeleteButton(text: "א", action: {})
       SettingsButton(image: "gear", action: {})
       TTSButton(image: "eraser", action: {})
-    }
+    }.background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
   }
 }
 #Preview {

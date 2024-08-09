@@ -5,7 +5,6 @@
 import SwiftUI
 import SwiftData
 
-
 struct MainView: View {
   @Environment(\.modelContext) private var ModelContext
   @ObservedObject var gVars = GlobalVars.get()
@@ -24,11 +23,12 @@ struct MainView: View {
           ToplineSubView()
             .frame(height: StaticData.screenheight * (1/7))
             .padding(.vertical, 0.0)
+            .background(Color(hex:StaticData.bg1_col[gVars.colorSet]))
           //-----------------------
           Divider()
             .frame(height: 5.0)
-            .foregroundColor(.black)
-            .overlay(.black)
+            .foregroundColor(Color(hex:StaticData.text_col[gVars.colorSet]))
+            .overlay(Color(hex:StaticData.text_col[gVars.colorSet]))
           //-----------------------
           KeyboardSubView()
         }

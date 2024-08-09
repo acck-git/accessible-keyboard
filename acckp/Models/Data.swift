@@ -12,10 +12,10 @@ var syntheziser = AVSpeechSynthesizer()
 class GlobalVars: ObservableObject {
   static var container: ModelContainer?
   static var singleton: GlobalVars!
-  static var colorSet: Int?
   //App states
   enum screens {case main, settings, teacher, stats}
   @Published var screen: screens          //currently displayed screen (uses enum)
+  @Published var colorSet: Int = 0
   @Published var board: Int               //currently displayed vowels board
   @Published var inputText: String        //displayed text in text input (main screen)
   @Published var student_edit: String
@@ -117,7 +117,7 @@ class GlobalVars: ObservableObject {
         user = u
         user_edit = u
         student = u.student
-        GlobalVars.colorSet = u.colorSet
+        colorSet = u.colorSet
         return nil
       }
     }
@@ -128,7 +128,7 @@ class GlobalVars: ObservableObject {
     }
     user_edit = user
     student = user.student
-    GlobalVars.colorSet = user.colorSet
+    colorSet = user.colorSet
     return login_user
   }
   //Change the selected student
@@ -141,6 +141,7 @@ class GlobalVars: ObservableObject {
           self.user = u
           self.user_edit = u
           self.student_edit = student
+          self.colorSet = u.colorSet
           self.board = 0
           self.image = ""
           self.inputText = ""
@@ -169,7 +170,14 @@ class GlobalVars: ObservableObject {
   func updateBoard(index: Int, state: Bool) {
     if self.user_edit == nil { return }
     self.user_edit!.toggleBoard(index: index, state: state)
-    self.user_edit!.printUser()
+    //self.user_edit!.printUser()
+  }
+  //Save change to color set
+  func updateColor(colorSet: Int) {
+    self.colorSet = colorSet
+    if self.user == nil { return }
+    self.user!.toggleColors(colorSet: colorSet)
+    self.user!.printUser()
   }
   //Save change to boards
   func updateStudent(name: String) -> (UserData?,String,Bool) {
@@ -276,15 +284,16 @@ final class StaticData {
   static let screenwidth:CGFloat = UIScreen.main.bounds.width
   static let screenheight:CGFloat = UIScreen.main.bounds.height
   //[Color]--------------------------------------
-  static let vowel_col = [0xFFEB99,0xB38F00,0xFFEB99,0xB38F00]
-  static let board_col = [0xFFD119,0x806600,0xFFD119,0x806600]
-  static let space_col = [0xCDCCF3,0x3E3C96,0xCDCCF3,0x3E3C96]
-  static let red_col = [0xFF766E,0x99231D,0xFF766E,0x99231D]
-  static let extra_col = [0xDBF7E0,0x359846,0xDBF7E0,0x359846]
-  static let settings_col = [0xCCE4FF,0x0055B3,0xCCE4FF,0x0055B3]
-  static let bg1_col = [0xFFFFFF,0x000000,0xFFEB99,0x000000]
-  static let bg2_col = [0xE2E2E2,0x1E1E1E,0xFFCC00,0x1E1E1E]
-  static  let text_col = [0x000000,0xFFFFFF,0x000000,0xFFCC00]
+  static let vowel_col: [UInt] = [0xFFEB99,0xcca300,0xFFEB99,0xcca300]
+  static let board_col: [UInt] = [0xFFD119,0x997a00,0xFFD119,0x997a00]
+  static let space_col: [UInt] = [0xCDCCF3,0x3E3C96,0xCDCCF3,0x3E3C96]
+  static let delete_col: [UInt] = [0xFF766E,0x99231D,0xFF766E,0x99231D]
+  static let extra_col: [UInt] = [0xDBF7E0,0x359846,0xDBF7E0,0x359846]
+  static let settings_col: [UInt] = [0xCCE4FF,0x0055B3,0xCCE4FF,0x0055B3]
+  static let confirm_col: [UInt] = [0x359846,0xDBF7E0,0x359846,0xDBF7E0]
+  static let bg1_col: [UInt] = [0xFFFFFF,0x000000,0xFFCC00,0x000000]
+  static let bg2_col: [UInt] = [0xE2E2E2,0x1E1E1E,0xFFEB99,0x1E1E1E]
+  static  let text_col: [UInt] = [0x000000,0xFFFFFF,0x000000,0xFFCC00]
   static let boardNames = ["קמץ","חיריק","סגול","חולם","עיצור","שורוק"]
   static let boards = [false,false,false,false,false,false]
   static let boards_def = [true,false,false,false,false,false]

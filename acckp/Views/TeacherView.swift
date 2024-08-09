@@ -38,7 +38,7 @@ struct TeacherView: View {
           VStack(spacing:15) {
             Text("תלמידים")
               .lineLimit(1)
-              .foregroundColor(.black)
+              .foregroundColor(Color(hex:StaticData.text_col[0]))
               .font(.system(size: 25, weight: .heavy))
             StudentPickerTeacher(array: students_new, onChange: {
               if gVars.student_edit == GlobalVars.student_new {
@@ -55,7 +55,7 @@ struct TeacherView: View {
                 .focused($textFieldFocus)
               Text("שם חדש:")
                 .lineLimit(1)
-                .foregroundColor(.black)
+                .foregroundColor(Color(hex:StaticData.text_col[0]))
                 .font(.system(size: 20, weight: .heavy))
             }
             HStack(spacing:10) {
@@ -86,12 +86,12 @@ struct TeacherView: View {
           .padding(.horizontal, 20)
           .padding(.vertical, 10)
           .overlay(RoundedRectangle(cornerRadius: 15)
-            .stroke(.black, lineWidth: 2))
+            .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2))
           //[Opening boards]-------------------
           VStack(spacing: 15) {
             Text("פתיחת לוחות")
               .lineLimit(1)
-              .foregroundColor(.black)
+              .foregroundColor(Color(hex:StaticData.text_col[0]))
               .font(.system(size: 25, weight: .heavy))
             StudentPickerTeacher(array: students, onChange: {
               //print(gVars.student_edit)
@@ -113,7 +113,7 @@ struct TeacherView: View {
           .padding(.vertical, 10)
           .padding(.horizontal, 20)
           .overlay(RoundedRectangle(cornerRadius: 15)
-            .stroke(.black, lineWidth: 2))
+            .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2))
         }
         .frame(maxWidth: StaticData.screenwidth/3, maxHeight: .infinity)
         //[Adding images]---------------------
@@ -121,7 +121,7 @@ struct TeacherView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(.black, lineWidth: 2))
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2))
       }
       //[Bottom row]--------------------------
       HStack() {
@@ -141,7 +141,7 @@ struct TeacherView: View {
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(.vertical, 10)
     .padding(.horizontal, 20)
-    .background(Color(uiColor:UIColor.systemGray5))
+    .background(Color(hex:StaticData.bg2_col[0]))
     .alert(alertMessage, isPresented: $alert, actions: {})
   }
   //[Add user to database]------------

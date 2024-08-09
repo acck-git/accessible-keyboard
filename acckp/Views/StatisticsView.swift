@@ -22,7 +22,7 @@ struct StatisticsView: View {
       VStack() {
         Text("סטטיסטיקה לתלמיד")
           .lineLimit(1)
-          .foregroundColor(.black)
+          .foregroundColor(Color(hex:StaticData.text_col[0]))
           .font(.system(size: 30, weight: .heavy))
           .padding(.top, 20.0)
         StudentPickerTeacher(array: students, onChange: {
@@ -62,13 +62,13 @@ struct StatisticsView: View {
           }
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .overlay(RoundedRectangle(cornerRadius: 15)
-            .stroke(.black, lineWidth: 2))
+            .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2))
         }
         .padding(.all, 20)
       }
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .overlay(RoundedRectangle(cornerRadius: 15)
-        .stroke(.black, lineWidth: 2))
+        .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2))
       //[Bottom row]---------------------------
       HStack() {
         HiddenButton().frame(maxWidth:.infinity)
@@ -80,7 +80,7 @@ struct StatisticsView: View {
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(.vertical, 10)
     .padding(.horizontal, 20)
-    .background(Color(uiColor:UIColor.systemGray5))
+    .background(Color(hex:StaticData.bg2_col[0]))
   }
 }
 

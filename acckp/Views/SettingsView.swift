@@ -60,11 +60,12 @@ struct SettingsView: View {
       .frame(height: StaticData.screenheight * (1/7))
       .padding(.horizontal, 20.0)
       .padding(.vertical, 0.0)
+      .background(Color(hex:StaticData.bg1_col[gVars.colorSet]))
       //-----------------------
       Divider()
         .frame(height: 5.0)
-        .foregroundColor(.black)
-        .overlay(.black)
+        .foregroundColor(Color(hex:StaticData.text_col[gVars.colorSet]))
+        .overlay(Color(hex:StaticData.text_col[gVars.colorSet]))
       //-----------------------
       VStack(spacing: 20) {
         //[Images container]---------------------
@@ -112,8 +113,12 @@ struct SettingsView: View {
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20.0)
         //[Bottom row]---------------------------
-        HStack() {
-          HiddenButton().frame(maxWidth:.infinity)
+        HStack(spacing: 20) {
+          //HiddenButton().frame(maxWidth:.infinity)
+          ColorButton(text: "טֶקסט", set: 3)
+          ColorButton(text: "טֶקסט", set: 2)
+          ColorButton(text: "טֶקסט", set: 1)
+          ColorButton(text: "טֶקסט", set: 0)
           SettingsButton(image: "arrowshape.right", action: {
             gVars.screen = GlobalVars.screens.main})
         }
@@ -123,7 +128,7 @@ struct SettingsView: View {
       .padding(.top, 20)
       .padding(.bottom, 10)
       .padding(.horizontal, 20)
-      .background(Color(uiColor:UIColor.systemGray5))
+      .background(Color(hex:StaticData.bg2_col[gVars.colorSet]))
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(.horizontal, 0.0)

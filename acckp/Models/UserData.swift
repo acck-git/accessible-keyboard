@@ -37,6 +37,11 @@ class UserData {
     self.boards[index] = state
     print("Updated board \(index).")
   }
+  //Update colors
+  func toggleColors(colorSet: Int = 0) {
+    self.colorSet = colorSet
+    print("Updated color \(colorSet).")
+  }
   //Update name
   func renameStudent(student: String) {
     self.student = student
