@@ -7,11 +7,13 @@ import SwiftData
 
 struct MainView: View {
   @Environment(\.modelContext) private var ModelContext
-  @ObservedObject var gVars = GlobalVars.get()
+  @ObservedObject var gVars = GlobalVars.get(screen: GlobalVars.screens.blank)
   var body: some View {
     //[Main container]---------------------
     VStack () {
       switch gVars.screen {
+      case GlobalVars.screens.blank:
+        VStack{}.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)  .background(Color(hex:StaticData.bg1_col[gVars.colorSet]))
       case GlobalVars.screens.settings:
         SettingsView()
       case GlobalVars.screens.teacher:
@@ -50,25 +52,27 @@ struct MainView: View {
   }
   //[Load users from database]------------
   @MainActor private func fetchUsers() {
+    print(gVars.colorSet)
     let query = FetchDescriptor<UserData>()
     do {
       gVars.users = try ModelContext.fetch(query)
-      print(gVars.users.count)
+      //print(gVars.users.count)
       let user = gVars.loginStudent()
       if user != nil {
         ModelContext.insert(user!)
         //try ModelContext.save()
-        user!.printUser()
+        //user!.printUser()
         print("Created user \(user!.student).")
       }
       else {
-        gVars.user.printUser()
+        //gVars.user.printUser()
         print("Loaded user \(gVars.student).")
       }
     }
     catch {
       fatalError("Could not fetch users: \(error)")
     }
+    gVars.screen = GlobalVars.screens.main
   }
 }
 

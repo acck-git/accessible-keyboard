@@ -18,7 +18,7 @@ struct SettingsView: View {
   //[Images]-----------------------------------
   @State var set: String = "a"
   @State var subSet: Int = 0
-  var vowelsRow: [String] = StaticData.vowelsRow.reversed()
+  var vowelsRow: [[String]] = StaticData.vowelsRow.reversed()
   var sets: [String] = StaticData.sets
   init () {
     if gVars.user != nil {
@@ -103,7 +103,7 @@ struct SettingsView: View {
         //[Board buttons]--------------------------------
         HStack(spacing: 10.0) {
           ForEach(vowelsRow.indices, id:\.self) { index in
-            VowelButton(image: vowelsRow[index], action: {
+            VowelButton(image: vowelsRow[index][gVars.colorSet], action: {
               set = sets[vowelsRow.count - index - 1]
               subSet = 0
             }, enabled: boards[vowelsRow.count - index - 1], selected: sets[vowelsRow.count - index - 1] == set)
@@ -114,13 +114,13 @@ struct SettingsView: View {
         .padding(.horizontal, 20.0)
         //[Bottom row]---------------------------
         HStack(spacing: 20) {
-          //HiddenButton().frame(maxWidth:.infinity)
           ColorButton(text: "טֶקסט", set: 3)
           ColorButton(text: "טֶקסט", set: 2)
           ColorButton(text: "טֶקסט", set: 1)
           ColorButton(text: "טֶקסט", set: 0)
           SettingsButton(image: "arrowshape.right", action: {
-            gVars.screen = GlobalVars.screens.main})
+            gVars.screen = GlobalVars.screens.main
+          })
         }
         .frame(height: StaticData.screenheight/9)
       }

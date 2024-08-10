@@ -74,7 +74,7 @@ struct StudentPickerTeacher: View {
     .accentColor(Color(hex:StaticData.text_col[0]))
     .frame(height: 40, alignment: .center)
     .frame(maxWidth: .infinity)
-    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
+    .background(Color(hex:StaticData.bg1_col[0]))
     .border(Color(hex:StaticData.text_col[0]))
   }
 }
@@ -112,7 +112,7 @@ struct ImageButton: View {
           .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
     })
-    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
+    .background(Color(hex:StaticData.bg1_col[0]))
     .cornerRadius(0)
   }
 }
@@ -127,7 +127,7 @@ struct TinyImageButton: View {
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .frame(width: 100, height: 100)
     })
-    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
+    .background(Color(hex:StaticData.bg1_col[0]))
   }
 }
 //[Massive Image Button]-------------------------------
@@ -141,7 +141,7 @@ struct MassiveImageButton: View {
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     })
-    .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
+    .background(Color(hex:StaticData.bg1_col[0]))
   }
 }
 //[Submit Image Button]---------------------------------
@@ -175,7 +175,7 @@ struct ColorButton: View {
         .foregroundColor(Color(hex:StaticData.text_col[set]))
         .font(.system(size: 45, weight: .heavy))
         .overlay(RoundedRectangle(cornerRadius: 5)
-          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[set]), lineWidth: 2)
         )
     })
     .buttonRepeatBehavior(.enabled)
@@ -210,7 +210,7 @@ struct SaveButton: View {
     Button(action: action, label: { Text(text)
         .frame(maxWidth: .infinity)
         .frame(maxHeight: .infinity)
-        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
+        .foregroundColor(Color(hex:StaticData.text_col[0]))
         .font(.system(size: 25))
         .overlay(RoundedRectangle(cornerRadius: 15)
           .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
@@ -229,7 +229,7 @@ struct DeleteTeacherButton: View {
     Button(action: action, label: { Text(text)
         .frame(maxWidth: .infinity)
         .frame(maxHeight: .infinity)
-        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
+        .foregroundColor(Color(hex:StaticData.text_col[0]))
         .font(.system(size: 25))
         .overlay(RoundedRectangle(cornerRadius: 15)
           .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)

@@ -13,7 +13,7 @@ struct KeyboardSubView: View {
   var row2: [String] = StaticData.letterRow2.reversed()
   var row3: [String] = StaticData.letterRow3.reversed()
   var row4: [String] = StaticData.letterRow4.reversed()
-  var vowelsRow: [String] = StaticData.vowelsRow.reversed()
+  var vowelsRow: [[String]] = StaticData.vowelsRow.reversed()
   var extraLets: [String] = StaticData.extraLetters
   var endLets: [String] = StaticData.endLetters
   var vowels: [String] = StaticData.vowels
@@ -97,7 +97,7 @@ struct KeyboardSubView: View {
         }
         .frame(width: (StaticData.screenwidth * (2/7)) - 19)
         ForEach(vowelsRow.indices, id:\.self) { index in
-          VowelButton(image: vowelsRow[index], action: {
+          VowelButton(image: vowelsRow[index][gVars.colorSet], action: {
             print(boards)
             gVars.board = vowelsRow.count - index - 1
           }, enabled: boards[vowelsRow.count - index - 1], selected: vowelsRow.count - index - 1 == gVars.board)

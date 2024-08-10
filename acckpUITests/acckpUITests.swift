@@ -5,14 +5,20 @@
 import XCTest
 
 final class acckpUITests: XCTestCase {
-  let letterRow1 = ["א" ,"ב" ,"ב\u{05BC}", "ג" ,"ד" ,"ה" ,"ו"]
-  let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ" ,"כ\u{05BC}", "ל"]
-  let letterRow3 = ["מ" ,"נ" ,"ס" ,"ע" ,"פ" ,"פ\u{05BC}", "צ"]
+  let letterRow1 = ["א" ,"ב\u{05BC}" ,"ב", "ג" ,"ד" ,"ה" ,"ו"]
+  let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ\u{05BC}" ,"כ", "ל"]
+  let letterRow3 = ["מ" ,"נ" ,"ס" ,"ע" ,"פ\u{05BC}" ,"פ", "צ"]
   let letterRow4 = ["ק" ,"ר" ,"ש\u{05C1}", "ש\u{05C2}", "ת"]
   let extraLetters = ["א" ,"ה" ,"ע"]
   let endLetters = ["ך" ,"ם" ,"ן" ,"ף" ,"ץ"]
   let vowels = ["\u{05B8}", "\u{05B4}י", "\u{05B6}", "ו\u{05B9}", "", "ו\u{05BC}"]
-  let vowelsRow = ["\u{05B8}  ", "\u{05B4}י  ", "\u{05B6}  ", "ו\u{05B9}", " ", "ו\u{05BC}"]
+  let vowelsRow = [
+    ["a","2_a","a","3_a"],
+    ["b","2_b","b","3_b"],
+    ["c","2_c","c","3_c"],
+    ["d","2_d","d","3_d"],
+    ["e","e","e","e"],
+    ["f","2_f","f","3_f"]]
   var extra: [Int] = [0,1,2]
   var end: [Int] = [4]
   
@@ -59,7 +65,17 @@ final class acckpUITests: XCTestCase {
   }
   //Press all letters in a selected board
   func runBoard(app: XCUIApplication, board: Int) -> String{
-    let boardButton = app.buttons[vowelsRow[board]]
+    var boardButton = app.buttons[vowelsRow[board][0]]
+    if !boardButton.exists {
+      boardButton = app.buttons[vowelsRow[board][1]]
+      if !boardButton.exists {
+        boardButton = app.buttons[vowelsRow[board][2]]
+        if !boardButton.exists {
+          boardButton = app.buttons[vowelsRow[board][3]]
+          XCTAssertTrue(boardButton.exists, "Vowel button wasn't found")
+        }
+      }
+    }
     boardButton.tap()
     
     letterRow1.forEach{ letter in

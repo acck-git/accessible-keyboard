@@ -13,38 +13,40 @@ class GlobalVars: ObservableObject {
   static var container: ModelContainer?
   static var singleton: GlobalVars!
   //App states
-  enum screens {case main, settings, teacher, stats}
+  enum screens {case main, settings, teacher, stats, blank}
   @Published var screen: screens          //currently displayed screen (uses enum)
-  @Published var colorSet: Int = 0
+  @Published var colorSet: Int            //currently displayed color set
   @Published var board: Int               //currently displayed vowels board
   @Published var inputText: String        //displayed text in text input (main screen)
-  @Published var student_edit: String
-  @Published var student: String          //name of the logged in user
-  @Published var user: UserData!          //object of the logged in user
-  @Published var user_edit: UserData!     //object of the user viewed by the teacher
-  @Published var users: [UserData] = []   //existing users in database
   @Published var image: String            //currently selected image (image typing mode)
   @Published var imageZoom: Bool = false  //show overlay of selected image
-  //Default values
+  //[Users]--------------------------------------
+  @Published var users: [UserData] = []   //existing users in database
+  @Published var user: UserData!          //object of the logged in user
+  @Published var user_edit: UserData!     //object of the user viewed by the teacher
+  @Published var student: String          //name of the logged in user
+  @Published var student_edit: String     //name of the user being viewed by the teacher
+  //[Default values]-----------------------------
   static let example = "טֶקסט לֶהָמחָשָה"
   static let student_def = "תלמיד"
   static let student_new = "תלמיד חדש"
-  private init(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") {
-    self.board = board
-    self.inputText = inputText
+  private init(screen: screens = screens.main, colorSet: Int = 0, board: Int = 0, image: String = "") {
     self.screen = screen
-    self.student = student
-    self.student_edit = student
+    self.colorSet = colorSet
+    self.board = board
     self.image = image
+    self.inputText = ""    
+    self.student = GlobalVars.student_def
+    self.student_edit = GlobalVars.student_def
     do {
       try AVAudioSession.sharedInstance().setCategory(.playback)
       try AVAudioSession.sharedInstance().setActive(true)
     }
     catch { print(error) }
   }
-  static func get(board: Int = 0, inputText: String = "", screen: screens = screens.main, student: String = student_def, image: String = "") -> GlobalVars {
+  static func get(screen: screens = screens.main, colorSet: Int = 0, board: Int = 0, image: String = "") -> GlobalVars {
     if (GlobalVars.singleton != nil) { return GlobalVars.singleton }
-    GlobalVars.singleton = GlobalVars(board: board, inputText: inputText, screen: screen, student: student, image: image)
+    GlobalVars.singleton = GlobalVars(screen: screen, colorSet: colorSet, board: board, image: image)
     return GlobalVars.singleton
   }
   
@@ -156,7 +158,7 @@ class GlobalVars: ObservableObject {
       else {
         if u.student == student_edit {
           self.user_edit = u
-          u.printUser()
+          //u.printUser()
           changed = true
           break
         }
@@ -177,7 +179,7 @@ class GlobalVars: ObservableObject {
     self.colorSet = colorSet
     if self.user == nil { return }
     self.user!.toggleColors(colorSet: colorSet)
-    self.user!.printUser()
+    //self.user!.printUser()
   }
   //Save change to boards
   func updateStudent(name: String) -> (UserData?,String,Bool) {
@@ -202,7 +204,7 @@ class GlobalVars: ObservableObject {
       message = "משתמש עודכן בהצלחה."
     }
     student_edit = name
-    self.user_edit!.printUser()
+    //self.user_edit!.printUser()
     return (newUser,message,true)
   }
   //Save change to boards
@@ -271,7 +273,7 @@ class GlobalVars: ObservableObject {
     //[Update user]------------------------------
     user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: desc.count, typos: typosAmount)
     print("Updated user \(user!).")
-    user!.printUser()
+    //user!.printUser()
     
     //[Clear selected image]---------------------
     image = ""
@@ -284,8 +286,8 @@ final class StaticData {
   static let screenwidth:CGFloat = UIScreen.main.bounds.width
   static let screenheight:CGFloat = UIScreen.main.bounds.height
   //[Color]--------------------------------------
-  static let vowel_col: [UInt] = [0xFFEB99,0xcca300,0xFFEB99,0xcca300]
-  static let board_col: [UInt] = [0xFFD119,0x997a00,0xFFD119,0x997a00]
+  static let vowel_col: [UInt] = [0xFFEB99,0x997a00,0xE2E2E2,0x997a00]
+  static let board_col: [UInt] = [0xFFD119,0xcca300,0xFFFFFF,0xcca300]
   static let space_col: [UInt] = [0xCDCCF3,0x3E3C96,0xCDCCF3,0x3E3C96]
   static let delete_col: [UInt] = [0xFF766E,0x99231D,0xFF766E,0x99231D]
   static let extra_col: [UInt] = [0xDBF7E0,0x359846,0xDBF7E0,0x359846]
@@ -305,7 +307,13 @@ final class StaticData {
   static let extraLetters = ["א" ,"ה" ,"ע"]
   static let endLetters = ["ך" ,"ם" ,"ן" ,"ף" ,"ץ"]
   static let vowels = ["\u{05B8}", "\u{05B4}י", "\u{05B6}", "ו\u{05B9}", "", "ו\u{05BC}"]
-  static let vowelsRow = ["a", "b", "c", "d", "e", "f"]
+  static let vowelsRow = [
+    ["a","2_a","a","3_a"],
+    ["b","2_b","b","3_b"],
+    ["c","2_c","c","3_c"],
+    ["d","2_d","d","3_d"],
+    ["e","e","e","e"],
+    ["f","2_f","f","3_f"]]
   static let noVowel = "\u{05B0}"
   static let fakeNoVowel = "\u{05B6}"
   //[Images]-------------------------------------
