@@ -64,9 +64,9 @@ struct ExtraLetterButton: View {
 //[Hidden key]---------------------------------
 struct HiddenButton: View {
   var body: some View {
-    Button(action: {}, label: { Text("")
+    VStack {}
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    })
+    
     .hidden()
   }
 }

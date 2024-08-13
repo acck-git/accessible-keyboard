@@ -41,8 +41,6 @@ struct SettingsView: View {
             (login,alertMessage,json) = gVars.checkPass(pass: pass)
             if alertMessage != "" { alert = true }
             pass = ""
-            //set = "a"
-            //subSet = 0
           }
         })
         if login {
@@ -50,7 +48,6 @@ struct SettingsView: View {
         }
         HiddenButton().frame(maxWidth: .infinity)
         StudentPicker(array: students, onChange: {
-          //print(gVars.student)
           gVars.swapStudent(login: true)
           set = "a"
           subSet = 0
@@ -94,8 +91,8 @@ struct SettingsView: View {
               }
             }
           }
-          //-------------------
           .frame(maxHeight: .infinity)
+          //-------------------
           ArrowButton(image: "arrowtriangle.right.fill",action: {
             subSet = subSet-6 < 0 ? 6 : subSet-6
           })

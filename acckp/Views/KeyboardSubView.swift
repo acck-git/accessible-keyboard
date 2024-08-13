@@ -98,7 +98,6 @@ struct KeyboardSubView: View {
         .frame(width: (StaticData.screenwidth * (2/7)) - 19)
         ForEach(vowelsRow.indices, id:\.self) { index in
           VowelButton(image: vowelsRow[index][gVars.colorSet], action: {
-            print(boards)
             gVars.board = vowelsRow.count - index - 1
           }, enabled: boards[vowelsRow.count - index - 1], selected: vowelsRow.count - index - 1 == gVars.board)
         }

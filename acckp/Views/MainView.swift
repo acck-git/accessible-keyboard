@@ -52,20 +52,16 @@ struct MainView: View {
   }
   //[Load users from database]------------
   @MainActor private func fetchUsers() {
-    print(gVars.colorSet)
     let query = FetchDescriptor<UserData>()
     do {
       gVars.users = try ModelContext.fetch(query)
-      //print(gVars.users.count)
       let user = gVars.loginStudent()
       if user != nil {
         ModelContext.insert(user!)
         //try ModelContext.save()
-        //user!.printUser()
         print("Created user \(user!.student).")
       }
       else {
-        //gVars.user.printUser()
         print("Loaded user \(gVars.student).")
       }
     }

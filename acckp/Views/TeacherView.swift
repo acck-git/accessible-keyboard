@@ -15,12 +15,16 @@ struct TeacherView: View {
   @State var alertMessage = ""
   @State var confirm: Bool = false
   //[User boards]------------------------------
-  @FocusState var pickerFieldFocus: Bool
   @State var boards = StaticData.boards
   //[Piker]------------------------------------
   @State var students: [String] = []
   @State var students_plain: [String] = []
   @State var students_new: [String] = []
+  //[Images]-----------------------------------
+  @State var set: String = "a"
+  @State var subSet: Int = 0
+  var sets: [String] = StaticData.sets
+  //-------------------
   init () {
     if gVars.user_edit != nil {
       _boards = State(wrappedValue: gVars.user_edit!.boards)
@@ -44,12 +48,10 @@ struct TeacherView: View {
               if gVars.student_edit == GlobalVars.student_new {
                 students = students_new
               }
-              else {
-                students = students_plain
-              }
+              else { students = students_plain }
               gVars.swapStudent(login: false)
-            }).focused($pickerFieldFocus)
-            
+            })
+            //-------------------
             HStack(spacing:10) {
               StudentEditInput(placeholder: "הקלד שם...", text: $newName)
                 .focused($textFieldFocus)
@@ -58,6 +60,7 @@ struct TeacherView: View {
                 .foregroundColor(Color(hex:StaticData.text_col[0]))
                 .font(.system(size: 20, weight: .heavy))
             }
+            //-------------------
             HStack(spacing:10) {
               if gVars.student_edit != GlobalVars.student_new {
                 DeleteTeacherButton(text: "מחק", action: {
@@ -74,6 +77,7 @@ struct TeacherView: View {
                     Text("לא ניתן לבטל פעולה זו. המשך?")
                   }
               }
+              //-------------------
               SaveButton(text: "שמור", action: {
                 if addUser() {
                   newName = ""
@@ -94,11 +98,10 @@ struct TeacherView: View {
               .foregroundColor(Color(hex:StaticData.text_col[0]))
               .font(.system(size: 25, weight: .heavy))
             StudentPickerTeacher(array: students, onChange: {
-              //print(gVars.student_edit)
               gVars.swapStudent(login: false)
               boards = gVars.user_edit != nil ? gVars.user_edit!.boards : StaticData.boards
-              //print(boards)
             })
+            //-------------------
             VStack(spacing:0) {
               ForEach(StaticData.boardNames.indices, id:\.self) { index in
                 ToggleBoard(text: "לוח " + StaticData.boardNames[index], ison: $boards[index], onChange: {
@@ -117,9 +120,72 @@ struct TeacherView: View {
         }
         .frame(maxWidth: StaticData.screenwidth/3, maxHeight: .infinity)
         //[Adding images]---------------------
-        VStack() {
+        VStack(spacing:20){
+          Text("מאגר תמונות")
+            .lineLimit(1)
+            .foregroundColor(Color(hex:StaticData.text_col[0]))
+            .font(.system(size: 25, weight: .heavy))
+          //-------------------
+          VStack(spacing:20) {
+            HStack(spacing: 20) {
+              ForEach((1...3).reversed(), id: \.self) { i in
+                ImageButton(image: set+String(subSet+i), action: {
+                  gVars.image = set+String(subSet+i)
+                  gVars.screen = GlobalVars.screens.main
+                  gVars.inputText = ""
+                })
+              }
+            }
+            HStack(spacing: 20) {
+              ForEach((4...6).reversed(), id: \.self) { i in
+                ImageButton(image: set+String(subSet+i), action: {
+                  gVars.image = set+String(subSet+i)
+                  gVars.screen = GlobalVars.screens.main
+                  gVars.inputText = ""
+                })
+              }
+            }
+          }
+          //.frame(maxHeight: .infinity)
+          .padding(.horizontal, 20)
+          //-------------------
+          HStack(spacing: 15) {
+            //-------------------
+            DeleteTeacherButton(text: "מחק", action: {
+            })
+            .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirm) {
+              Button("מחק", role: .destructive) {
+                
+              }} message: {
+                Text("לא ניתן לבטל פעולה זו. המשך?")
+              }
+            //-------------------
+            SaveButton(text: "שמור", action: {
+              
+            })
+            //temp
+            //-------------------
+            HiddenButton().overlay(RoundedRectangle(cornerRadius: 5)
+              .stroke(.black, lineWidth: 2))
+            //----
+            Text("תיאור:")
+              .lineLimit(1)
+              .foregroundColor(Color(hex:StaticData.text_col[0]))
+              .font(.system(size: 20, weight: .heavy))
+            //-------------------
+            //temp
+            HiddenButton().overlay(RoundedRectangle(cornerRadius: 5)
+              .stroke(.black, lineWidth: 2))
+            //----
+            Text("לוח:")
+              .lineLimit(1)
+              .foregroundColor(Color(hex:StaticData.text_col[0]))
+              .font(.system(size: 20, weight: .heavy))
+          }.frame(height: 50)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
         .overlay(RoundedRectangle(cornerRadius: 15)
           .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2))
       }
@@ -135,9 +201,6 @@ struct TeacherView: View {
       }
       .frame(height: StaticData.screenheight/9)
     }
-    .onChange(of: pickerFieldFocus) {
-      print(pickerFieldFocus)
-    }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(.vertical, 10)
     .padding(.horizontal, 20)
@@ -150,11 +213,10 @@ struct TeacherView: View {
     var user: UserData?
     var clearField = false
     (user,alertMessage,clearField) = gVars.updateStudent(name: newName)
-    //Add new
+    //Add new if relevant
     if user != nil {
       ModelContext.insert(user!)
       //try ModelContext.save()
-      user!.printUser()
       print("Created user \(user!.student).")
     }
     if (clearField) {
@@ -162,6 +224,7 @@ struct TeacherView: View {
       students_new = gVars.getStudents(add:true)
       students = students_plain
     }
+    //Popup message
     if alertMessage != "" { alert = true }
     return clearField
   }
@@ -169,15 +232,16 @@ struct TeacherView: View {
   @MainActor private func deleteUser() {
     if !confirm { return }
     let (user_del,def_user) = gVars.deleteStudent()
+    //Delete user if valid
     if user_del != nil {
       ModelContext.delete(user_del!)
       //try ModelContext.save()
       print("Deleted user")
     }
+    //Create default user if needed
     if def_user != nil {
       ModelContext.insert(def_user!)
       //try ModelContext.save()
-      def_user!.printUser()
       print("Created user \(def_user!.student).")
     }
     students_plain = gVars.getStudents(add:false)

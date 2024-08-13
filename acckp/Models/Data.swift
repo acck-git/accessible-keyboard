@@ -81,9 +81,12 @@ class GlobalVars: ObservableObject {
     var correct = true
     var message = ""
     var json:Data = Data()
+    
+    //--------------------------------Delete to fix login--------------------------------------
     screen = screens.teacher
     return (!correct,message,json)
-    //-----------------------------------
+    //--------------------------------Delete to fix login--------------------------------------
+    
     switch temppass.firstIndex(of: pass) {
     case 0:
       message = "Correct password."

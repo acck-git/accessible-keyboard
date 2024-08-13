@@ -26,7 +26,6 @@ struct StatisticsView: View {
           .font(.system(size: 30, weight: .heavy))
           .padding(.top, 20.0)
         StudentPickerTeacher(array: students, onChange: {
-          //print(gVars.student_edit)
           gVars.swapStudent(login: false)
           if gVars.user_edit != nil {
             stats = gVars.user_edit!.stats

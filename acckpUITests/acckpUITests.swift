@@ -41,6 +41,15 @@ final class acckpUITests: XCTestCase {
     XCTAssertEqual(textbox.label, "" ,"Couldn't clear textbox")
   }
   
+  func testAppLaunch() throws {
+    let app = XCUIApplication()
+    app.launch()
+    sleep(1)
+    
+    let textbox = app.staticTexts["textbox"]
+    XCTAssertTrue(textbox.exists, "Textbox wasn't found")
+    XCTAssertEqual(textbox.label, "" ,"Textbox isn't empty")
+  }
   func testFirstBoard() throws {checkBoard(board: 0)}
   func testSecondBoard() throws {checkBoard(board: 1)}
   func testThirdBoard() throws {checkBoard(board: 2)}

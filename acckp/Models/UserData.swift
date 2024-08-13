@@ -33,30 +33,16 @@ class UserData {
     }
   }
   //Update boards
-  func toggleBoard(index: Int = 0, state: Bool = true) {
-    self.boards[index] = state
-    print("Updated board \(index).")
-  }
+  func toggleBoard(index: Int = 0, state: Bool = true) { self.boards[index] = state }
   //Update colors
-  func toggleColors(colorSet: Int = 0) {
-    self.colorSet = colorSet
-    print("Updated color \(colorSet).")
-  }
+  func toggleColors(colorSet: Int = 0) { self.colorSet = colorSet }
   //Update name
-  func renameStudent(student: String) {
-    self.student = student
-    print("Renamed to student \(student).")
-  }
+  func renameStudent(student: String) { self.student = student }
   //Update logged in state
-  func toggleLogin(state: Bool = false) {
-    self.loggedIn = state
-    //print("Updated user \(student).")
-  }
-  //Update name
-  func deleteStudent(student: String) {
-    self.student = student
-    print("Renamed to student \(student).")
-  }
+  func toggleLogin(state: Bool = false) { self.loggedIn = state }
+  //Delete user
+  func deleteStudent(student: String) { self.student = student }
+  
   //Create json from data
   func fetchJSON() -> Data {
     var statsJSON: [[String: Any]] = []
@@ -95,14 +81,7 @@ class UserData {
     else { print("\(stats.count) stats saved.") }
     print("=================================================================")
   }
-  //Copy stats
-  func fixStats() {
-    let statsArr = self.stats
-    self.stats = []
-    for stat in statsArr {
-      self.stats.append(dayStats(correct_words: stat.correct_words, total_letters: stat.total_letters, typos: stat.typos))
-    }
-  }
+  
   //Insert stats
   func addStats() {
     //let stat = self.stats[stats.count-1]
