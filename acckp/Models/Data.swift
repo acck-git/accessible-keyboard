@@ -126,11 +126,9 @@ class GlobalVars: ObservableObject {
         return nil
       }
     }
-    if login_user != nil {
-      login_user = UserData(student: GlobalVars.student_def, loggedIn: true)
-      user = login_user
-      users.append(user)
-    }
+    login_user = UserData(student: GlobalVars.student_def, loggedIn: true)
+    user = login_user
+    users.append(user)
     user_edit = user
     student = user.student
     colorSet = user.colorSet

@@ -56,10 +56,10 @@ struct StatisticsView: View {
                     }
                   }
                   .environment(\.layoutDirection,.rightToLeft)
-                  .frame(height: 300)
+                  .frame(height: 200)
                 }
               }
-              .frame(height:300)
+              .frame(height:200)
               VStack{
                 HStack {
                   VStack{
