@@ -36,24 +36,68 @@ struct StatisticsView: View {
         HStack {
           VStack(spacing: 13.0) {
             if stats.count > 0 {
-              Table(stats) {
-                TableColumn("תאריך") { stat in
-                  Text(String(stat.day)).font(.system(size: 25))
-                }
-                TableColumn("סה״כ מילים") { stat in
-                  Text(String(stat.total_words)).font(.system(size: 25))
-                }
-                TableColumn("מילים נכונות") { stat in
-                  Text(String(stat.correct_words)).font(.system(size: 25))
-                }
-                TableColumn("סה״כ אותיות") { stat in
-                  Text(String(stat.total_letters)).font(.system(size: 25))
-                }
-                TableColumn("שגיאות כתיב") { stat in
-                  Text(String(stat.typos)).font(.system(size: 25))
+              ScrollView([.vertical]) {
+                VStack{
+                  Table(stats) {
+                    TableColumn("תאריך") { stat in
+                      Text(String(stat.day)).font(.system(size: 25))
+                    }
+                    TableColumn("סה״כ מילים") { stat in
+                      Text(String(stat.total_words)).font(.system(size: 25))
+                    }
+                    TableColumn("מילים נכונות") { stat in
+                      Text(String(stat.correct_words)).font(.system(size: 25))
+                    }
+                    TableColumn("סה״כ אותיות") { stat in
+                      Text(String(stat.total_letters)).font(.system(size: 25))
+                    }
+                    TableColumn("שגיאות כתיב") { stat in
+                      Text(String(stat.typos)).font(.system(size: 25))
+                    }
+                  }
+                  .environment(\.layoutDirection,.rightToLeft)
+                  .frame(height: 300)
                 }
               }
-              .environment(\.layoutDirection,.rightToLeft)
+              .frame(height:300)
+              VStack{
+                HStack {
+                  VStack{
+                    Text("מילים נכונות מתוך סה״כ")
+                      .font(.headline)
+                      .padding(.bottom, 5)
+                    Chart {
+                      ForEach(stats) { stat in
+                        LineMark(
+                          x: .value("Date", stat.day),
+                          y: .value("Correct Words", (Double(stat.correct_words) / Double(stat.total_words)) * 100)
+                        )
+                        .foregroundStyle(.green)
+                      }
+                    }
+                    .chartYScale(domain: 0...100)
+                    .frame(height: 200)
+                    .padding()
+                  }
+                  VStack{
+                    Text("שגיאות כתיב מתוך סה״כ")
+                      .font(.headline)
+                      .padding(.bottom, 5)
+                    Chart {
+                      ForEach(stats) { stat in
+                        LineMark(
+                          x: .value("Date", stat.day),
+                          y: .value("Typos", (Double(stat.typos) / Double(stat.total_letters)) * 100)
+                        )
+                        .foregroundStyle(.red)
+                      }
+                    }
+                    .chartYScale(domain: 0...100)
+                    .frame(height: 200)
+                    .padding()
+                  }
+                }
+              }
             }
             else {
               Text("לא נמצאו נתונים להצגה").font(.system(size: 25))
