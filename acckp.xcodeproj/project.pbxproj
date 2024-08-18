@@ -23,7 +23,31 @@
 		5C5A857D2B8C9F4200770254 /* acckpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A857C2B8C9F4200770254 /* acckpTests.swift */; };
 		5C5A85872B8C9F4200770254 /* acckpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85862B8C9F4200770254 /* acckpUITests.swift */; };
 		5C5A85892B8C9F4200770254 /* acckpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */; };
+		5C72EF8E2C72389F001DF748 /* ב_u{05BC}.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF782C72389E001DF748 /* ב_u{05BC}.mp4 */; };
+		5C72EF8F2C72389F001DF748 /* ב.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF792C72389F001DF748 /* ב.mp4 */; };
+		5C72EF902C72389F001DF748 /* צ.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF7A2C72389F001DF748 /* צ.mp4 */; };
+		5C72EF912C72389F001DF748 /* כ_u{05BC}.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF7B2C72389F001DF748 /* כ_u{05BC}.mp4 */; };
+		5C72EF922C72389F001DF748 /* ח.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF7C2C72389F001DF748 /* ח.mp4 */; };
+		5C72EF932C72389F001DF748 /* י.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF7D2C72389F001DF748 /* י.mp4 */; };
+		5C72EF942C72389F001DF748 /* ט.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF7E2C72389F001DF748 /* ט.mp4 */; };
+		5C72EF952C72389F001DF748 /* ז.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF7F2C72389F001DF748 /* ז.mp4 */; };
+		5C72EF962C72389F001DF748 /* נ.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF802C72389F001DF748 /* נ.mp4 */; };
+		5C72EF972C72389F001DF748 /* פ_u{05BC}.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF812C72389F001DF748 /* פ_u{05BC}.mp4 */; };
+		5C72EF982C72389F001DF748 /* פ.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF822C72389F001DF748 /* פ.mp4 */; };
+		5C72EF992C72389F001DF748 /* ר.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF832C72389F001DF748 /* ר.mp4 */; };
+		5C72EF9A2C72389F001DF748 /* ש_u{05C1}.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF842C72389F001DF748 /* ש_u{05C1}.mp4 */; };
+		5C72EF9B2C72389F001DF748 /* כ.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF852C72389F001DF748 /* כ.mp4 */; };
+		5C72EF9C2C72389F001DF748 /* ל.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF862C72389F001DF748 /* ל.mp4 */; };
+		5C72EF9D2C72389F001DF748 /* ש_u{05C2}.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF872C72389F001DF748 /* ש_u{05C2}.mp4 */; };
+		5C72EF9E2C72389F001DF748 /* ת.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF882C72389F001DF748 /* ת.mp4 */; };
+		5C72EF9F2C72389F001DF748 /* ו.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF892C72389F001DF748 /* ו.mp4 */; };
+		5C72EFA02C72389F001DF748 /* ס.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF8A2C72389F001DF748 /* ס.mp4 */; };
+		5C72EFA12C72389F001DF748 /* ד.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF8B2C72389F001DF748 /* ד.mp4 */; };
+		5C72EFA22C72389F001DF748 /* ג.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF8C2C72389F001DF748 /* ג.mp4 */; };
+		5C72EFA32C72389F001DF748 /* מ.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF8D2C72389F001DF748 /* מ.mp4 */; };
+		5C72EFA52C724127001DF748 /* ק.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EFA42C724127001DF748 /* ק.mp4 */; };
 		5C7FF77B2BBFD4D400BB0FF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */; };
+		5CA329DB2C7201AA00C20DB5 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA329DA2C7201AA00C20DB5 /* ImageData.swift */; };
 		5CC996A52BD57F5B001FFE57 /* SettingsPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */; };
 		5CEC071C2BDD5E9600AB9F19 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEC071B2BDD5E9600AB9F19 /* UserData.swift */; };
 /* End PBXBuildFile section */
@@ -64,7 +88,31 @@
 		5C5A85822B8C9F4200770254 /* acckpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = acckpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A85862B8C9F4200770254 /* acckpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpUITests.swift; sourceTree = "<group>"; };
 		5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5C72EF782C72389E001DF748 /* ב_u{05BC}.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ב_u{05BC}.mp4"; sourceTree = "<group>"; };
+		5C72EF792C72389F001DF748 /* ב.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ב.mp4"; sourceTree = "<group>"; };
+		5C72EF7A2C72389F001DF748 /* צ.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "צ.mp4"; sourceTree = "<group>"; };
+		5C72EF7B2C72389F001DF748 /* כ_u{05BC}.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "כ_u{05BC}.mp4"; sourceTree = "<group>"; };
+		5C72EF7C2C72389F001DF748 /* ח.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ח.mp4"; sourceTree = "<group>"; };
+		5C72EF7D2C72389F001DF748 /* י.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "י.mp4"; sourceTree = "<group>"; };
+		5C72EF7E2C72389F001DF748 /* ט.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ט.mp4"; sourceTree = "<group>"; };
+		5C72EF7F2C72389F001DF748 /* ז.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ז.mp4"; sourceTree = "<group>"; };
+		5C72EF802C72389F001DF748 /* נ.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "נ.mp4"; sourceTree = "<group>"; };
+		5C72EF812C72389F001DF748 /* פ_u{05BC}.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "פ_u{05BC}.mp4"; sourceTree = "<group>"; };
+		5C72EF822C72389F001DF748 /* פ.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "פ.mp4"; sourceTree = "<group>"; };
+		5C72EF832C72389F001DF748 /* ר.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ר.mp4"; sourceTree = "<group>"; };
+		5C72EF842C72389F001DF748 /* ש_u{05C1}.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ש_u{05C1}.mp4"; sourceTree = "<group>"; };
+		5C72EF852C72389F001DF748 /* כ.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "כ.mp4"; sourceTree = "<group>"; };
+		5C72EF862C72389F001DF748 /* ל.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ל.mp4"; sourceTree = "<group>"; };
+		5C72EF872C72389F001DF748 /* ש_u{05C2}.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ש_u{05C2}.mp4"; sourceTree = "<group>"; };
+		5C72EF882C72389F001DF748 /* ת.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ת.mp4"; sourceTree = "<group>"; };
+		5C72EF892C72389F001DF748 /* ו.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ו.mp4"; sourceTree = "<group>"; };
+		5C72EF8A2C72389F001DF748 /* ס.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ס.mp4"; sourceTree = "<group>"; };
+		5C72EF8B2C72389F001DF748 /* ד.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ד.mp4"; sourceTree = "<group>"; };
+		5C72EF8C2C72389F001DF748 /* ג.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ג.mp4"; sourceTree = "<group>"; };
+		5C72EF8D2C72389F001DF748 /* מ.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "מ.mp4"; sourceTree = "<group>"; };
+		5C72EFA42C724127001DF748 /* ק.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ק.mp4"; sourceTree = "<group>"; };
 		5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		5CA329DA2C7201AA00C20DB5 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
 		5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresets.swift; sourceTree = "<group>"; };
 		5CD75FED2BB0BB1700F2F6C3 /* acckp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = acckp.xctestplan; sourceTree = "<group>"; };
 		5CEC071B2BDD5E9600AB9F19 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -101,6 +149,7 @@
 			children = (
 				5C53DE7B2B9F70BA00F51194 /* Data.swift */,
 				5CEC071B2BDD5E9600AB9F19 /* UserData.swift */,
+				5CA329DA2C7201AA00C20DB5 /* ImageData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -144,6 +193,7 @@
 		5C5A85682B8C9F4100770254 /* acckp */ = {
 			isa = PBXGroup;
 			children = (
+				5C72EF4A2C723876001DF748 /* Sounds */,
 				5C5A85692B8C9F4100770254 /* acckpApp.swift */,
 				5C53DE752B9F663000F51194 /* Views */,
 				5C537DAA2BA0B6FE00C5020F /* Models */,
@@ -178,6 +228,36 @@
 				5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */,
 			);
 			path = acckpUITests;
+			sourceTree = "<group>";
+		};
+		5C72EF4A2C723876001DF748 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				5C72EFA42C724127001DF748 /* ק.mp4 */,
+				5C72EF782C72389E001DF748 /* ב_u{05BC}.mp4 */,
+				5C72EF792C72389F001DF748 /* ב.mp4 */,
+				5C72EF8C2C72389F001DF748 /* ג.mp4 */,
+				5C72EF8B2C72389F001DF748 /* ד.mp4 */,
+				5C72EF892C72389F001DF748 /* ו.mp4 */,
+				5C72EF7F2C72389F001DF748 /* ז.mp4 */,
+				5C72EF7C2C72389F001DF748 /* ח.mp4 */,
+				5C72EF7E2C72389F001DF748 /* ט.mp4 */,
+				5C72EF7D2C72389F001DF748 /* י.mp4 */,
+				5C72EF7B2C72389F001DF748 /* כ_u{05BC}.mp4 */,
+				5C72EF852C72389F001DF748 /* כ.mp4 */,
+				5C72EF862C72389F001DF748 /* ל.mp4 */,
+				5C72EF8D2C72389F001DF748 /* מ.mp4 */,
+				5C72EF802C72389F001DF748 /* נ.mp4 */,
+				5C72EF8A2C72389F001DF748 /* ס.mp4 */,
+				5C72EF812C72389F001DF748 /* פ_u{05BC}.mp4 */,
+				5C72EF822C72389F001DF748 /* פ.mp4 */,
+				5C72EF7A2C72389F001DF748 /* צ.mp4 */,
+				5C72EF832C72389F001DF748 /* ר.mp4 */,
+				5C72EF842C72389F001DF748 /* ש_u{05C1}.mp4 */,
+				5C72EF872C72389F001DF748 /* ש_u{05C2}.mp4 */,
+				5C72EF882C72389F001DF748 /* ת.mp4 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,9 +370,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C72EF9D2C72389F001DF748 /* ש_u{05C2}.mp4 in Resources */,
+				5C72EFA32C72389F001DF748 /* מ.mp4 in Resources */,
+				5C72EF972C72389F001DF748 /* פ_u{05BC}.mp4 in Resources */,
+				5C72EF9E2C72389F001DF748 /* ת.mp4 in Resources */,
+				5C72EF9F2C72389F001DF748 /* ו.mp4 in Resources */,
+				5C72EF962C72389F001DF748 /* נ.mp4 in Resources */,
+				5C72EF952C72389F001DF748 /* ז.mp4 in Resources */,
+				5C72EFA52C724127001DF748 /* ק.mp4 in Resources */,
+				5C72EFA22C72389F001DF748 /* ג.mp4 in Resources */,
+				5C72EF902C72389F001DF748 /* צ.mp4 in Resources */,
 				5C53DE6F2B9F647A00F51194 /* README.md in Resources */,
 				5C5A85732B8C9F4200770254 /* Preview Assets.xcassets in Resources */,
+				5C72EF992C72389F001DF748 /* ר.mp4 in Resources */,
+				5C72EF9B2C72389F001DF748 /* כ.mp4 in Resources */,
+				5C72EFA02C72389F001DF748 /* ס.mp4 in Resources */,
+				5C72EF982C72389F001DF748 /* פ.mp4 in Resources */,
+				5C72EF932C72389F001DF748 /* י.mp4 in Resources */,
+				5C72EF922C72389F001DF748 /* ח.mp4 in Resources */,
+				5C72EF9A2C72389F001DF748 /* ש_u{05C1}.mp4 in Resources */,
+				5C72EF9C2C72389F001DF748 /* ל.mp4 in Resources */,
+				5C72EF8F2C72389F001DF748 /* ב.mp4 in Resources */,
 				5C5A85702B8C9F4200770254 /* Assets.xcassets in Resources */,
+				5C72EFA12C72389F001DF748 /* ד.mp4 in Resources */,
+				5C72EF912C72389F001DF748 /* כ_u{05BC}.mp4 in Resources */,
+				5C72EF942C72389F001DF748 /* ט.mp4 in Resources */,
+				5C72EF8E2C72389F001DF748 /* ב_u{05BC}.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +422,7 @@
 			files = (
 				5C53DE7E2B9F987200F51194 /* MainPresets.swift in Sources */,
 				5C3E14142C1C9790003A5C91 /* StatisticsView.swift in Sources */,
+				5CA329DB2C7201AA00C20DB5 /* ImageData.swift in Sources */,
 				5C5A856C2B8C9F4100770254 /* MainView.swift in Sources */,
 				5CC996A52BD57F5B001FFE57 /* SettingsPresets.swift in Sources */,
 				5C3E14122C1C3B4C003A5C91 /* TeacherView.swift in Sources */,

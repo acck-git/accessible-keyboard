@@ -98,6 +98,24 @@ struct ArrowButton: View {
     .cornerRadius(50)
   }
 }
+struct ArrowButtonSmall: View {
+  var image: String
+  var action: (() -> Void)
+  var body: some View {
+    Button(action: action, label: { Image(systemName: image)
+        .resizable()
+        .scaledToFit()
+        .padding(EdgeInsets(top: -10.0, leading: 20.0, bottom: -10.0, trailing: 20.0))
+        .frame(width: 60, height: 160)
+        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
+        .overlay(RoundedRectangle(cornerRadius: 50)
+          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
+        )
+    })
+    .background(Color(hex:StaticData.bg2_col[GlobalVars.get().colorSet]))
+    .cornerRadius(50)
+  }
+}
 //[Image Button]----------------------------------
 struct ImageButton: View {
   var image: String
@@ -221,6 +239,25 @@ struct SaveButton: View {
     .cornerRadius(15)
   }
 }
+
+//[Rename Images]------------------------------------
+struct ImageEditInput: View {
+  var placeholder: String
+  @Binding var text: String
+  var body: some View {
+    TextField(placeholder, text: $text)
+      .environment(\.layoutDirection,.rightToLeft)
+      .foregroundColor(Color(hex:StaticData.text_col[0]))
+      .font(.system(size: 20, weight: .heavy))
+      .frame(height: 40, alignment: .trailing)
+      .frame(maxWidth: .infinity)
+      .padding(.horizontal,6)
+      .overlay(RoundedRectangle(cornerRadius: 5)
+        .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
+      )
+      .background(Color(hex:StaticData.bg1_col[0]))
+  }
+}
 //[DeleteTeacher key]---------------------------------
 struct DeleteTeacherButton: View {
   var text: String
@@ -256,6 +293,31 @@ struct ToggleBoard: View {
     .padding(.horizontal,10)
     .padding(.vertical, 5)
     .background(Color(hex:StaticData.bg2_col[0]))
+  }
+}
+
+//[Board Picker for Images]
+struct BoardPickerImages: View {
+  var array: [String]
+  var onChange: (() -> Void)
+  @State var gVars = GlobalVars.get()
+  @Binding var selectedBoard: String
+  var body: some View {
+    Picker(selection: $selectedBoard, label: Text("Picker")) {
+      Text("קמץ").tag("a")
+      Text("חיריק").tag("b")
+      Text("סגול").tag("c")
+      Text("חולם").tag("d")
+      Text("עיצור").tag("e")
+      Text("שורוק").tag("f")
+    }
+    .scaleEffect(1.5)
+    .pickerStyle(.menu)
+    .accentColor(Color(hex:StaticData.text_col[0]))
+    .frame(height: 40, alignment: .center)
+    .frame(maxWidth: .infinity)
+    .background(Color(hex:StaticData.bg1_col[0]))
+    .border(Color(hex:StaticData.text_col[0]))
   }
 }
 

@@ -12,6 +12,7 @@ var syntheziser = AVSpeechSynthesizer()
 class GlobalVars: ObservableObject {
   static var container: ModelContainer?
   static var singleton: GlobalVars!
+  var player: AVAudioPlayer?
   //App states
   enum screens {case main, settings, teacher, stats, blank}
   @Published var screen: screens          //currently displayed screen (uses enum)
@@ -35,7 +36,7 @@ class GlobalVars: ObservableObject {
     self.colorSet = colorSet
     self.board = board
     self.image = image
-    self.inputText = ""    
+    self.inputText = ""
     self.student = GlobalVars.student_def
     self.student_edit = GlobalVars.student_def
     do {
@@ -55,8 +56,45 @@ class GlobalVars: ObservableObject {
   @IBAction func type(text: String, tts: Bool) {
     self.inputText += text
     if !tts { return }
-    let txt = text
-    if txt == "א" || txt == "ה" || txt == "ע" || self.board == 4 { return }
+    var txt = text
+    if txt == "א" || txt == "ה" || txt == "ע"{
+      return
+    }
+    switch text{
+    case "ב\u{05BC}":
+      txt = "ב_u{05BC}"
+    case "כ\u{05BC}":
+      txt = "כ_u{05BC}"
+    case "פ\u{05BC}":
+      txt = "פ_u{05BC}"
+    case "ש\u{05C1}":
+      txt = "ש_u{05C1}"
+    case "ש\u{05C2}":
+      txt = "ש_u{05C2}"
+    case "ך":
+      txt = "כ"
+    case "ם":
+      txt = "מ"
+    case "ן":
+      txt = "נ"
+    case "ף":
+      txt = "פ"
+    case "ץ":
+      txt = "צ"
+    default:
+      break
+    }
+    if self.board == 4 {
+      guard let url = Bundle.main.url(forResource: txt, withExtension: ".mp4") else { return }
+      do {
+        print(txt)
+        player = try AVAudioPlayer(contentsOf: url)
+        player?.play()
+      } catch let error {
+        print("Error playing recording sound. \(error.localizedDescription)")
+      }
+      return
+    }
     
     let utterance = AVSpeechUtterance(string: txt)
     utterance.rate = 0.5
@@ -317,6 +355,7 @@ final class StaticData {
     ["f","2_f","f","3_f"]]
   static let noVowel = "\u{05B0}"
   static let fakeNoVowel = "\u{05B6}"
+  static let records = ["ב", "ג" ,"ד" ,"ו" ,"ז" ,"ח" ,"ט" ,"י" ,"כ" ,"ל" ,"מ" ,"נ" ,"ס" ,"פ" ,"צ" ,"ק" ,"ר" ,"ת"]
   //[Images]-------------------------------------
   static let sets = ["a","b","c","d","e","f"]
   static let imgDesc = [

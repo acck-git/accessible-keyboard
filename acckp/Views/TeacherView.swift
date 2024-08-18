@@ -16,6 +16,7 @@ struct TeacherView: View {
   @State var confirm: Bool = false
   //[User boards]------------------------------
   @State var boards = StaticData.boards
+  @State var boardNames = StaticData.boardNames
   //[Piker]------------------------------------
   @State var students: [String] = []
   @State var students_plain: [String] = []
@@ -23,6 +24,8 @@ struct TeacherView: View {
   //[Images]-----------------------------------
   @State var set: String = "a"
   @State var subSet: Int = 0
+  @State var newImageName: String = ""
+  @State var confirmImage: Bool = false
   var sets: [String] = StaticData.sets
   //-------------------
   init () {
@@ -126,34 +129,11 @@ struct TeacherView: View {
             .foregroundColor(Color(hex:StaticData.text_col[0]))
             .font(.system(size: 25, weight: .heavy))
           //-------------------
-          VStack(spacing:20) {
-            HStack(spacing: 20) {
-              ForEach((1...3).reversed(), id: \.self) { i in
-                ImageButton(image: set+String(subSet+i), action: {
-                  gVars.image = set+String(subSet+i)
-                  gVars.screen = GlobalVars.screens.main
-                  gVars.inputText = ""
-                })
-              }
-            }
-            HStack(spacing: 20) {
-              ForEach((4...6).reversed(), id: \.self) { i in
-                ImageButton(image: set+String(subSet+i), action: {
-                  gVars.image = set+String(subSet+i)
-                  gVars.screen = GlobalVars.screens.main
-                  gVars.inputText = ""
-                })
-              }
-            }
-          }
-          //.frame(maxHeight: .infinity)
-          .padding(.horizontal, 20)
-          //-------------------
           HStack(spacing: 15) {
             //-------------------
             DeleteTeacherButton(text: "מחק", action: {
             })
-            .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirm) {
+            .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirmImage) {
               Button("מחק", role: .destructive) {
                 
               }} message: {
@@ -165,8 +145,8 @@ struct TeacherView: View {
             })
             //temp
             //-------------------
-            HiddenButton().overlay(RoundedRectangle(cornerRadius: 5)
-              .stroke(.black, lineWidth: 2))
+            ImageEditInput(placeholder: "", text: $newImageName)
+              .focused($textFieldFocus)
             //----
             Text("תיאור:")
               .lineLimit(1)
@@ -174,14 +154,40 @@ struct TeacherView: View {
               .font(.system(size: 20, weight: .heavy))
             //-------------------
             //temp
-            HiddenButton().overlay(RoundedRectangle(cornerRadius: 5)
-              .stroke(.black, lineWidth: 2))
+            BoardPickerImages(array: boardNames, onChange: {
+            },selectedBoard: $set)
             //----
             Text("לוח:")
               .lineLimit(1)
               .foregroundColor(Color(hex:StaticData.text_col[0]))
               .font(.system(size: 20, weight: .heavy))
           }.frame(height: 50)
+          HStack{
+            ArrowButtonSmall(image: "arrowtriangle.left.fill",action: {
+              subSet = subSet+6 > 6 ? 0 : subSet+6
+            })
+            VStack(spacing:20) {
+              HStack(spacing: 20) {
+                ForEach((1...3).reversed(), id: \.self) { i in
+                  ImageButton(image: set+String(subSet+i), action: {
+                    newImageName = StaticData.imgDesc[set+String(subSet+i)] != nil ? StaticData.imgDesc[set+String(subSet+i)]! : ""
+                  })
+                }
+              }
+              HStack(spacing: 20) {
+                ForEach((4...6).reversed(), id: \.self) { i in
+                  ImageButton(image: set+String(subSet+i), action: {
+                    newImageName = StaticData.imgDesc[set+String(subSet+i)] != nil ? StaticData.imgDesc[set+String(subSet+i)]! : ""
+                  })
+                }
+              }
+            }
+            //.frame(maxHeight: .infinity)
+            .padding(.horizontal, 20)
+            ArrowButtonSmall(image: "arrowtriangle.right.fill",action: {
+              subSet = subSet-6 < 0 ? 6 : subSet-6
+            })
+          }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 20)
