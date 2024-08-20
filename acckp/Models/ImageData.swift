@@ -6,54 +6,63 @@ import Foundation
 import SwiftData
 
 @Model
-//[Single user data]-----------------------------
+//[All images data]-----------------------------
 class ImageData {
-  var board1: [String: String]
-  var board2: [String: String]
-  var board3: [String: String]
-  var board4: [String: String]
-  var board5: [String: String]
-  var board6: [String: String]
-  var maxIndex: [Int]
-  init(board1: [String: String] = [:],board2: [String: String] = [:],board3: [String: String] = [:],board4: [String: String] = [:],board5: [String: String] = [:],board6: [String: String] = [:], maxIndex: [Int] = [0,0,0,0,0,0]) {
+  var board1: [imageInfo] = []
+  var board2: [imageInfo] = []
+  var board3: [imageInfo] = []
+  var board4: [imageInfo] = []
+  var board5: [imageInfo] = []
+  var board6: [imageInfo] = []
+  init(board1: [imageInfo] = [],board2: [imageInfo] = [],board3: [imageInfo] = [],board4: [imageInfo] = [],board5: [imageInfo] = [],board6: [imageInfo] = []) {
     self.board1 = board1
     self.board2 = board2
     self.board3 = board3
     self.board4 = board4
     self.board5 = board5
     self.board6 = board6
-    self.maxIndex = maxIndex
   }
-  //Update stats
+    //Update stats
   func update(newDesc: String, newBoard: String, oldBoard: String, index: Int) {
-    var (editarray, _) = findarray(board: oldBoard)
+    var editarray = findarray(board: oldBoard)
+    //Same board
     if oldBoard == newBoard{
-      editarray[newBoard+String(index)] = newDesc
+      editarray[index]=imageInfo(key: newBoard+String(index),desc: newDesc)
     }
+    //Swapping boards
     else{
-      editarray[oldBoard+String(index)] = nil
-      var (newarray, newindex) = findarray(board: newBoard)
-      maxIndex[newindex]+=1
-      newarray[newBoard+String(maxIndex[newindex])] = newDesc
+      editarray.remove(at:index)
+      var newarray = findarray(board: newBoard)
+      newarray.append(imageInfo(key: newBoard+String(newarray.count+1),desc: newDesc))
     }
   }
-  func findarray(board: String) -> ([String:String], Int){
+  //Find relevant board
+   func findarray(board: String) -> ([imageInfo]){
     switch board{
     case "a":
-      return (board1, 0)
+      return board1
     case "b":
-      return (board2, 1)
+      return board2
     case "c":
-      return (board3, 2)
+      return board3
     case "d":
-      return (board4, 3)
+      return board4
     case "e":
-      return (board5, 4)
+      return board5
     case "f":
-      return (board6, 5)
+      return board6
     default:
-      return (board1, 0)
+      return board1
     }
   }
+}
+struct imageInfo: Codable, Identifiable {
+  var id = UUID()
+  var key: String
+  var desc: String
   
+  init(key: String, desc: String) {
+    self.key = key
+    self.desc = desc
+  }
 }

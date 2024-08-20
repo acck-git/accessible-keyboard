@@ -74,13 +74,15 @@ struct MainView: View {
     do {
       let images = try ModelContext.fetch(queryimg)
       if images.count != 0 {
+        print("Images[0]")
+        print(images[0])
         gVars.images = images[0]
       }
       else{
         gVars.images = ImageData()
         ModelContext.insert(gVars.images!)
       }
-      gVars.images.board1["a13"] = "מתנה"
+      //gVars.images.board1["a13"] = "מתנה"
       gVars.loadImages()
     }
     catch {

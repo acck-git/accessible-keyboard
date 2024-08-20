@@ -14,22 +14,22 @@ struct ImagesView: View {
   @State var newImageName: String = ""
   @State var confirmImage: Bool = false
   @State var boardNames = StaticData.boardNames
-  @State var board1: [String: String] = [:]
-  @State var board2: [String: String] = [:]
-  @State var board3: [String: String] = [:]
-  @State var board4: [String: String] = [:]
-  @State var board5: [String: String] = [:]
-  @State var board6: [String: String] = [:]
+  @State var board1: [(String,String)] = []
+  @State var board2: [(String,String)] = []
+  @State var board3: [(String,String)] = []
+  @State var board4: [(String,String)] = []
+  @State var board5: [(String,String)] = []
+  @State var board6: [(String,String)] = []
   var sets: [String] = StaticData.sets
   //-------------------
   init () {
     if gVars.images != nil {
-      _board1 = State(wrappedValue: gVars.images.board1)
-      _board2 = State(wrappedValue: gVars.images.board2)
-      _board3 = State(wrappedValue: gVars.images.board3)
-      _board4 = State(wrappedValue: gVars.images.board4)
-      _board5 = State(wrappedValue: gVars.images.board5)
-      _board6 = State(wrappedValue: gVars.images.board6)
+      _board1 = State(wrappedValue: gVars.imageBoard1)
+      _board2 = State(wrappedValue: gVars.imageBoard2)
+      _board3 = State(wrappedValue: gVars.imageBoard3)
+      _board4 = State(wrappedValue: gVars.imageBoard4)
+      _board5 = State(wrappedValue: gVars.imageBoard5)
+      _board6 = State(wrappedValue: gVars.imageBoard6)
     }
   }
   var body: some View {

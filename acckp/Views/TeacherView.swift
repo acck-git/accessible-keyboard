@@ -26,14 +26,14 @@ struct TeacherView: View {
   @State var subSet: Int = 0
   @State var newImageName: String = ""
   @State var confirmImage: Bool = false
-  @State var board1: [String: String] = StaticData.imgDesc1
-  @State var board2: [String: String] = StaticData.imgDesc2
-  @State var board3: [String: String] = StaticData.imgDesc3
-  @State var board4: [String: String] = StaticData.imgDesc4
-  @State var board5: [String: String] = StaticData.imgDesc5
-  @State var board6: [String: String] = StaticData.imgDesc6
-  var tempboard1: [String: String] = [:]
-  var tempboard2: [String: String] = [:]
+  @State var board1: [(String, String)] = StaticData.imgDesc1
+  @State var board2: [(String, String)] = StaticData.imgDesc2
+  @State var board3: [(String, String)] = StaticData.imgDesc3
+  @State var board4: [(String, String)] = StaticData.imgDesc4
+  @State var board5: [(String, String)] = StaticData.imgDesc5
+  @State var board6: [(String, String)] = StaticData.imgDesc6
+  var tempboard1: [(String, String)] = []
+  var tempboard2: [(String, String)] = []
   var sets: [String] = StaticData.sets
   //-------------------
   init () {
@@ -51,14 +51,14 @@ struct TeacherView: View {
       _board5 = State(wrappedValue: gVars.imageBoard5)
       _board6 = State(wrappedValue: gVars.imageBoard6)
     }
-    print("Board 1:")
-    print(board1)
-    board1.sorted(by: { $0.key < $1.key }).forEach { 
-      print($0)
-      tempboard1[$0] = $1
-    }
-    print("Temp board:")
-    print(tempboard1)
+    //print("Board 1:")
+    //print(board1)
+    //board1.sorted(by: { $0.key < $1.key }).forEach {
+    //  print($0)
+    //  tempboard1[$0] = $1
+    //}
+    //print("Temp board:")
+    //print(tempboard1)
   }
   var body: some View {
     //[Teacher container]----------------------
@@ -178,11 +178,11 @@ struct TeacherView: View {
             })
             VStack(spacing:20) {
               HStack(spacing: 20) {
-                ForEach(board1.sorted(by: >), id: \.key) { key, desc in
-                  ImageButton(image: key, action: {
-                    newImageName = desc
-                  })
-                }
+                //ForEach(board1.sorted(by: >), id: \.key) { key, desc in
+                //  ImageButton(image: key, action: {
+                //    newImageName = desc
+                //  })
+               // }
               }
               HStack(spacing: 20) {
                 //ForEach((4...6).reversed(), id: \.self) { i in
