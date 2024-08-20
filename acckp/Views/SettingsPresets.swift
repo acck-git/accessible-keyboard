@@ -107,12 +107,12 @@ struct ArrowButtonSmall: View {
         .scaledToFit()
         .padding(EdgeInsets(top: -10.0, leading: 20.0, bottom: -10.0, trailing: 20.0))
         .frame(width: 60, height: 160)
-        .foregroundColor(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]))
+        .foregroundColor(Color(hex:StaticData.text_col[0]))
         .overlay(RoundedRectangle(cornerRadius: 50)
-          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
         )
     })
-    .background(Color(hex:StaticData.bg2_col[GlobalVars.get().colorSet]))
+    .background(Color(hex:StaticData.bg2_col[0]))
     .cornerRadius(50)
   }
 }
@@ -131,6 +131,23 @@ struct ImageButton: View {
         )
     })
     .background(Color(hex:StaticData.bg1_col[0]))
+    .cornerRadius(0)
+  }
+}
+struct ImageButtonNew: View {
+  var image: String
+  var action: (() -> Void)
+  var body: some View {
+    Button(action: action, label: { Image(systemName: image)
+        .resizable()
+        .scaledToFit()
+        .padding(EdgeInsets(top: 70, leading: 70, bottom: 70, trailing: 70))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foregroundColor(Color(.gray))
+        .overlay(RoundedRectangle(cornerRadius: 0)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 1)
+        )
+    })
     .cornerRadius(0)
   }
 }
@@ -341,11 +358,11 @@ struct SettingsPresetsPreview: View {
         ColorButton(text: "טקסט", set:2)
         ColorButton(text: "טקסט", set:3)
       }.frame(height: StaticData.screenheight/9)
+      ImageButtonNew(image: "plus.circle", action: {})
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(.horizontal, 0.0)
     .padding(.vertical, -22.0)
-    .background(Color(hex:StaticData.bg1_col[1]))
     //.overlay(MassiveImageButton(image: "a1", action: {}))
   }
 }

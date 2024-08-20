@@ -20,6 +20,8 @@ struct MainView: View {
         TeacherView()
       case GlobalVars.screens.stats:
         StatisticsView()
+      case GlobalVars.screens.images:
+        ImagesView()
       default:
         let main = VStack (spacing: 0.0) {
           ToplineSubView()
@@ -48,11 +50,12 @@ struct MainView: View {
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(.all, 0.0)
     .ignoresSafeArea(.keyboard)
-    .onAppear(perform: fetchUsers)
+    .onAppear(perform: FetchData)
   }
   //[Load users from database]------------
-  @MainActor private func fetchUsers() {
+  @MainActor private func FetchData() {
     let query = FetchDescriptor<UserData>()
+    let queryimg = FetchDescriptor<ImageData>()
     do {
       gVars.users = try ModelContext.fetch(query)
       let user = gVars.loginStudent()
@@ -68,10 +71,25 @@ struct MainView: View {
     catch {
       fatalError("Could not fetch users: \(error)")
     }
+    do {
+      let images = try ModelContext.fetch(queryimg)
+      if images.count != 0 {
+        gVars.images = images[0]
+      }
+      else{
+        gVars.images = ImageData()
+        ModelContext.insert(gVars.images!)
+      }
+      gVars.images.board1["a13"] = "מתנה"
+      gVars.loadImages()
+    }
+    catch {
+      fatalError("Could not fetch images: \(error)")
+    }
     gVars.screen = GlobalVars.screens.main
   }
 }
 
 #Preview {
-  MainView().modelContainer(for: UserData.self)
+  MainView().modelContainer(for: [UserData.self, ImageData.self])
 }

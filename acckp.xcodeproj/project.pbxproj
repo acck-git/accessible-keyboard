@@ -46,6 +46,7 @@
 		5C72EFA22C72389F001DF748 /* ג.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF8C2C72389F001DF748 /* ג.mp4 */; };
 		5C72EFA32C72389F001DF748 /* מ.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF8D2C72389F001DF748 /* מ.mp4 */; };
 		5C72EFA52C724127001DF748 /* ק.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EFA42C724127001DF748 /* ק.mp4 */; };
+		5C72EFA72C724881001DF748 /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C72EFA62C724881001DF748 /* ImagesView.swift */; };
 		5C7FF77B2BBFD4D400BB0FF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */; };
 		5CA329DB2C7201AA00C20DB5 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA329DA2C7201AA00C20DB5 /* ImageData.swift */; };
 		5CC996A52BD57F5B001FFE57 /* SettingsPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */; };
@@ -111,6 +112,7 @@
 		5C72EF8C2C72389F001DF748 /* ג.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ג.mp4"; sourceTree = "<group>"; };
 		5C72EF8D2C72389F001DF748 /* מ.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "מ.mp4"; sourceTree = "<group>"; };
 		5C72EFA42C724127001DF748 /* ק.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ק.mp4"; sourceTree = "<group>"; };
+		5C72EFA62C724881001DF748 /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
 		5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA329DA2C7201AA00C20DB5 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
 		5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresets.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				5C53DE722B9F65E700F51194 /* KeyboardSubView.swift */,
 				5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */,
 				5C3E14112C1C3B4C003A5C91 /* TeacherView.swift */,
+				5C72EFA62C724881001DF748 /* ImagesView.swift */,
 				5C3E14132C1C9790003A5C91 /* StatisticsView.swift */,
 				5C53DE7D2B9F987200F51194 /* MainPresets.swift */,
 				5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */,
@@ -430,6 +433,7 @@
 				5C53DE812B9FAB1A00F51194 /* Utils.swift in Sources */,
 				5CEC071C2BDD5E9600AB9F19 /* UserData.swift in Sources */,
 				5C53DE732B9F65E700F51194 /* KeyboardSubView.swift in Sources */,
+				5C72EFA72C724881001DF748 /* ImagesView.swift in Sources */,
 				5C5A856A2B8C9F4100770254 /* acckpApp.swift in Sources */,
 				5C53DE7C2B9F70BA00F51194 /* Data.swift in Sources */,
 				5C53DE7A2B9F6DCE00F51194 /* ToplineSubView.swift in Sources */,

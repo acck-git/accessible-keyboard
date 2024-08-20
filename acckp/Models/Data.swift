@@ -14,13 +14,20 @@ class GlobalVars: ObservableObject {
   static var singleton: GlobalVars!
   var player: AVAudioPlayer?
   //App states
-  enum screens {case main, settings, teacher, stats, blank}
+  enum screens {case main, settings, teacher, stats, blank, images}
   @Published var screen: screens          //currently displayed screen (uses enum)
   @Published var colorSet: Int            //currently displayed color set
   @Published var board: Int               //currently displayed vowels board
   @Published var inputText: String        //displayed text in text input (main screen)
   @Published var image: String            //currently selected image (image typing mode)
   @Published var imageZoom: Bool = false  //show overlay of selected image
+  @Published var images: ImageData!       //
+  @Published var imageBoard1: [String: String] = StaticData.imgDesc1
+  @Published var imageBoard2: [String: String] = StaticData.imgDesc2
+  @Published var imageBoard3: [String: String] = StaticData.imgDesc3
+  @Published var imageBoard4: [String: String] = StaticData.imgDesc4
+  @Published var imageBoard5: [String: String] = StaticData.imgDesc5
+  @Published var imageBoard6: [String: String] = StaticData.imgDesc6
   //[Users]--------------------------------------
   @Published var users: [UserData] = []   //existing users in database
   @Published var user: UserData!          //object of the logged in user
@@ -266,6 +273,14 @@ class GlobalVars: ObservableObject {
   }
   
   //[Images data]--------------------------------
+  func loadImages() {
+    images.board1.forEach { imageBoard1[$0] = $1 }
+    images.board2.forEach { imageBoard2[$0] = $1 }
+    images.board3.forEach { imageBoard3[$0] = $1 }
+    images.board4.forEach { imageBoard4[$0] = $1 }
+    images.board5.forEach { imageBoard5[$0] = $1 }
+    images.board6.forEach { imageBoard6[$0] = $1 }
+  }
   func checkSpelling() {
     //[Calculate typos]--------------------------
     if inputText.count == 0 {
@@ -419,6 +434,90 @@ final class StaticData {
     "e10":"סֶפֶר",
     "e11":"מָסרֶק",
     "e12":"קֶשֶׁת",
+    "f1":"שׁוּם",
+    "f2":"תוּת",
+    "f3":"חוּם",
+    "f4":"חִיתוּל",
+    "f5":"גוּפִייָה",
+    "f6":"כָּדוּר",
+    "f7":"קוּבִּייָה",
+    "f8":"חָלוּק",
+    "f9":"תָנוּר",
+    "f10":"בּוּבָּה",
+    "f11":"חוּלצָה",
+    "f12":"דוּבִּי"
+  ]
+  static let imgDesc1 = [
+    "a1":"מָתָנָה",
+    "a2":"קָרָא",
+    "a3":"בָּכָה",
+    "a4":"מָכָּה",
+    "a5":"חָסָה",
+    "a6":"סָבָּא",
+    "a7":"תָחָנָה",
+    "a8":"צָבָא",
+    "a9":"בָּנָנָה",
+    "a10":"פָּרָה",
+    "a11":"אָבָּא",
+    "a12":"צָמָה"
+  ]
+  static let imgDesc2 = [
+    "b1":"פִּיצָה",
+    "b2":"מִיטׁה",
+    "b3":"עָנִיבָה",
+    "b4":"חָבִיתָה",
+    "b5":"סִיכָּה",
+    "b6":"כִּיפָּה",
+    "b7":"גִיטָרָה",
+    "b8":"חִיטָה",
+    "b9":"חָסִידָה",
+    "b10":"גִינָה",
+    "b11":"אִישָׁה",
+    "b12":"טִיפָּה"
+  ]
+  static let imgDesc3 = [
+    "c1":"לֶחִי",
+    "c2":"קֶעָרָה",
+    "c3":"שֶׁקָע",
+    "c4":"פֶּאָה",
+    "c5":"שֶבָע",
+    "c6":"לֶטָאָה",
+    "c7":"נֶמָלָה",
+    "c8":"מֶסִיבָּה",
+    "c9":"שָׂדֶה",
+    "c10":"הֶגֶה",
+    "c11":"כִּיסֶא",
+    "c12":"תֶה"
+  ]
+  static let imgDesc4 = [
+    "d1":"כּוֹבָע",
+    "d2":"לֶגוֹ",
+    "d3":"פּוֹנִי",
+    "d4":"רוֹבֶה",
+    "d5":"שוֹקוֹ",
+    "d6":"חָגוֹרָה",
+    "d7":"אוֹנִייָה",
+    "d8":"נוֹצָה",
+    "d9":"מֶנוֹרָה",
+    "d10":"אוֹטוֹ",
+    "d11":"חוֹלָה",
+    "d12":"יוֹנָה"
+  ]
+  static let imgDesc5 = [
+    "e1":"כּחוֹל",
+    "e2":"אָגָס",
+    "e3":"בֶּרֶז",
+    "e4":"פָּרפָּר",
+    "e5":"תִיק",
+    "e6":"מָזלֶג",
+    "e7":"נָחָש",
+    "e8":"כּוֹס",
+    "e9":"קָלמָר",
+    "e10":"סֶפֶר",
+    "e11":"מָסרֶק",
+    "e12":"קֶשֶׁת"
+  ]
+  static let imgDesc6 = [
     "f1":"שׁוּם",
     "f2":"תוּת",
     "f3":"חוּם",

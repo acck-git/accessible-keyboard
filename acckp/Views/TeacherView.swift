@@ -17,7 +17,7 @@ struct TeacherView: View {
   //[User boards]------------------------------
   @State var boards = StaticData.boards
   @State var boardNames = StaticData.boardNames
-  //[Piker]------------------------------------
+  //[Picker]------------------------------------
   @State var students: [String] = []
   @State var students_plain: [String] = []
   @State var students_new: [String] = []
@@ -26,6 +26,14 @@ struct TeacherView: View {
   @State var subSet: Int = 0
   @State var newImageName: String = ""
   @State var confirmImage: Bool = false
+  @State var board1: [String: String] = StaticData.imgDesc1
+  @State var board2: [String: String] = StaticData.imgDesc2
+  @State var board3: [String: String] = StaticData.imgDesc3
+  @State var board4: [String: String] = StaticData.imgDesc4
+  @State var board5: [String: String] = StaticData.imgDesc5
+  @State var board6: [String: String] = StaticData.imgDesc6
+  var tempboard1: [String: String] = [:]
+  var tempboard2: [String: String] = [:]
   var sets: [String] = StaticData.sets
   //-------------------
   init () {
@@ -35,6 +43,22 @@ struct TeacherView: View {
       _students_new = State(wrappedValue: gVars.getStudents(add:true))
       _students = _students_plain
     }
+    if gVars.images != nil {
+      _board1 = State(wrappedValue: gVars.imageBoard1)
+      _board2 = State(wrappedValue: gVars.imageBoard2)
+      _board3 = State(wrappedValue: gVars.imageBoard3)
+      _board4 = State(wrappedValue: gVars.imageBoard4)
+      _board5 = State(wrappedValue: gVars.imageBoard5)
+      _board6 = State(wrappedValue: gVars.imageBoard6)
+    }
+    print("Board 1:")
+    print(board1)
+    board1.sorted(by: { $0.key < $1.key }).forEach { 
+      print($0)
+      tempboard1[$0] = $1
+    }
+    print("Temp board:")
+    print(tempboard1)
   }
   var body: some View {
     //[Teacher container]----------------------
@@ -131,22 +155,8 @@ struct TeacherView: View {
           //-------------------
           HStack(spacing: 15) {
             //-------------------
-            DeleteTeacherButton(text: "מחק", action: {
-            })
-            .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirmImage) {
-              Button("מחק", role: .destructive) {
-                
-              }} message: {
-                Text("לא ניתן לבטל פעולה זו. המשך?")
-              }
-            //-------------------
-            SaveButton(text: "שמור", action: {
-              
-            })
-            //temp
-            //-------------------
             ImageEditInput(placeholder: "", text: $newImageName)
-              .focused($textFieldFocus)
+              .disabled(true)
             //----
             Text("תיאור:")
               .lineLimit(1)
@@ -168,18 +178,18 @@ struct TeacherView: View {
             })
             VStack(spacing:20) {
               HStack(spacing: 20) {
-                ForEach((1...3).reversed(), id: \.self) { i in
-                  ImageButton(image: set+String(subSet+i), action: {
-                    newImageName = StaticData.imgDesc[set+String(subSet+i)] != nil ? StaticData.imgDesc[set+String(subSet+i)]! : ""
+                ForEach(board1.sorted(by: >), id: \.key) { key, desc in
+                  ImageButton(image: key, action: {
+                    newImageName = desc
                   })
                 }
               }
               HStack(spacing: 20) {
-                ForEach((4...6).reversed(), id: \.self) { i in
-                  ImageButton(image: set+String(subSet+i), action: {
-                    newImageName = StaticData.imgDesc[set+String(subSet+i)] != nil ? StaticData.imgDesc[set+String(subSet+i)]! : ""
-                  })
-                }
+                //ForEach((4...6).reversed(), id: \.self) { i in
+                 // ImageButton(image: set+String(subSet+i), action: {
+                  //  newImageName = board1[set+String(subSet+i)] != nil ? board1[set+String(subSet+i)]! : ""
+                 // })
+                //}
               }
             }
             //.frame(maxHeight: .infinity)
@@ -199,6 +209,10 @@ struct TeacherView: View {
       HStack() {
         SaveButton(text: "סטטיסטיקת תלמידים", action: {
           gVars.screen = GlobalVars.screens.stats
+        })
+        .frame(width: StaticData.screenwidth/3)
+        SaveButton(text: "הוספת תמונות", action: {
+          gVars.screen = GlobalVars.screens.images
         })
         .frame(width: StaticData.screenwidth/3)
         HiddenButton().frame(maxWidth:.infinity)

@@ -8,7 +8,7 @@ import SwiftData
 @main
 struct acckpApp: App {
   var container: ModelContainer = {
-    let schema = Schema([UserData.self])
+    let schema = Schema([UserData.self, ImageData.self])
     let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
     do { 
       GlobalVars.container = try ModelContainer(for: schema, configurations: [configuration])
