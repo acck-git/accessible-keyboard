@@ -211,12 +211,40 @@ struct TinyImageButton: View {
     .background(Color(hex:StaticData.bg1_col[0]))
   }
 }
+struct TinyImageButtonNew: View {
+  var image: Data
+  var action: (() -> Void)
+  var body: some View {
+    Button(action: action, label: {
+      Image(uiImage: UIImage(data: image)!)
+        .resizable()
+        .scaledToFit()
+        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .frame(width: 100, height: 100)
+    })
+    .background(Color(hex:StaticData.bg1_col[0]))
+  }
+}
 //[Massive Image Button]-------------------------------
 struct MassiveImageButton: View {
   var image: String
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Image(image)
+        .resizable()
+        .scaledToFit()
+        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    })
+    .background(Color(hex:StaticData.bg1_col[0]))
+  }
+}
+struct MassiveImageButtonNew: View {
+  var image: Data
+  var action: (() -> Void)
+  var body: some View {
+    Button(action: action, label: {
+      Image(uiImage: UIImage(data: image)!)
         .resizable()
         .scaledToFit()
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))

@@ -42,18 +42,18 @@ class ImageData {
     }
   }
   func addImage(desc: String, board: String, image: Data, newarray: inout [imageInfo]) {
-    newarray.append(imageInfo(key: board+String(newarray.count+1),desc: desc, image: image))
+    newarray.append(imageInfo(desc: desc, image: image))
     print(board)
     print(newarray)
     print("board1")
     print(board1)
   }
   //Update Image
-  func update(newDesc: String, newBoard: String, oldBoard: String, key: String) {
+  func update(newDesc: String, newBoard: String, oldBoard: String, id: UUID) {
     var editarray = findarray(board: oldBoard).pointee
     var index = editarray.count
     for i in editarray.indices {
-      if editarray[i].key == key {
+      if editarray[i].id == id {
         index = i
         break
       }
@@ -61,13 +61,13 @@ class ImageData {
     let image = editarray[index].image
     //Same board
     if oldBoard == newBoard{
-      editarray[index]=imageInfo(key: newBoard+String(index),desc: newDesc, image: image)
+      editarray[index]=imageInfo(desc: newDesc, image: image)
     }
     //Swapping boards
     else{
       editarray.remove(at:index)
       var newarray = findarray(board: newBoard).pointee
-      newarray.append(imageInfo(key: newBoard+String(newarray.count+1),desc: newDesc, image: image))
+      newarray.append(imageInfo(desc: newDesc, image: image))
     }
   }
   //Find relevant board
@@ -96,9 +96,9 @@ struct imageInfo: Codable, Identifiable {
   var desc: String
   var image: Data?
   
-  init(key: String, desc: String, image: Data? = Data()) {
-    self.key = key
+  init(key: String = "",desc: String, image: Data? = Data()) {
     self.desc = desc
     self.image = image
+    self.key = key
   }
 }

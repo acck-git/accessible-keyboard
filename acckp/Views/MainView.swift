@@ -8,6 +8,7 @@ import SwiftData
 struct MainView: View {
   @Environment(\.modelContext) private var ModelContext
   @ObservedObject var gVars = GlobalVars.get(screen: GlobalVars.screens.blank)
+  var NilData = Data()
   var body: some View {
     //[Main container]---------------------
     VStack () {
@@ -39,10 +40,16 @@ struct MainView: View {
           .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
           .padding(.horizontal, 0.0)
           .padding(.vertical, 0.0)
-        if gVars.imageZoom { main
-          .overlay(MassiveImageButton(
-            image: gVars.image, action: { gVars.imageZoom = false })
-          )
+        if gVars.imageZoom {
+          if gVars.image!.image != NilData {
+            main.overlay(MassiveImageButtonNew(
+              image: gVars.image!.image!, action: { gVars.imageZoom = false })
+            )
+          }
+          else {
+            main.overlay(MassiveImageButton(
+              image: gVars.image!.key, action: { gVars.imageZoom = false })
+            )}
         }
         else { main }
       }

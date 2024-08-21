@@ -28,7 +28,7 @@ struct TeacherView: View {
   @State var confirmImage: Bool = false
   @State var currboard: [imageInfo] = StaticData.imgDesc1
   @State var tempboard: [imageInfo] = []
-  @State var currImage: String = ""
+  @State var currImage: UUID?
   var NilData = Data()
   var sets: [String] = StaticData.sets
   //-------------------
@@ -168,15 +168,15 @@ struct TeacherView: View {
                 ForEach((0..<3).reversed(), id: \.self) { i in
                   if i < tempboard.count {
                     if tempboard[i].image != NilData{
-                      ImageButtonNew(image: tempboard[i].image!, selected: currImage == tempboard[i].key, action: {
+                      ImageButtonNew(image: tempboard[i].image!, selected: currImage == tempboard[i].id, action: {
                         newImageName = tempboard[i].desc
-                        currImage = tempboard[i].key
+                        currImage = tempboard[i].id
                       })
                     }
                     else {
-                      ImageButton(image: tempboard[i].key,selected: currImage == tempboard[i].key, action: {
+                      ImageButton(image: tempboard[i].key,selected: currImage == tempboard[i].id, action: {
                         newImageName = tempboard[i].desc
-                        currImage = tempboard[i].key
+                        currImage = tempboard[i].id
                       })
                     }
                   }
@@ -191,15 +191,15 @@ struct TeacherView: View {
                 ForEach((3..<6).reversed(), id: \.self) { i in
                   if i < tempboard.count {
                     if tempboard[i].image != NilData{
-                      ImageButtonNew(image: tempboard[i].image!, selected: currImage == tempboard[i].key, action: {
+                      ImageButtonNew(image: tempboard[i].image!, selected: currImage == tempboard[i].id, action: {
                         newImageName = tempboard[i].desc
-                        currImage = tempboard[i].key
+                        currImage = tempboard[i].id
                       })
                     }
                     else {
-                      ImageButton(image: tempboard[i].key, selected: currImage == tempboard[i].key, action: {
+                      ImageButton(image: tempboard[i].key, selected: currImage == tempboard[i].id, action: {
                         newImageName = tempboard[i].desc
-                        currImage = tempboard[i].key
+                        currImage = tempboard[i].id
                       })
                     }
                   }

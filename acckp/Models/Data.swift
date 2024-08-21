@@ -19,7 +19,7 @@ class GlobalVars: ObservableObject {
   @Published var colorSet: Int            //currently displayed color set
   @Published var board: Int               //currently displayed vowels board
   @Published var inputText: String        //displayed text in text input (main screen)
-  @Published var image: String            //currently selected image (image typing mode)
+  @Published var image: imageInfo?        //currently selected image (image typing mode)
   @Published var imageZoom: Bool = false  //show overlay of selected image
   @Published var images: ImageData!       //
   @Published var imageBoard1: [imageInfo] = StaticData.imgDesc1
@@ -38,11 +38,10 @@ class GlobalVars: ObservableObject {
   static let example = "טֶקסט לֶהָמחָשָה"
   static let student_def = "תלמיד"
   static let student_new = "תלמיד חדש"
-  private init(screen: screens = screens.main, colorSet: Int = 0, board: Int = 0, image: String = "") {
+  private init(screen: screens = screens.main, colorSet: Int = 0, board: Int = 0) {
     self.screen = screen
     self.colorSet = colorSet
     self.board = board
-    self.image = image
     self.inputText = ""
     self.student = GlobalVars.student_def
     self.student_edit = GlobalVars.student_def
@@ -52,9 +51,9 @@ class GlobalVars: ObservableObject {
     }
     catch { print(error) }
   }
-  static func get(screen: screens = screens.main, colorSet: Int = 0, board: Int = 0, image: String = "") -> GlobalVars {
+  static func get(screen: screens = screens.main, colorSet: Int = 0, board: Int = 0) -> GlobalVars {
     if (GlobalVars.singleton != nil) { return GlobalVars.singleton }
-    GlobalVars.singleton = GlobalVars(screen: screen, colorSet: colorSet, board: board, image: image)
+    GlobalVars.singleton = GlobalVars(screen: screen, colorSet: colorSet, board: board)
     return GlobalVars.singleton
   }
   
@@ -191,7 +190,7 @@ class GlobalVars: ObservableObject {
           self.student_edit = student
           self.colorSet = u.colorSet
           self.board = 0
-          self.image = ""
+          self.image = nil
           self.inputText = ""
           //u.printUser()
           changed = true
@@ -304,15 +303,10 @@ class GlobalVars: ObservableObject {
   func checkSpelling() {
     //[Calculate typos]--------------------------
     if inputText.count == 0 {
-      image = ""
+      image = nil
       return
     }
-    guard let desc = StaticData.imgDesc[image] else {
-      print("Image description for \"\(image)\" not found in system.")
-      image = ""
-      return
-    }
-    var expected = Array(desc)
+    var expected = Array(image!.desc)
     let recieved = Array(inputText)
     
     //missing letters -> typo
@@ -327,7 +321,7 @@ class GlobalVars: ObservableObject {
       }
       else { typosAmount += 1 }
     }
-    expected = Array(desc)
+    expected = Array(image!.desc)
     
     //swapped -> typo
     var eIndex1 = 0
@@ -345,12 +339,12 @@ class GlobalVars: ObservableObject {
     print("Typos: \(typosAmount).")
     
     //[Update user]------------------------------
-    user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: desc.count, typos: typosAmount)
+    user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: image!.desc.count, typos: typosAmount)
     print("Updated user \(user!).")
     //user!.printUser()
     
     //[Clear selected image]---------------------
-    image = ""
+    image = nil
     inputText = ""
   }
 }
@@ -480,7 +474,6 @@ final class StaticData {
     imageInfo(key: "a10", desc:"פָּרָה"),
     imageInfo(key: "a11", desc:"אָבָּא"),
     imageInfo(key: "a12", desc:"צָמָה"),
-    imageInfo(key: "a13", desc:"בדיקה")
   ]
   static let imgDesc2 = [
     imageInfo(key: "b1", desc: "פִּיצָה"),

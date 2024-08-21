@@ -86,14 +86,14 @@ struct SettingsView: View {
                 if i < tempboard.count {
                   if tempboard[i].image != NilData{
                     ImageButtonNew(image: tempboard[i].image!, action: {
-                      gVars.image = tempboard[i].key
+                      gVars.image = tempboard[i]
                       gVars.screen = GlobalVars.screens.main
                       gVars.inputText = ""
                     })
                   }
                   else {
                     ImageButton(image: tempboard[i].key, action: {
-                      gVars.image = tempboard[i].key
+                      gVars.image = tempboard[i]
                       gVars.screen = GlobalVars.screens.main
                       gVars.inputText = ""
                     })
@@ -111,14 +111,14 @@ struct SettingsView: View {
                 if i < tempboard.count {
                   if tempboard[i].image != NilData{
                     ImageButtonNew(image: tempboard[i].image!, action: {
-                      gVars.image = tempboard[i].key
+                      gVars.image = tempboard[i]
                       gVars.screen = GlobalVars.screens.main
                       gVars.inputText = ""
                     })
                   }
                   else {
                     ImageButton(image: tempboard[i].key, action: {
-                      gVars.image = tempboard[i].key
+                      gVars.image = tempboard[i]
                       gVars.screen = GlobalVars.screens.main
                       gVars.inputText = ""
                     })
