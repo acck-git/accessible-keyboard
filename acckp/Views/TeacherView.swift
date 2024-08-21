@@ -26,14 +26,10 @@ struct TeacherView: View {
   @State var subSet: Int = 0
   @State var newImageName: String = ""
   @State var confirmImage: Bool = false
-  @State var board1: [(String, String)] = StaticData.imgDesc1
-  @State var board2: [(String, String)] = StaticData.imgDesc2
-  @State var board3: [(String, String)] = StaticData.imgDesc3
-  @State var board4: [(String, String)] = StaticData.imgDesc4
-  @State var board5: [(String, String)] = StaticData.imgDesc5
-  @State var board6: [(String, String)] = StaticData.imgDesc6
-  var tempboard1: [(String, String)] = []
-  var tempboard2: [(String, String)] = []
+  @State var currboard: [imageInfo] = StaticData.imgDesc1
+  @State var tempboard: [imageInfo] = []
+  @State var currImage: String = ""
+  var NilData = Data()
   var sets: [String] = StaticData.sets
   //-------------------
   init () {
@@ -44,26 +40,14 @@ struct TeacherView: View {
       _students = _students_plain
     }
     if gVars.images != nil {
-      _board1 = State(wrappedValue: gVars.imageBoard1)
-      _board2 = State(wrappedValue: gVars.imageBoard2)
-      _board3 = State(wrappedValue: gVars.imageBoard3)
-      _board4 = State(wrappedValue: gVars.imageBoard4)
-      _board5 = State(wrappedValue: gVars.imageBoard5)
-      _board6 = State(wrappedValue: gVars.imageBoard6)
+      _currboard = State(wrappedValue: gVars.imageBoard1)
     }
-    //print("Board 1:")
-    //print(board1)
-    //board1.sorted(by: { $0.key < $1.key }).forEach {
-    //  print($0)
-    //  tempboard1[$0] = $1
-    //}
-    //print("Temp board:")
-    //print(tempboard1)
+    _tempboard = State(wrappedValue: Array(currboard[0..<6]))
   }
   var body: some View {
     //[Teacher container]----------------------
     VStack(spacing:20) {
-      HStack (spacing: 15) {
+      HStack(spacing: 15) {
         VStack(spacing: 15) {
           //[Adding students]------------------
           VStack(spacing:15) {
@@ -105,7 +89,7 @@ struct TeacherView: View {
                   }
               }
               //-------------------
-              SaveButton(text: "שמור", action: {
+              PlainButton(text: "שמור", action: {
                 if addUser() {
                   newName = ""
                   textFieldFocus = false
@@ -163,8 +147,10 @@ struct TeacherView: View {
               .foregroundColor(Color(hex:StaticData.text_col[0]))
               .font(.system(size: 20, weight: .heavy))
             //-------------------
-            //temp
-            BoardPickerImages(array: boardNames, onChange: {
+            BoardPickerImages(onChange: {
+              subSet = 0
+              currboard = gVars.fetchImages(set: set)
+              tempboard = Array(currboard.prefix(6))
             },selectedBoard: $set)
             //----
             Text("לוח:")
@@ -174,28 +160,67 @@ struct TeacherView: View {
           }.frame(height: 50)
           HStack{
             ArrowButtonSmall(image: "arrowtriangle.left.fill",action: {
-              subSet = subSet+6 > 6 ? 0 : subSet+6
+              subSet = subSet+6 >= currboard.count ? 0 : subSet+6
+              tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
             })
             VStack(spacing:20) {
               HStack(spacing: 20) {
-                //ForEach(board1.sorted(by: >), id: \.key) { key, desc in
-                //  ImageButton(image: key, action: {
-                //    newImageName = desc
-                //  })
-               // }
+                ForEach((0..<3).reversed(), id: \.self) { i in
+                  if i < tempboard.count {
+                    if tempboard[i].image != NilData{
+                      ImageButtonNew(image: tempboard[i].image!, selected: currImage == tempboard[i].key, action: {
+                        newImageName = tempboard[i].desc
+                        currImage = tempboard[i].key
+                      })
+                    }
+                    else {
+                      ImageButton(image: tempboard[i].key,selected: currImage == tempboard[i].key, action: {
+                        newImageName = tempboard[i].desc
+                        currImage = tempboard[i].key
+                      })
+                    }
+                  }
+                  else{
+                    HStack{}
+                      .frame(maxWidth: .infinity, maxHeight: .infinity)
+                      .border(Color.black)
+                  }
+                }
               }
               HStack(spacing: 20) {
-                //ForEach((4...6).reversed(), id: \.self) { i in
-                 // ImageButton(image: set+String(subSet+i), action: {
-                  //  newImageName = board1[set+String(subSet+i)] != nil ? board1[set+String(subSet+i)]! : ""
-                 // })
-                //}
+                ForEach((3..<6).reversed(), id: \.self) { i in
+                  if i < tempboard.count {
+                    if tempboard[i].image != NilData{
+                      ImageButtonNew(image: tempboard[i].image!, selected: currImage == tempboard[i].key, action: {
+                        newImageName = tempboard[i].desc
+                        currImage = tempboard[i].key
+                      })
+                    }
+                    else {
+                      ImageButton(image: tempboard[i].key, selected: currImage == tempboard[i].key, action: {
+                        newImageName = tempboard[i].desc
+                        currImage = tempboard[i].key
+                      })
+                    }
+                  }
+                  else{
+                    HStack{}
+                      .frame(maxWidth: .infinity, maxHeight: .infinity)
+                      .border(Color.black)
+                  }
+                }
               }
             }
-            //.frame(maxHeight: .infinity)
             .padding(.horizontal, 20)
             ArrowButtonSmall(image: "arrowtriangle.right.fill",action: {
-              subSet = subSet-6 < 0 ? 6 : subSet-6
+              if subSet-6 < 0 {
+                subSet = currboard.count - ((currboard.count)%6)
+                if subSet == currboard.count {
+                  subSet = currboard.count - 6
+                }
+              }
+              else { subSet -= 6 }
+              tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
             })
           }
         }
@@ -206,17 +231,17 @@ struct TeacherView: View {
           .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2))
       }
       //[Bottom row]--------------------------
-      HStack() {
-        SaveButton(text: "סטטיסטיקת תלמידים", action: {
+      HStack(spacing: 15) {
+        PlainButton(text: "סטטיסטיקת תלמידים", action: {
           gVars.screen = GlobalVars.screens.stats
         })
         .frame(width: StaticData.screenwidth/3)
-        SaveButton(text: "הוספת תמונות", action: {
+        PlainButton(text: "הוספת תמונות", action: {
           gVars.screen = GlobalVars.screens.images
         })
         .frame(width: StaticData.screenwidth/3)
         HiddenButton().frame(maxWidth:.infinity)
-        SettingsButton(image: "arrowshape.right", action: {
+        BackButton(image: "arrowshape.right", action: {
           gVars.screen = GlobalVars.screens.settings})
       }
       .frame(height: StaticData.screenheight/9)

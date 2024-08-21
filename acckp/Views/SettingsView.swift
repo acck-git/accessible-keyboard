@@ -17,7 +17,10 @@ struct SettingsView: View {
   @State var json:Data = Data()
   //[Images]-----------------------------------
   @State var set: String = "a"
+  @State var currboard: [imageInfo] = StaticData.imgDesc1
+  @State var tempboard: [imageInfo] = []
   @State var subSet: Int = 0
+  var NilData = Data()
   var vowelsRow: [[String]] = StaticData.vowelsRow.reversed()
   var sets: [String] = StaticData.sets
   init () {
@@ -25,6 +28,11 @@ struct SettingsView: View {
       boards = gVars.user!.boards
       _students = State(wrappedValue: gVars.getStudents(add:false))
     }
+    if gVars.images != nil {
+      _currboard = State(wrappedValue: gVars.imageBoard1)
+      print(currboard.count)
+    }
+    _tempboard = State(wrappedValue: Array(currboard[0..<6]))
   }
   var body: some View {
     if !json.isEmpty {
@@ -68,41 +76,83 @@ struct SettingsView: View {
         //[Images container]---------------------
         HStack(spacing: 20) {
           ArrowButton(image: "arrowtriangle.left.fill",action: {
-            subSet = subSet+6 > 6 ? 0 : subSet+6
+            subSet = subSet+6 >= currboard.count ? 0 : subSet+6
+            tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
           })
           //-------------------
           VStack(spacing:20) {
             HStack(spacing: 20) {
-              ForEach((1...3).reversed(), id: \.self) { i in
-                ImageButton(image: set+String(subSet+i), action: {
-                  gVars.image = set+String(subSet+i)
-                  gVars.screen = GlobalVars.screens.main
-                  gVars.inputText = ""
-                })
+              ForEach((0..<3).reversed(), id: \.self) { i in
+                if i < tempboard.count {
+                  if tempboard[i].image != NilData{
+                    ImageButtonNew(image: tempboard[i].image!, action: {
+                      gVars.image = tempboard[i].key
+                      gVars.screen = GlobalVars.screens.main
+                      gVars.inputText = ""
+                    })
+                  }
+                  else {
+                    ImageButton(image: tempboard[i].key, action: {
+                      gVars.image = tempboard[i].key
+                      gVars.screen = GlobalVars.screens.main
+                      gVars.inputText = ""
+                    })
+                  }
+                }
+                else{
+                  HStack{}
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .border(Color.black)
+                }
               }
             }
             HStack(spacing: 20) {
-              ForEach((4...6).reversed(), id: \.self) { i in
-                ImageButton(image: set+String(subSet+i), action: {
-                  gVars.image = set+String(subSet+i)
-                  gVars.screen = GlobalVars.screens.main
-                  gVars.inputText = ""
-                })
+              ForEach((3..<6).reversed(), id: \.self) { i in
+                if i < tempboard.count {
+                  if tempboard[i].image != NilData{
+                    ImageButtonNew(image: tempboard[i].image!, action: {
+                      gVars.image = tempboard[i].key
+                      gVars.screen = GlobalVars.screens.main
+                      gVars.inputText = ""
+                    })
+                  }
+                  else {
+                    ImageButton(image: tempboard[i].key, action: {
+                      gVars.image = tempboard[i].key
+                      gVars.screen = GlobalVars.screens.main
+                      gVars.inputText = ""
+                    })
+                  }
+                }
+                else{
+                  HStack{}
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .border(Color.black)
+                }
               }
             }
           }
           .frame(maxHeight: .infinity)
           //-------------------
           ArrowButton(image: "arrowtriangle.right.fill",action: {
-            subSet = subSet-6 < 0 ? 6 : subSet-6
+            if subSet-6 < 0 {
+              subSet = currboard.count - ((currboard.count)%6)
+              if subSet == currboard.count {
+                subSet = currboard.count - 6
+              }
+            }
+            else { subSet -= 6 }
+            tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
           })
         }
         //[Board buttons]--------------------------------
         HStack(spacing: 10.0) {
           ForEach(vowelsRow.indices, id:\.self) { index in
             VowelButton(image: vowelsRow[index][gVars.colorSet], action: {
-              set = sets[vowelsRow.count - index - 1]
               subSet = 0
+              set = sets[vowelsRow.count - index - 1]
+              currboard = gVars.fetchImages(set: set)
+              tempboard = Array(currboard.prefix(6))
             }, enabled: boards[vowelsRow.count - index - 1], selected: sets[vowelsRow.count - index - 1] == set)
           }
         }

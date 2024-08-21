@@ -115,7 +115,7 @@ struct StatisticsView: View {
       //[Bottom row]---------------------------
       HStack() {
         HiddenButton().frame(maxWidth:.infinity)
-        SettingsButton(image: "arrowshape.right", action: {
+        BackButton(image: "arrowshape.right", action: {
           gVars.screen = GlobalVars.screens.teacher})
       }
       .frame(height: StaticData.screenheight/9)

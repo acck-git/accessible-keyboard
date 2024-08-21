@@ -22,47 +22,83 @@ class ImageData {
     self.board5 = board5
     self.board6 = board6
   }
-    //Update stats
-  func update(newDesc: String, newBoard: String, oldBoard: String, index: Int) {
-    var editarray = findarray(board: oldBoard)
+  // New Image
+  func newImage(desc: String, board: String, image: Data) {
+    switch board {
+    case "a":
+      addImage(desc: desc, board: board, image: image, newarray: &board1)
+    case "b":
+      addImage(desc: desc, board: board, image: image, newarray: &board2)
+    case "c":
+      addImage(desc: desc, board: board, image: image, newarray: &board3)
+    case "d":
+      addImage(desc: desc, board: board, image: image, newarray: &board4)
+    case "e":
+      addImage(desc: desc, board: board, image: image, newarray: &board5)
+    case "f":
+      addImage(desc: desc, board: board, image: image, newarray: &board6)
+    default:
+      addImage(desc: desc, board: board, image: image, newarray: &board1)
+    }
+  }
+  func addImage(desc: String, board: String, image: Data, newarray: inout [imageInfo]) {
+    newarray.append(imageInfo(key: board+String(newarray.count+1),desc: desc, image: image))
+    print(board)
+    print(newarray)
+    print("board1")
+    print(board1)
+  }
+  //Update Image
+  func update(newDesc: String, newBoard: String, oldBoard: String, key: String) {
+    var editarray = findarray(board: oldBoard).pointee
+    var index = editarray.count
+    for i in editarray.indices {
+      if editarray[i].key == key {
+        index = i
+        break
+      }
+    }
+    let image = editarray[index].image
     //Same board
     if oldBoard == newBoard{
-      editarray[index]=imageInfo(key: newBoard+String(index),desc: newDesc)
+      editarray[index]=imageInfo(key: newBoard+String(index),desc: newDesc, image: image)
     }
     //Swapping boards
     else{
       editarray.remove(at:index)
-      var newarray = findarray(board: newBoard)
-      newarray.append(imageInfo(key: newBoard+String(newarray.count+1),desc: newDesc))
+      var newarray = findarray(board: newBoard).pointee
+      newarray.append(imageInfo(key: newBoard+String(newarray.count+1),desc: newDesc, image: image))
     }
   }
   //Find relevant board
-   func findarray(board: String) -> ([imageInfo]){
-    switch board{
-    case "a":
-      return board1
-    case "b":
-      return board2
-    case "c":
-      return board3
-    case "d":
-      return board4
-    case "e":
-      return board5
-    case "f":
-      return board6
-    default:
-      return board1
-    }
+  func findarray(board: String) -> UnsafeMutablePointer<[imageInfo]> {
+      switch board {
+      case "a":
+          return UnsafeMutablePointer(&board1)
+      case "b":
+          return UnsafeMutablePointer(&board2)
+      case "c":
+          return UnsafeMutablePointer(&board3)
+      case "d":
+          return UnsafeMutablePointer(&board4)
+      case "e":
+          return UnsafeMutablePointer(&board5)
+      case "f":
+          return UnsafeMutablePointer(&board6)
+      default:
+          return UnsafeMutablePointer(&board1)
+      }
   }
 }
 struct imageInfo: Codable, Identifiable {
   var id = UUID()
   var key: String
   var desc: String
+  var image: Data?
   
-  init(key: String, desc: String) {
+  init(key: String, desc: String, image: Data? = Data()) {
     self.key = key
     self.desc = desc
+    self.image = image
   }
 }

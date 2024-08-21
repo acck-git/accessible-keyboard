@@ -22,12 +22,12 @@ class GlobalVars: ObservableObject {
   @Published var image: String            //currently selected image (image typing mode)
   @Published var imageZoom: Bool = false  //show overlay of selected image
   @Published var images: ImageData!       //
-  @Published var imageBoard1: [(String, String)] = StaticData.imgDesc1
-  @Published var imageBoard2: [(String, String)] = StaticData.imgDesc2
-  @Published var imageBoard3: [(String, String)] = StaticData.imgDesc3
-  @Published var imageBoard4: [(String, String)] = StaticData.imgDesc4
-  @Published var imageBoard5: [(String, String)] = StaticData.imgDesc5
-  @Published var imageBoard6: [(String, String)] = StaticData.imgDesc6
+  @Published var imageBoard1: [imageInfo] = StaticData.imgDesc1
+  @Published var imageBoard2: [imageInfo] = StaticData.imgDesc2
+  @Published var imageBoard3: [imageInfo] = StaticData.imgDesc3
+  @Published var imageBoard4: [imageInfo] = StaticData.imgDesc4
+  @Published var imageBoard5: [imageInfo] = StaticData.imgDesc5
+  @Published var imageBoard6: [imageInfo] = StaticData.imgDesc6
   //[Users]--------------------------------------
   @Published var users: [UserData] = []   //existing users in database
   @Published var user: UserData!          //object of the logged in user
@@ -274,15 +274,32 @@ class GlobalVars: ObservableObject {
   
   //[Images data]--------------------------------
   func loadImages() {
-    //imageBoard1 += images.board1
-    images.board1.forEach { imageBoard1.append(($0.key,$0.desc)) }
-    images.board2.forEach { imageBoard2.append(($0.key,$0.desc)) }
-    images.board3.forEach { imageBoard3.append(($0.key,$0.desc)) }
-    images.board4.forEach { imageBoard4.append(($0.key,$0.desc)) }
-    images.board5.forEach { imageBoard5.append(($0.key,$0.desc)) }
-    images.board6.forEach { imageBoard6.append(($0.key,$0.desc)) }
-    print("IMAGE BOARD 1 DATA:")
-    print(imageBoard1)
+    imageBoard1 = StaticData.imgDesc1 + images.board1
+    imageBoard2 = StaticData.imgDesc2 + images.board2
+    imageBoard3 = StaticData.imgDesc3 + images.board3
+    imageBoard4 = StaticData.imgDesc4 + images.board4
+    imageBoard5 = StaticData.imgDesc5 + images.board5
+    imageBoard6 = StaticData.imgDesc6 + images.board6
+    print("Imageboard1 count:")
+    print(imageBoard1.count)
+  }
+  func fetchImages(set: String , all: Bool = true) -> [imageInfo] {
+    switch set{
+    case "a":
+      return all ? imageBoard1 : images.board1
+    case "b":
+      return all ? imageBoard2 : images.board2
+    case "c":
+      return all ? imageBoard3 : images.board3
+    case "d":
+      return all ? imageBoard4 : images.board4
+    case "e":
+      return all ? imageBoard5 : images.board5
+    case "f":
+      return all ? imageBoard6 : images.board6
+    default:
+      return all ? imageBoard1 : images.board1
+    }
   }
   func checkSpelling() {
     //[Calculate typos]--------------------------
@@ -352,7 +369,7 @@ final class StaticData {
   static let confirm_col: [UInt] = [0x359846,0xDBF7E0,0x359846,0xDBF7E0]
   static let bg1_col: [UInt] = [0xFFFFFF,0x000000,0xFFCC00,0x000000]
   static let bg2_col: [UInt] = [0xE2E2E2,0x1E1E1E,0xFFEB99,0x1E1E1E]
-  static  let text_col: [UInt] = [0x000000,0xFFFFFF,0x000000,0xFFCC00]
+  static let text_col: [UInt] = [0x000000,0xFFFFFF,0x000000,0xFFCC00]
   static let boardNames = ["קמץ","חיריק","סגול","חולם","עיצור","שורוק"]
   static let boards = [false,false,false,false,false,false]
   static let boards_def = [true,false,false,false,false,false]
@@ -365,173 +382,174 @@ final class StaticData {
   static let endLetters = ["ך" ,"ם" ,"ן" ,"ף" ,"ץ"]
   static let vowels = ["\u{05B8}", "\u{05B4}י", "\u{05B6}", "ו\u{05B9}", "", "ו\u{05BC}"]
   static let vowelsRow = [
-    ["a","2_a","a","3_a"],
-    ["b","2_b","b","3_b"],
-    ["c","2_c","c","3_c"],
-    ["d","2_d","d","3_d"],
+    ["a","2_a","a","2_a"],
+    ["b","2_b","b","2_b"],
+    ["c","2_c","c","2_c"],
+    ["d","2_d","d","2_d"],
     ["e","e","e","e"],
-    ["f","2_f","f","3_f"]]
+    ["f","2_f","f","2_f"]]
   static let noVowel = "\u{05B0}"
   static let fakeNoVowel = "\u{05B6}"
   static let records = ["ב", "ג" ,"ד" ,"ו" ,"ז" ,"ח" ,"ט" ,"י" ,"כ" ,"ל" ,"מ" ,"נ" ,"ס" ,"פ" ,"צ" ,"ק" ,"ר" ,"ת"]
   //[Images]-------------------------------------
   static let sets = ["a","b","c","d","e","f"]
   static let imgDesc = [
-      "a1":"מָתָנָה",
-      "a2":"קָרָא",
-      "a3":"בָּכָה",
-      "a4":"מָכָּה",
-      "a5":"חָסָה",
-      "a6":"סָבָּא",
-      "a7":"תָחָנָה",
-      "a8":"צָבָא",
-      "a9":"בָּנָנָה",
-      "a10":"פָּרָה",
-      "a11":"אָבָּא",
-      "a12":"צָמָה",
-      "b1":"פִּיצָה",
-      "b2":"מִיטׁה",
-      "b3":"עָנִיבָה",
-      "b4":"חָבִיתָה",
-      "b5":"סִיכָּה",
-      "b6":"כִּיפָּה",
-      "b7":"גִיטָרָה",
-      "b8":"חִיטָה",
-      "b9":"חָסִידָה",
-      "b10":"גִינָה",
-      "b11":"אִישָׁה",
-      "b12":"טִיפָּה",
-      "c1":"לֶחִי",
-      "c2":"קֶעָרָה",
-      "c3":"שֶׁקָע",
-      "c4":"פֶּאָה",
-      "c5":"שֶבָע",
-      "c6":"לֶטָאָה",
-      "c7":"נֶמָלָה",
-      "c8":"מֶסִיבָּה",
-      "c9":"שָׂדֶה",
-      "c10":"הֶגֶה",
-      "c11":"כִּיסֶא",
-      "c12":"תֶה",
-      "d1":"כּוֹבָע",
-      "d2":"לֶגוֹ",
-      "d3":"פּוֹנִי",
-      "d4":"רוֹבֶה",
-      "d5":"שוֹקוֹ",
-      "d6":"חָגוֹרָה",
-      "d7":"אוֹנִייָה",
-      "d8":"נוֹצָה",
-      "d9":"מֶנוֹרָה",
-      "d10":"אוֹטוֹ",
-      "d11":"חוֹלָה",
-      "d12":"יוֹנָה",
-      "e1":"כּחוֹל",
-      "e2":"אָגָס",
-      "e3":"בֶּרֶז",
-      "e4":"פָּרפָּר",
-      "e5":"תִיק",
-      "e6":"מָזלֶג",
-      "e7":"נָחָש",
-      "e8":"כּוֹס",
-      "e9":"קָלמָר",
-      "e10":"סֶפֶר",
-      "e11":"מָסרֶק",
-      "e12":"קֶשֶׁת",
-      "f1":"שׁוּם",
-      "f2":"תוּת",
-      "f3":"חוּם",
-      "f4":"חִיתוּל",
-      "f5":"גוּפִייָה",
-      "f6":"כָּדוּר",
-      "f7":"קוּבִּייָה",
-      "f8":"חָלוּק",
-      "f9":"תָנוּר",
-      "f10":"בּוּבָּה",
-      "f11":"חוּלצָה",
-      "f12":"דוּבִּי"
-    ]
+    "a1":"מָתָנָה",
+    "a2":"קָרָא",
+    "a3":"בָּכָה",
+    "a4":"מָכָּה",
+    "a5":"חָסָה",
+    "a6":"סָבָּא",
+    "a7":"תָחָנָה",
+    "a8":"צָבָא",
+    "a9":"בָּנָנָה",
+    "a10":"פָּרָה",
+    "a11":"אָבָּא",
+    "a12":"צָמָה",
+    "b1":"פִּיצָה",
+    "b2":"מִיטׁה",
+    "b3":"עָנִיבָה",
+    "b4":"חָבִיתָה",
+    "b5":"סִיכָּה",
+    "b6":"כִּיפָּה",
+    "b7":"גִיטָרָה",
+    "b8":"חִיטָה",
+    "b9":"חָסִידָה",
+    "b10":"גִינָה",
+    "b11":"אִישָׁה",
+    "b12":"טִיפָּה",
+    "c1":"לֶחִי",
+    "c2":"קֶעָרָה",
+    "c3":"שֶׁקָע",
+    "c4":"פֶּאָה",
+    "c5":"שֶבָע",
+    "c6":"לֶטָאָה",
+    "c7":"נֶמָלָה",
+    "c8":"מֶסִיבָּה",
+    "c9":"שָׂדֶה",
+    "c10":"הֶגֶה",
+    "c11":"כִּיסֶא",
+    "c12":"תֶה",
+    "d1":"כּוֹבָע",
+    "d2":"לֶגוֹ",
+    "d3":"פּוֹנִי",
+    "d4":"רוֹבֶה",
+    "d5":"שוֹקוֹ",
+    "d6":"חָגוֹרָה",
+    "d7":"אוֹנִייָה",
+    "d8":"נוֹצָה",
+    "d9":"מֶנוֹרָה",
+    "d10":"אוֹטוֹ",
+    "d11":"חוֹלָה",
+    "d12":"יוֹנָה",
+    "e1":"כּחוֹל",
+    "e2":"אָגָס",
+    "e3":"בֶּרֶז",
+    "e4":"פָּרפָּר",
+    "e5":"תִיק",
+    "e6":"מָזלֶג",
+    "e7":"נָחָש",
+    "e8":"כּוֹס",
+    "e9":"קָלמָר",
+    "e10":"סֶפֶר",
+    "e11":"מָסרֶק",
+    "e12":"קֶשֶׁת",
+    "f1":"שׁוּם",
+    "f2":"תוּת",
+    "f3":"חוּם",
+    "f4":"חִיתוּל",
+    "f5":"גוּפִייָה",
+    "f6":"כָּדוּר",
+    "f7":"קוּבִּייָה",
+    "f8":"חָלוּק",
+    "f9":"תָנוּר",
+    "f10":"בּוּבָּה",
+    "f11":"חוּלצָה",
+    "f12":"דוּבִּי"
+  ]
   static let imgDesc1 = [
-      ("a1","מָתָנָה"),
-      ("a2","קָרָא"),
-      ("a3","בָּכָה"),
-      ("a4","מָכָּה"),
-      ("a5","חָסָה"),
-      ("a6","סָבָּא"),
-      ("a7","תָחָנָה"),
-      ("a8","צָבָא"),
-      ("a9","בָּנָנָה"),
-      ("a10","פָּרָה"),
-      ("a11","אָבָּא"),
-      ("a12","צָמָה")
-    ]
-    static let imgDesc2 = [
-      ("b1","פִּיצָה"),
-      ("b2","מִיטׁה"),
-      ("b3","עָנִיבָה"),
-      ("b4","חָבִיתָה"),
-      ("b5","סִיכָּה"),
-      ("b6","כִּיפָּה"),
-      ("b7","גִיטָרָה"),
-      ("b8","חִיטָה"),
-      ("b9","חָסִידָה"),
-      ("b10","גִינָה"),
-      ("b11","אִישָׁה"),
-      ("b12","טִיפָּה")
-    ]
-    static let imgDesc3 = [
-      ("c1","לֶחִי"),
-      ("c2","קֶעָרָה"),
-      ("c3","שֶׁקָע"),
-      ("c4","פֶּאָה"),
-      ("c5","שֶבָע"),
-      ("c6","לֶטָאָה"),
-      ("c7","נֶמָלָה"),
-      ("c8","מֶסִיבָּה"),
-      ("c9","שָׂדֶה"),
-      ("c10","הֶגֶה"),
-      ("c11","כִּיסֶא"),
-      ("c12","תֶה")
-    ]
-    static let imgDesc4 = [
-      ("d1","כּוֹבָע"),
-      ("d2","לֶגוֹ"),
-      ("d3","פּוֹנִי"),
-      ("d4","רוֹבֶה"),
-      ("d5","שוֹקוֹ"),
-      ("d6","חָגוֹרָה"),
-      ("d7","אוֹנִייָה"),
-      ("d8","נוֹצָה"),
-      ("d9","מֶנוֹרָה"),
-      ("d10","אוֹטוֹ"),
-      ("d11","חוֹלָה"),
-      ("d12","יוֹנָה")
-    ]
-    static let imgDesc5 = [
-      ("e1","כּחוֹל"),
-      ("e2","אָגָס"),
-      ("e3","בֶּרֶז"),
-      ("e4","פָּרפָּר"),
-      ("e5","תִיק"),
-      ("e6","מָזלֶג"),
-      ("e7","נָחָש"),
-      ("e8","כּוֹס"),
-      ("e9","קָלמָר"),
-      ("e10","סֶפֶר"),
-      ("e11","מָסרֶק"),
-      ("e12","קֶשֶׁת")
-    ]
-    static let imgDesc6 = [
-      ("f1","שׁוּם"),
-      ("f2","תוּת"),
-      ("f3","חוּם"),
-      ("f4","חִיתוּל"),
-      ("f5","גוּפִייָה"),
-      ("f6","כָּדוּר"),
-      ("f7","קוּבִּייָה"),
-      ("f8","חָלוּק"),
-      ("f9","תָנוּר"),
-      ("f10","בּוּבָּה"),
-      ("f11","חוּלצָה"),
-      ("f12","דוּבִּי")
-    ]
+    imageInfo(key: "a1", desc: "מָתָנָה"),
+    imageInfo(key: "a2", desc:"קָרָא"),
+    imageInfo(key: "a3", desc:"בָּכָה"),
+    imageInfo(key: "a4", desc:"מָכָּה"),
+    imageInfo(key: "a5", desc:"חָסָה"),
+    imageInfo(key: "a6", desc:"סָבָּא"),
+    imageInfo(key: "a7", desc:"תָחָנָה"),
+    imageInfo(key: "a8", desc:"צָבָא"),
+    imageInfo(key: "a9", desc:"בָּנָנָה"),
+    imageInfo(key: "a10", desc:"פָּרָה"),
+    imageInfo(key: "a11", desc:"אָבָּא"),
+    imageInfo(key: "a12", desc:"צָמָה"),
+    imageInfo(key: "a13", desc:"בדיקה")
+  ]
+  static let imgDesc2 = [
+    imageInfo(key: "b1", desc: "פִּיצָה"),
+    imageInfo(key: "b2", desc: "מִיטׁה"),
+    imageInfo(key: "b3", desc: "עָנִיבָה"),
+    imageInfo(key: "b4", desc: "חָבִיתָה"),
+    imageInfo(key: "b5", desc: "סִיכָּה"),
+    imageInfo(key: "b6", desc: "כִּיפָּה"),
+    imageInfo(key: "b7", desc: "גִיטָרָה"),
+    imageInfo(key: "b8", desc: "חִיטָה"),
+    imageInfo(key: "b9", desc: "חָסִידָה"),
+    imageInfo(key: "b10", desc: "גִינָה"),
+    imageInfo(key: "b11", desc: "אִישָׁה"),
+    imageInfo(key: "b12", desc: "טִיפָּה")
+  ]
+  static let imgDesc3 = [
+    imageInfo(key: "c1", desc: "לֶחִי"),
+    imageInfo(key: "c2", desc: "קֶעָרָה"),
+    imageInfo(key: "c3", desc: "שֶׁקָע"),
+    imageInfo(key: "c4", desc: "פֶּאָה"),
+    imageInfo(key: "c5", desc: "שֶבָע"),
+    imageInfo(key: "c6", desc: "לֶטָאָה"),
+    imageInfo(key: "c7", desc: "נֶמָלָה"),
+    imageInfo(key: "c8", desc: "מֶסִיבָּה"),
+    imageInfo(key: "c9", desc: "שָׂדֶה"),
+    imageInfo(key: "c10", desc: "הֶגֶה"),
+    imageInfo(key: "c11", desc: "כִּיסֶא"),
+    imageInfo(key: "c12", desc: "תֶה")
+  ]
+  static let imgDesc4 = [
+    imageInfo(key: "d1", desc: "כּוֹבָע"),
+    imageInfo(key: "d2", desc: "לֶגוֹ"),
+    imageInfo(key: "d3", desc: "פּוֹנִי"),
+    imageInfo(key: "d4", desc: "רוֹבֶה"),
+    imageInfo(key: "d5", desc: "שוֹקוֹ"),
+    imageInfo(key: "d6", desc: "חָגוֹרָה"),
+    imageInfo(key: "d7", desc: "אוֹנִייָה"),
+    imageInfo(key: "d8", desc: "נוֹצָה"),
+    imageInfo(key: "d9", desc: "מֶנוֹרָה"),
+    imageInfo(key: "d10", desc: "אוֹטוֹ"),
+    imageInfo(key: "d11", desc: "חוֹלָה"),
+    imageInfo(key: "d12", desc: "יוֹנָה")
+  ]
+  static let imgDesc5 = [
+    imageInfo(key: "e1", desc: "כּחוֹל"),
+    imageInfo(key: "e2", desc: "אָגָס"),
+    imageInfo(key: "e3", desc: "בֶּרֶז"),
+    imageInfo(key: "e4", desc: "פָּרפָּר"),
+    imageInfo(key: "e5", desc: "תִיק"),
+    imageInfo(key: "e6", desc: "מָזלֶג"),
+    imageInfo(key: "e7", desc: "נָחָש"),
+    imageInfo(key: "e8", desc: "כּוֹס"),
+    imageInfo(key: "e9", desc: "קָלמָר"),
+    imageInfo(key: "e10", desc: "סֶפֶר"),
+    imageInfo(key: "e11", desc: "מָסרֶק"),
+    imageInfo(key: "e12", desc: "קֶשֶׁת")
+  ]
+  static let imgDesc6 = [
+    imageInfo(key: "f1", desc: "שׁוּם"),
+    imageInfo(key: "f2", desc: "תוּת"),
+    imageInfo(key: "f3", desc: "חוּם"),
+    imageInfo(key: "f4", desc: "חִיתוּל"),
+    imageInfo(key: "f5", desc: "גוּפִייָה"),
+    imageInfo(key: "f6", desc: "כָּדוּר"),
+    imageInfo(key: "f7", desc: "קוּבִּייָה"),
+    imageInfo(key: "f8", desc: "חָלוּק"),
+    imageInfo(key: "f9", desc: "תָנוּר"),
+    imageInfo(key: "f10", desc: "בּוּבָּה"),
+    imageInfo(key: "f11", desc: "חוּלצָה"),
+    imageInfo(key: "f12", desc: "דוּבִּי")
+  ]
 }

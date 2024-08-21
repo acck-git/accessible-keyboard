@@ -4,6 +4,48 @@
 
 import SwiftUI
 
+//[Board key]----------------------------------
+struct BoardButton: View {
+  var image: String
+  var action: (() -> Void)
+  var selected: Bool = false
+  var body: some View {
+    let button = Button(action: action, label: { Image(image)
+        .resizable()
+        .scaledToFit()
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(RoundedRectangle(cornerRadius: 50)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
+        )
+    })
+      if selected {
+        button.background(Color(hex:StaticData.board_col[0])).cornerRadius(50)
+      }
+      else {
+        button.background(Color(hex:StaticData.vowel_col[0])).cornerRadius(50)
+      }
+  }
+}
+//[Back Button]-------------------------------------
+struct BackButton: View {
+  var image: String
+  var action: (() -> Void)
+  var body: some View {
+    Button(action: action, label: { Image(systemName: image)
+        .resizable()
+        .scaledToFit()
+        .padding(EdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0))
+        .frame(width: 95, height: 95)
+        .foregroundColor(Color(hex:StaticData.text_col[0]))
+        .overlay(RoundedRectangle(cornerRadius: 50)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
+        )
+    })
+    .background(Color(hex:StaticData.settings_col[0]))
+    .cornerRadius(50)
+  }
+}
 //[Login Button]---------------------------------
 struct TeacherLoginButton: View {
   var text: String
@@ -119,6 +161,7 @@ struct ArrowButtonSmall: View {
 //[Image Button]----------------------------------
 struct ImageButton: View {
   var image: String
+  var selected: Bool = false
   var action: (() -> Void)
   var body: some View {
     Button(action: action, label: { Image(image)
@@ -127,27 +170,30 @@ struct ImageButton: View {
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(RoundedRectangle(cornerRadius: 0)
-          .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth:  selected ? 8 : 2)
         )
     })
     .background(Color(hex:StaticData.bg1_col[0]))
     .cornerRadius(0)
   }
 }
+//[Image Button]----------------------------------
 struct ImageButtonNew: View {
-  var image: String
+  var image: Data
+  var selected: Bool = false
   var action: (() -> Void)
   var body: some View {
-    Button(action: action, label: { Image(systemName: image)
+    Button(action: action, label: {
+      Image(uiImage: UIImage(data: image)!)
         .resizable()
         .scaledToFit()
-        .padding(EdgeInsets(top: 70, leading: 70, bottom: 70, trailing: 70))
+        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundColor(Color(.gray))
         .overlay(RoundedRectangle(cornerRadius: 0)
-          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 1)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth:  selected ? 8 : 2)
         )
     })
+    .background(Color(hex:StaticData.bg1_col[0]))
     .cornerRadius(0)
   }
 }
@@ -238,7 +284,7 @@ struct StudentEditInput: View {
   }
 }
 //[Save key]---------------------------------
-struct SaveButton: View {
+struct PlainButton: View {
   var text: String
   var action: (() -> Void)
   var body: some View {
@@ -256,6 +302,23 @@ struct SaveButton: View {
     .cornerRadius(15)
   }
 }
+//[Text Button]---------------------------------
+struct TextButton: View {
+  var text: String
+  var body: some View {
+    Text(text)
+        .frame(maxWidth: .infinity)
+        .frame(maxHeight: .infinity)
+        .foregroundColor(Color(hex:StaticData.text_col[0]))
+        .font(.system(size: 25))
+        .background(Color(hex:StaticData.bg1_col[0]))
+        .cornerRadius(15)
+        .overlay(RoundedRectangle(cornerRadius: 15)
+          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
+        )
+  }
+}
+
 
 //[Rename Images]------------------------------------
 struct ImageEditInput: View {
@@ -315,7 +378,6 @@ struct ToggleBoard: View {
 
 //[Board Picker for Images]
 struct BoardPickerImages: View {
-  var array: [String]
   var onChange: (() -> Void)
   @State var gVars = GlobalVars.get()
   @Binding var selectedBoard: String
@@ -328,6 +390,7 @@ struct BoardPickerImages: View {
       Text("עיצור").tag("e")
       Text("שורוק").tag("f")
     }
+    .onChange(of: selectedBoard, initial: true){onChange()}
     .scaleEffect(1.5)
     .pickerStyle(.menu)
     .accentColor(Color(hex:StaticData.text_col[0]))
@@ -358,7 +421,6 @@ struct SettingsPresetsPreview: View {
         ColorButton(text: "טקסט", set:2)
         ColorButton(text: "טקסט", set:3)
       }.frame(height: StaticData.screenheight/9)
-      ImageButtonNew(image: "plus.circle", action: {})
     }
     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     .padding(.horizontal, 0.0)
