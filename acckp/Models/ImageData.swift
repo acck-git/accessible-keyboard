@@ -26,68 +26,82 @@ class ImageData {
   func newImage(desc: String, board: String, image: Data) {
     switch board {
     case "a":
-      addImage(desc: desc, board: board, image: image, newarray: &board1)
+      addImage(desc: desc, image: image, newarray: &board1)
     case "b":
-      addImage(desc: desc, board: board, image: image, newarray: &board2)
+      addImage(desc: desc, image: image, newarray: &board2)
     case "c":
-      addImage(desc: desc, board: board, image: image, newarray: &board3)
+      addImage(desc: desc, image: image, newarray: &board3)
     case "d":
-      addImage(desc: desc, board: board, image: image, newarray: &board4)
+      addImage(desc: desc, image: image, newarray: &board4)
     case "e":
-      addImage(desc: desc, board: board, image: image, newarray: &board5)
+      addImage(desc: desc, image: image, newarray: &board5)
     case "f":
-      addImage(desc: desc, board: board, image: image, newarray: &board6)
+      addImage(desc: desc, image: image, newarray: &board6)
     default:
-      addImage(desc: desc, board: board, image: image, newarray: &board1)
+      addImage(desc: desc, image: image, newarray: &board1)
     }
   }
-  func addImage(desc: String, board: String, image: Data, newarray: inout [imageInfo]) {
+  private func addImage(desc: String, image: Data, newarray: inout [imageInfo]) {
     newarray.append(imageInfo(desc: desc, image: image))
-    print(board)
-    print(newarray)
-    print("board1")
-    print(board1)
   }
   //Update Image
-  func update(newDesc: String, newBoard: String, oldBoard: String, id: UUID) {
-    var editarray = findarray(board: oldBoard).pointee
-    var index = editarray.count
-    for i in editarray.indices {
-      if editarray[i].id == id {
-        index = i
-        break
-      }
-    }
-    let image = editarray[index].image
-    //Same board
-    if oldBoard == newBoard{
-      editarray[index]=imageInfo(desc: newDesc, image: image)
-    }
-    //Swapping boards
-    else{
-      editarray.remove(at:index)
-      var newarray = findarray(board: newBoard).pointee
-      newarray.append(imageInfo(desc: newDesc, image: image))
+  func updateDesc(desc: String, board: String, id: UUID) {
+    switch board {
+    case "a":
+      changeDesc(desc: desc, id: id, editarray: &board1)
+    case "b":
+      changeDesc(desc: desc, id: id, editarray: &board2)
+    case "c":
+      changeDesc(desc: desc, id: id, editarray: &board3)
+    case "d":
+      changeDesc(desc: desc, id: id, editarray: &board4)
+    case "e":
+      changeDesc(desc: desc, id: id, editarray: &board5)
+    case "f":
+      changeDesc(desc: desc, id: id, editarray: &board6)
+    default:
+      changeDesc(desc: desc, id: id, editarray: &board1)
     }
   }
-  //Find relevant board
-  func findarray(board: String) -> UnsafeMutablePointer<[imageInfo]> {
-      switch board {
-      case "a":
-          return UnsafeMutablePointer(&board1)
-      case "b":
-          return UnsafeMutablePointer(&board2)
-      case "c":
-          return UnsafeMutablePointer(&board3)
-      case "d":
-          return UnsafeMutablePointer(&board4)
-      case "e":
-          return UnsafeMutablePointer(&board5)
-      case "f":
-          return UnsafeMutablePointer(&board6)
-      default:
-          return UnsafeMutablePointer(&board1)
+  private func changeDesc(desc: String, id: UUID, editarray: inout [imageInfo]) {
+    for i in editarray.indices {
+      if editarray[i].id == id {
+        editarray[i].desc = desc
+        return
       }
+    }
+  }
+  func updateBoard(oldBoard: String, newBoard: String, id: UUID){
+    let oldimage = deleteImage(board: oldBoard, id: id)
+    if oldimage != nil {
+      newImage(desc: oldimage!.desc, board: newBoard, image: oldimage!.image!)
+    }
+  }
+  func deleteImage(board: String, id: UUID) -> imageInfo?{
+    switch board {
+    case "a":
+      return removeImage(id: id, editarray: &board1)
+    case "b":
+      return removeImage(id: id, editarray: &board2)
+    case "c":
+      return removeImage(id: id, editarray: &board3)
+    case "d":
+      return removeImage(id: id, editarray: &board4)
+    case "e":
+      return removeImage(id: id, editarray: &board5)
+    case "f":
+      return removeImage(id: id, editarray: &board6)
+    default:
+      return removeImage(id: id, editarray: &board1)
+    }
+  }
+  private func removeImage(id: UUID, editarray: inout [imageInfo]) -> imageInfo? {
+    for i in editarray.indices {
+      if editarray[i].id == id {
+        return editarray.remove(at: i)
+      }
+    }
+    return nil
   }
 }
 struct imageInfo: Codable, Identifiable {

@@ -21,15 +21,17 @@ struct ImagesView: View {
   @State var currImage: UUID?
   @State var pickedNewPhoto: PhotosPickerItem?
   @State var pickedNewPhotoData: Data?
+  @State var alertMessage: String = ""
+  @State var alert: Bool = false
   var NilData = Data()
   var vowelsRow: [[String]] = StaticData.vowelsRow.reversed()
   var sets: [String] = StaticData.sets
   //-------------------
   init () {
     if gVars.images != nil {
-      _currboard = State(wrappedValue: gVars.imageBoard1)
+      _currboard = State(wrappedValue: gVars.images.board1)
     }
-    _tempboard = State(wrappedValue: Array(currboard[0..<6]))
+    _tempboard = State(wrappedValue: Array(currboard.prefix(6)))
   }
   var body: some View {
     //[Teacher container]----------------------
@@ -46,6 +48,7 @@ struct ImagesView: View {
           DeleteTeacherButton(text: "מחק", action: {
             if pickedNewPhotoData != nil {
               pickedNewPhotoData = nil
+              newImageName = ""
             }
             else {
               confirmImage = true
@@ -53,27 +56,45 @@ struct ImagesView: View {
           })
           .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirmImage) {
             Button("מחק", role: .destructive) {
+              _ = gVars.images.deleteImage(board: set, id: currImage!)
+              gVars.loadImages()
+              currImage = nil
+              newImageName = ""
+              currboard = gVars.fetchImages(set: set, all: false)
+              subSet = subSet > currboard.count-1 ? (Int((currboard.count - 1) / 6)) * 6 : subSet
+              tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
+              newImageSet = set
+              pickedNewPhoto = nil
+              pickedNewPhotoData = nil
             }} message: {
               Text("לא ניתן לבטל פעולה זו. המשך?")
             }
           //-------------------
           PlainButton(text: "שמור", action: {
-            if pickedNewPhotoData != nil {
-              gVars.images.newImage(desc: newImageName, board: newImageSet, image: pickedNewPhotoData!)
+            if newImageName == "" {
+              alertMessage = "יש למלא תיאור תמונה."
+              alert = true
             }
-            else {
-              //gVars.images.update(newDesc: newImageName, newBoard: newImageSet, oldBoard: set, key: currImage)
+            else{
+              if pickedNewPhotoData != nil {
+                gVars.images.newImage(desc: newImageName, board: newImageSet, image: pickedNewPhotoData!)
+              }
+              else {
+                gVars.images.updateDesc(desc: newImageName, board: set, id: currImage!)
+                if set != newImageSet {
+                  gVars.images.updateBoard(oldBoard: set, newBoard: newImageSet, id: currImage!)
+                }
+              }
+              gVars.loadImages()
+              set = newImageSet
+              currboard = gVars.fetchImages(set: set, all: false)
+              subSet = (Int((currboard.count - 1) / 6)) * 6
+              tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
+              currImage = nil
+              newImageName = ""
+              pickedNewPhoto = nil
+              pickedNewPhotoData = nil
             }
-            gVars.loadImages()
-            currImage = nil
-            newImageName = ""
-            subSet = 0
-            set = "a"
-            currboard = gVars.fetchImages(set: set)
-            tempboard = Array(currboard.prefix(6))
-            newImageSet = "a"
-            pickedNewPhoto = nil
-            pickedNewPhotoData = nil
           })
           //-------------------
           ImageEditInput(placeholder: "", text: $newImageName)
@@ -93,10 +114,15 @@ struct ImagesView: View {
           .opacity ( (currImage != nil || pickedNewPhotoData != nil) ? 1 : 0.5)
         HStack{
           if pickedNewPhotoData == nil {
-            ArrowButtonSmall(image: "arrowtriangle.left.fill",action: {
-              subSet = subSet+6 >= currboard.count ? 0 : subSet+6
-              tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
-            })
+            if currboard.count > 6 {
+              ArrowButtonSmall(image: "arrowtriangle.left.fill",action: {
+                subSet = subSet+6 >= currboard.count ? 0 : subSet+6
+                tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
+              })
+            }
+            else {
+              ArrowButtonSmall(image: "arrowtriangle.left.fill",action: {}).hidden()
+            }
             VStack(spacing:20) {
               HStack(spacing: 20) {
                 ForEach((0..<3).reversed(), id: \.self) { i in
@@ -105,12 +131,14 @@ struct ImagesView: View {
                       ImageButtonNew(image: tempboard[i].image!, selected: currImage == tempboard[i].id, action: {
                         newImageName = tempboard[i].desc
                         currImage = tempboard[i].id
+                        newImageSet = set
                       })
                     }
                     else {
                       ImageButton(image: tempboard[i].key, selected: currImage == tempboard[i].id, action: {
                         newImageName = tempboard[i].desc
                         currImage = tempboard[i].id
+                        newImageSet = set
                       })
                     }
                   }
@@ -128,12 +156,14 @@ struct ImagesView: View {
                       ImageButtonNew(image: tempboard[i].image!, selected: currImage == tempboard[i].id, action: {
                         newImageName = tempboard[i].desc
                         currImage = tempboard[i].id
+                        newImageSet = set
                       })
                     }
                     else {
                       ImageButton(image: tempboard[i].key, selected: currImage == tempboard[i].id, action: {
                         newImageName = tempboard[i].desc
                         currImage = tempboard[i].id
+                        newImageSet = set
                       })
                     }
                   }
@@ -149,7 +179,8 @@ struct ImagesView: View {
                   BoardButton(image: vowelsRow[index][0], action: {
                     subSet = 0
                     set = sets[vowelsRow.count - index - 1]
-                    currboard = gVars.fetchImages(set: set)
+                    newImageSet = set
+                    currboard = gVars.fetchImages(set: set, all: false)
                     tempboard = Array(currboard.prefix(6))
                   }, selected: sets[vowelsRow.count - index - 1] == set)
                 }
@@ -157,16 +188,21 @@ struct ImagesView: View {
               .frame(height: StaticData.screenheight/9)
             }
             .padding(.horizontal, 20)
-            ArrowButtonSmall(image: "arrowtriangle.right.fill",action: {
-              if subSet-6 < 0 {
-                subSet = currboard.count - ((currboard.count)%6)
-                if subSet == currboard.count {
-                  subSet = currboard.count - 6
+            if currboard.count > 6 {
+              ArrowButtonSmall(image: "arrowtriangle.right.fill",action: {
+                if subSet-6 < 0 {
+                  subSet = currboard.count - ((currboard.count)%6)
+                  if subSet == currboard.count {
+                    subSet = currboard.count - 6
+                  }
                 }
-              }
-              else { subSet -= 6 }
-              tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
-            })
+                else { subSet -= 6 }
+                tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
+              })
+            }
+            else {
+              ArrowButtonSmall(image: "arrowtriangle.right.fill",action: {}).hidden()
+            }
           }
           else {
             if let pickedNewPhotoData,
@@ -205,15 +241,11 @@ struct ImagesView: View {
         pickedNewPhotoData = data
         currImage = nil
         newImageName = ""
-        subSet = 0
-        set = "a"
-        currboard = gVars.fetchImages(set: set)
-        tempboard = Array(currboard.prefix(6))
-        newImageSet = "a"
+        newImageSet = set
         pickedNewPhoto = nil
       }
     }
-    //.alert(alertMessage, isPresented: $alert, actions: {})
+    .alert(alertMessage, isPresented: $alert, actions: {})
   }
 }
 

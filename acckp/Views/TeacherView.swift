@@ -75,14 +75,13 @@ struct TeacherView: View {
             HStack(spacing:10) {
               if gVars.student_edit != GlobalVars.student_new {
                 DeleteTeacherButton(text: "מחק", action: {
-                  deleteUser()
                   confirm = true
-                  newName = ""
-                  textFieldFocus = false
                 })
                 .confirmationDialog("לא ניתן לבטל פעולה זו. המשך?", isPresented: $confirm) {
                   Button("מחק", role: .destructive) {
                     deleteUser()
+                    newName = ""
+                    textFieldFocus = false
                     confirm = false
                   }} message: {
                     Text("לא ניתן לבטל פעולה זו. המשך?")
@@ -90,7 +89,11 @@ struct TeacherView: View {
               }
               //-------------------
               PlainButton(text: "שמור", action: {
-                if addUser() {
+                if newName == "" {
+                  alertMessage = "יש למלא שם תלמיד."
+                  alert = true
+                }
+                else if addUser() {
                   newName = ""
                   textFieldFocus = false
                 }
