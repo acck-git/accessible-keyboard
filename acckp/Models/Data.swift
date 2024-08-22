@@ -224,7 +224,6 @@ class GlobalVars: ObservableObject {
     self.colorSet = colorSet
     if self.user == nil { return }
     self.user!.toggleColors(colorSet: colorSet)
-    //self.user!.printUser()
   }
   //Save change to boards
   func updateStudent(name: String) -> (UserData?,String,Bool) {
@@ -249,7 +248,6 @@ class GlobalVars: ObservableObject {
       message = "משתמש עודכן בהצלחה."
     }
     student_edit = name
-    //self.user_edit!.printUser()
     return (newUser,message,true)
   }
   //Save change to boards
@@ -279,8 +277,6 @@ class GlobalVars: ObservableObject {
     imageBoard4 = StaticData.imgDesc4 + images.board4
     imageBoard5 = StaticData.imgDesc5 + images.board5
     imageBoard6 = StaticData.imgDesc6 + images.board6
-    print("Imageboard1 count:")
-    print(imageBoard1.count)
   }
   func fetchImages(set: String , all: Bool = true) -> [imageInfo] {
     switch set{
@@ -366,7 +362,7 @@ final class StaticData {
   static let text_col: [UInt] = [0x000000,0xFFFFFF,0x000000,0xFFCC00]
   static let boardNames = ["קמץ","חיריק","סגול","חולם","עיצור","שורוק"]
   static let boards = [false,false,false,false,false,false]
-  static let boards_def = [true,false,false,false,false,false]
+  static let boards_def = [true,true,true,true,true,true]
   //[Keys]---------------------------------------
   static let letterRow1 = ["א" ,"ב\u{05BC}" ,"ב", "ג" ,"ד" ,"ה" ,"ו"]
   static let letterRow2 = ["ז" ,"ח" ,"ט" ,"י" ,"כ\u{05BC}" ,"כ", "ל"]
