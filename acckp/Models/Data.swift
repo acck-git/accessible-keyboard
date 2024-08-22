@@ -117,7 +117,7 @@ class GlobalVars: ObservableObject {
   }
   
   //[Teacher Login]-------------------------------
-  var temppass: [String] = ["מורה123", "devexport"]
+  var temppass: [String] = ["מורה123","teacher123", "devexport"]
   func checkPass(pass: String) -> (Bool,String,Data) {
     //return false -> hides textfield
     //return true -> keeps textfield visible
@@ -126,10 +126,10 @@ class GlobalVars: ObservableObject {
     var json:Data = Data()
     
     switch temppass.firstIndex(of: pass) {
-    case 0:
+    case 0,1:
       //Teacher screen redirect
       screen = screens.teacher
-    case 1:
+    case 2:
       //Dev export
       json = user!.fetchJSON()
     default:

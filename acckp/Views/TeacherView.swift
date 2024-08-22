@@ -89,7 +89,7 @@ struct TeacherView: View {
                   }
               }
               //-------------------
-              PlainButton(text: "שמור", action: {
+              PlainButton(text: gVars.student_edit != GlobalVars.student_new ? "עדכן" : "שמור" , action: {
                 if newName == "" {
                   alertMessage = "יש למלא שם תלמיד."
                   alert = true
