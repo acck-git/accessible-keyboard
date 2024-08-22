@@ -1,5 +1,5 @@
 //
-//  Top line sub view
+//  Settings view
 //
 
 import SwiftUI
@@ -30,7 +30,6 @@ struct SettingsView: View {
     }
     if gVars.images != nil {
       _currboard = State(wrappedValue: gVars.imageBoard1)
-      print(currboard.count)
     }
     _tempboard = State(wrappedValue: Array(currboard[0..<6]))
   }

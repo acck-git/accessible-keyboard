@@ -20,9 +20,7 @@
 		5C5A856C2B8C9F4100770254 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A856B2B8C9F4100770254 /* MainView.swift */; };
 		5C5A85702B8C9F4200770254 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C5A856F2B8C9F4200770254 /* Assets.xcassets */; };
 		5C5A85732B8C9F4200770254 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C5A85722B8C9F4200770254 /* Preview Assets.xcassets */; };
-		5C5A857D2B8C9F4200770254 /* acckpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A857C2B8C9F4200770254 /* acckpTests.swift */; };
 		5C5A85872B8C9F4200770254 /* acckpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85862B8C9F4200770254 /* acckpUITests.swift */; };
-		5C5A85892B8C9F4200770254 /* acckpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */; };
 		5C72EF8E2C72389F001DF748 /* ב_u{05BC}.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF782C72389E001DF748 /* ב_u{05BC}.mp4 */; };
 		5C72EF8F2C72389F001DF748 /* ב.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF792C72389F001DF748 /* ב.mp4 */; };
 		5C72EF902C72389F001DF748 /* צ.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5C72EF7A2C72389F001DF748 /* צ.mp4 */; };
@@ -85,10 +83,8 @@
 		5C5A856F2B8C9F4200770254 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C5A85722B8C9F4200770254 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5C5A85782B8C9F4200770254 /* acckpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = acckpTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C5A857C2B8C9F4200770254 /* acckpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpTests.swift; sourceTree = "<group>"; };
 		5C5A85822B8C9F4200770254 /* acckpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = acckpUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C5A85862B8C9F4200770254 /* acckpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpUITests.swift; sourceTree = "<group>"; };
-		5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5C72EF782C72389E001DF748 /* ב_u{05BC}.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ב_u{05BC}.mp4"; sourceTree = "<group>"; };
 		5C72EF792C72389F001DF748 /* ב.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ב.mp4"; sourceTree = "<group>"; };
 		5C72EF7A2C72389F001DF748 /* צ.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "צ.mp4"; sourceTree = "<group>"; };
@@ -176,7 +172,6 @@
 			isa = PBXGroup;
 			children = (
 				5C5A85682B8C9F4100770254 /* acckp */,
-				5C5A857B2B8C9F4200770254 /* acckpTests */,
 				5C5A85852B8C9F4200770254 /* acckpUITests */,
 				5CD75FED2BB0BB1700F2F6C3 /* acckp.xctestplan */,
 				5C5A85672B8C9F4100770254 /* Products */,
@@ -216,19 +211,10 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		5C5A857B2B8C9F4200770254 /* acckpTests */ = {
-			isa = PBXGroup;
-			children = (
-				5C5A857C2B8C9F4200770254 /* acckpTests.swift */,
-			);
-			path = acckpTests;
-			sourceTree = "<group>";
-		};
 		5C5A85852B8C9F4200770254 /* acckpUITests */ = {
 			isa = PBXGroup;
 			children = (
 				5C5A85862B8C9F4200770254 /* acckpUITests.swift */,
-				5C5A85882B8C9F4200770254 /* acckpUITestsLaunchTests.swift */,
 			);
 			path = acckpUITests;
 			sourceTree = "<group>";
@@ -444,7 +430,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C5A857D2B8C9F4200770254 /* acckpTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,7 +438,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C5A85872B8C9F4200770254 /* acckpUITests.swift in Sources */,
-				5C5A85892B8C9F4200770254 /* acckpUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

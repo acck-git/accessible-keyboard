@@ -65,8 +65,8 @@ struct ExtraLetterButton: View {
 struct HiddenButton: View {
   var body: some View {
     VStack {}
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .hidden()
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .hidden()
   }
 }
 //[Vowel key]----------------------------------
@@ -172,32 +172,4 @@ struct TTSButton: View {
     .background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
     .cornerRadius(15)
   }
-}
-
-//------------------------------------------------
-//preview stuff
-struct MainPresetsPreview: View {
-  var body: some View {
-    VStack {
-      TextInput(text: "היי")
-      LetterButton(text: "א", action: {})
-      ExtraLetterButton(text: "א", action: {})
-      //HiddenButton()
-      HStack(spacing: 10.0) {
-        VowelButton(image: "a", action: {}, enabled: true)
-        VowelButton(image: "b", action: {}, enabled: false)
-        VowelButton(image: "c", action: {}, enabled: false)
-        VowelButton(image: "d", action: {}, enabled: false)
-        VowelButton(image: "e", action: {}, enabled: false)
-        VowelButton(image: "f", action: {}, enabled: false)
-      }.padding(/*@START_MENU_TOKEN@*/.horizontal, 3.0/*@END_MENU_TOKEN@*/).frame(maxWidth: 823)
-      SpaceButton(text: "א", action: {})
-      DeleteButton(text: "א", action: {})
-      SettingsButton(image: "gear", action: {})
-      TTSButton(image: "eraser", action: {})
-    }.background(Color(hex:StaticData.bg1_col[GlobalVars.get().colorSet]))
-  }
-}
-#Preview {
-  MainPresetsPreview()
 }

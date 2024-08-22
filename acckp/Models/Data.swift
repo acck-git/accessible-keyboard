@@ -21,7 +21,7 @@ class GlobalVars: ObservableObject {
   @Published var inputText: String        //displayed text in text input (main screen)
   @Published var image: imageInfo?        //currently selected image (image typing mode)
   @Published var imageZoom: Bool = false  //show overlay of selected image
-  @Published var images: ImageData!       //
+  @Published var images: ImageData!
   @Published var imageBoard1: [imageInfo] = StaticData.imgDesc1
   @Published var imageBoard2: [imageInfo] = StaticData.imgDesc2
   @Published var imageBoard3: [imageInfo] = StaticData.imgDesc3
@@ -93,7 +93,6 @@ class GlobalVars: ObservableObject {
     if self.board == 4 {
       guard let url = Bundle.main.url(forResource: txt, withExtension: ".mp4") else { return }
       do {
-        print(txt)
         player = try AVAudioPlayer(contentsOf: url)
         player?.play()
       } catch let error {
@@ -118,7 +117,7 @@ class GlobalVars: ObservableObject {
   }
   
   //[Teacher Login]-------------------------------
-  var temppass: [String] = ["passcheck", "ttt", "dev"]
+  var temppass: [String] = ["מורה123", "devexport"]
   func checkPass(pass: String) -> (Bool,String,Data) {
     //return false -> hides textfield
     //return true -> keeps textfield visible
@@ -126,25 +125,16 @@ class GlobalVars: ObservableObject {
     var message = ""
     var json:Data = Data()
     
-    //--------------------------------Delete to fix login--------------------------------------
-    screen = screens.teacher
-    return (!correct,message,json)
-    //--------------------------------Delete to fix login--------------------------------------
-    
     switch temppass.firstIndex(of: pass) {
     case 0:
-      message = "Correct password."
-      print(message)
-    case 1:
       //Teacher screen redirect
       screen = screens.teacher
-    case 2:
+    case 1:
       //Dev export
       json = user!.fetchJSON()
     default:
       //Incorrect password
-      message = "Wrong password."
-      print(message)
+      message = "סיסמה לא נכונה."
       correct = false
     }
     return (!correct,message,json)
@@ -152,10 +142,8 @@ class GlobalVars: ObservableObject {
   
   //[Student Login]-------------------------------
   func getStudents(add: Bool) -> [String] {
-    //will load existing students in the future
     var students = users.map { $0.student }
     if add { students.append(GlobalVars.student_new) }
-    //print(students)
     return students
   }
   //Find logged in user
@@ -192,18 +180,15 @@ class GlobalVars: ObservableObject {
           self.board = 0
           self.image = nil
           self.inputText = ""
-          //u.printUser()
           changed = true
         }
         else {
           u.toggleLogin(state: false)
-          //u.printUser()
         }
       }
       else {
         if u.student == student_edit {
           self.user_edit = u
-          //u.printUser()
           changed = true
           break
         }
@@ -217,7 +202,6 @@ class GlobalVars: ObservableObject {
   func updateBoard(index: Int, state: Bool) {
     if self.user_edit == nil { return }
     self.user_edit!.toggleBoard(index: index, state: state)
-    //self.user_edit!.printUser()
   }
   //Save change to color set
   func updateColor(colorSet: Int) {
@@ -332,12 +316,9 @@ class GlobalVars: ObservableObject {
       }
       cIndex += 1
     }
-    print("Typos: \(typosAmount).")
     
     //[Update user]------------------------------
     user!.update(correct_words: typosAmount == 0 ? 1 : 0, total_letters: image!.desc.count, typos: typosAmount)
-    print("Updated user \(user!).")
-    //user!.printUser()
     
     //[Clear selected image]---------------------
     image = nil
@@ -378,85 +359,9 @@ final class StaticData {
     ["d","2_d","d","2_d"],
     ["e","e","e","e"],
     ["f","2_f","f","2_f"]]
-  static let noVowel = "\u{05B0}"
-  static let fakeNoVowel = "\u{05B6}"
   static let records = ["ב", "ג" ,"ד" ,"ו" ,"ז" ,"ח" ,"ט" ,"י" ,"כ" ,"ל" ,"מ" ,"נ" ,"ס" ,"פ" ,"צ" ,"ק" ,"ר" ,"ת"]
   //[Images]-------------------------------------
   static let sets = ["a","b","c","d","e","f"]
-  static let imgDesc = [
-    "a1":"מָתָנָה",
-    "a2":"קָרָא",
-    "a3":"בָּכָה",
-    "a4":"מָכָּה",
-    "a5":"חָסָה",
-    "a6":"סָבָּא",
-    "a7":"תָחָנָה",
-    "a8":"צָבָא",
-    "a9":"בָּנָנָה",
-    "a10":"פָּרָה",
-    "a11":"אָבָּא",
-    "a12":"צָמָה",
-    "b1":"פִּיצָה",
-    "b2":"מִיטׁה",
-    "b3":"עָנִיבָה",
-    "b4":"חָבִיתָה",
-    "b5":"סִיכָּה",
-    "b6":"כִּיפָּה",
-    "b7":"גִיטָרָה",
-    "b8":"חִיטָה",
-    "b9":"חָסִידָה",
-    "b10":"גִינָה",
-    "b11":"אִישָׁה",
-    "b12":"טִיפָּה",
-    "c1":"לֶחִי",
-    "c2":"קֶעָרָה",
-    "c3":"שֶׁקָע",
-    "c4":"פֶּאָה",
-    "c5":"שֶבָע",
-    "c6":"לֶטָאָה",
-    "c7":"נֶמָלָה",
-    "c8":"מֶסִיבָּה",
-    "c9":"שָׂדֶה",
-    "c10":"הֶגֶה",
-    "c11":"כִּיסֶא",
-    "c12":"תֶה",
-    "d1":"כּוֹבָע",
-    "d2":"לֶגוֹ",
-    "d3":"פּוֹנִי",
-    "d4":"רוֹבֶה",
-    "d5":"שוֹקוֹ",
-    "d6":"חָגוֹרָה",
-    "d7":"אוֹנִייָה",
-    "d8":"נוֹצָה",
-    "d9":"מֶנוֹרָה",
-    "d10":"אוֹטוֹ",
-    "d11":"חוֹלָה",
-    "d12":"יוֹנָה",
-    "e1":"כּחוֹל",
-    "e2":"אָגָס",
-    "e3":"בֶּרֶז",
-    "e4":"פָּרפָּר",
-    "e5":"תִיק",
-    "e6":"מָזלֶג",
-    "e7":"נָחָש",
-    "e8":"כּוֹס",
-    "e9":"קָלמָר",
-    "e10":"סֶפֶר",
-    "e11":"מָסרֶק",
-    "e12":"קֶשֶׁת",
-    "f1":"שׁוּם",
-    "f2":"תוּת",
-    "f3":"חוּם",
-    "f4":"חִיתוּל",
-    "f5":"גוּפִייָה",
-    "f6":"כָּדוּר",
-    "f7":"קוּבִּייָה",
-    "f8":"חָלוּק",
-    "f9":"תָנוּר",
-    "f10":"בּוּבָּה",
-    "f11":"חוּלצָה",
-    "f12":"דוּבִּי"
-  ]
   static let imgDesc1 = [
     imageInfo(key: "a1", desc: "מָתָנָה"),
     imageInfo(key: "a2", desc:"קָרָא"),

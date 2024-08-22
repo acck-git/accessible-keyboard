@@ -34,7 +34,7 @@ struct ImagesView: View {
     _tempboard = State(wrappedValue: Array(currboard.prefix(6)))
   }
   var body: some View {
-    //[Teacher container]----------------------
+    //[Images container]----------------------
     VStack(spacing:20) {
       //Adding Images
       VStack(spacing:20){

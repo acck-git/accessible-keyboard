@@ -81,6 +81,7 @@ struct TeacherView: View {
                   Button("מחק", role: .destructive) {
                     deleteUser()
                     newName = ""
+                    boards = gVars.user_edit != nil ? gVars.user_edit!.boards : StaticData.boards
                     textFieldFocus = false
                     confirm = false
                   }} message: {
@@ -96,6 +97,7 @@ struct TeacherView: View {
                 else if addUser() {
                   newName = ""
                   textFieldFocus = false
+                  boards = gVars.user_edit != nil ? gVars.user_edit!.boards : StaticData.boards
                 }
               })
             }
@@ -144,7 +146,6 @@ struct TeacherView: View {
             //-------------------
             ImageEditInput(placeholder: "", text: $newImageName)
               .disabled(true)
-            //----
             Text("תיאור:")
               .lineLimit(1)
               .foregroundColor(Color(hex:StaticData.text_col[0]))
@@ -155,7 +156,6 @@ struct TeacherView: View {
               currboard = gVars.fetchImages(set: set)
               tempboard = Array(currboard.prefix(6))
             },selectedBoard: $set)
-            //----
             Text("לוח:")
               .lineLimit(1)
               .foregroundColor(Color(hex:StaticData.text_col[0]))
@@ -264,7 +264,6 @@ struct TeacherView: View {
     //Add new if relevant
     if user != nil {
       ModelContext.insert(user!)
-      //try ModelContext.save()
       print("Created user \(user!.student).")
     }
     if (clearField) {
@@ -283,13 +282,11 @@ struct TeacherView: View {
     //Delete user if valid
     if user_del != nil {
       ModelContext.delete(user_del!)
-      //try ModelContext.save()
       print("Deleted user")
     }
     //Create default user if needed
     if def_user != nil {
       ModelContext.insert(def_user!)
-      //try ModelContext.save()
       print("Created user \(def_user!.student).")
     }
     students_plain = gVars.getStudents(add:false)

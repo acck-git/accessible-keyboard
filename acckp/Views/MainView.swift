@@ -68,7 +68,6 @@ struct MainView: View {
       let user = gVars.loginStudent()
       if user != nil {
         ModelContext.insert(user!)
-        //try ModelContext.save()
         print("Created user \(user!.student).")
       }
       else {
@@ -80,7 +79,6 @@ struct MainView: View {
     }
     do {
       let images = try ModelContext.fetch(queryimg)
-      //ModelContext.delete(images[0])
       if images.count != 0 {
         gVars.images = images[0]
       }
@@ -88,7 +86,6 @@ struct MainView: View {
         gVars.images = ImageData()
         ModelContext.insert(gVars.images!)
       }
-      //gVars.images.board1.append(imageInfo(key: "a13", desc: "מתנה"))
       gVars.loadImages()
     }
     catch {

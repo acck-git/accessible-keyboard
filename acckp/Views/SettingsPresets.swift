@@ -19,12 +19,12 @@ struct BoardButton: View {
           .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
         )
     })
-      if selected {
-        button.background(Color(hex:StaticData.board_col[0])).cornerRadius(50)
-      }
-      else {
-        button.background(Color(hex:StaticData.vowel_col[0])).cornerRadius(50)
-      }
+    if selected {
+      button.background(Color(hex:StaticData.board_col[0])).cornerRadius(50)
+    }
+    else {
+      button.background(Color(hex:StaticData.vowel_col[0])).cornerRadius(50)
+    }
   }
 }
 //[Back Button]-------------------------------------
@@ -335,15 +335,15 @@ struct TextButton: View {
   var text: String
   var body: some View {
     Text(text)
-        .frame(maxWidth: .infinity)
-        .frame(maxHeight: .infinity)
-        .foregroundColor(Color(hex:StaticData.text_col[0]))
-        .font(.system(size: 25))
-        .background(Color(hex:StaticData.bg1_col[0]))
-        .cornerRadius(15)
-        .overlay(RoundedRectangle(cornerRadius: 15)
-          .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
-        )
+      .frame(maxWidth: .infinity)
+      .frame(maxHeight: .infinity)
+      .foregroundColor(Color(hex:StaticData.text_col[0]))
+      .font(.system(size: 25))
+      .background(Color(hex:StaticData.bg1_col[0]))
+      .cornerRadius(15)
+      .overlay(RoundedRectangle(cornerRadius: 15)
+        .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
+      )
   }
 }
 
@@ -427,35 +427,4 @@ struct BoardPickerImages: View {
     .background(Color(hex:StaticData.bg1_col[0]))
     .border(Color(hex:StaticData.text_col[0]))
   }
-}
-
-//------------------------------------------------
-//preview stuff
-struct SettingsPresetsPreview: View {
-  @State var pass: String = ""
-  var body: some View {
-    VStack {
-      //TeacherLoginButton(text: "כניסת מורה", action: {})
-      TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
-      //ArrowButton(image:"arrowtriangle.left.fill",action: {})
-      //ImageButton(image:"a1", action: {})
-      //TinyImageButton(image:"a1", action: {})
-      //ImageSubmitButton(image: "checkmark", action: {})
-      StudentPicker(array: ["one","two"], onChange: {})
-      StudentPickerTeacher(array: ["one","two"], onChange: {})
-      HStack(spacing: 20) {
-        ColorButton(text: "טקסט", set:0)
-        ColorButton(text: "טקסט", set:1)
-        ColorButton(text: "טקסט", set:2)
-        ColorButton(text: "טקסט", set:3)
-      }.frame(height: StaticData.screenheight/9)
-    }
-    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-    .padding(.horizontal, 0.0)
-    .padding(.vertical, -22.0)
-    //.overlay(MassiveImageButton(image: "a1", action: {}))
-  }
-}
-#Preview {
-  SettingsPresetsPreview()
 }
