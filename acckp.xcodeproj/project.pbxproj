@@ -47,6 +47,7 @@
 		5C72EFA72C724881001DF748 /* ImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C72EFA62C724881001DF748 /* ImagesView.swift */; };
 		5C7FF77B2BBFD4D400BB0FF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */; };
 		5CA329DB2C7201AA00C20DB5 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA329DA2C7201AA00C20DB5 /* ImageData.swift */; };
+		5CBB96762C7C6E4400CE7FCF /* acckpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBB96752C7C6E4400CE7FCF /* acckpTests.swift */; };
 		5CC996A52BD57F5B001FFE57 /* SettingsPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */; };
 		5CEC071C2BDD5E9600AB9F19 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CEC071B2BDD5E9600AB9F19 /* UserData.swift */; };
 /* End PBXBuildFile section */
@@ -111,6 +112,7 @@
 		5C72EFA62C724881001DF748 /* ImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesView.swift; sourceTree = "<group>"; };
 		5C7FF77A2BBFD4D400BB0FF1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		5CA329DA2C7201AA00C20DB5 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
+		5CBB96752C7C6E4400CE7FCF /* acckpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acckpTests.swift; sourceTree = "<group>"; };
 		5CC996A42BD57F5B001FFE57 /* SettingsPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresets.swift; sourceTree = "<group>"; };
 		5CD75FED2BB0BB1700F2F6C3 /* acckp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = acckp.xctestplan; sourceTree = "<group>"; };
 		5CEC071B2BDD5E9600AB9F19 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -172,8 +174,9 @@
 			isa = PBXGroup;
 			children = (
 				5C5A85682B8C9F4100770254 /* acckp */,
-				5C5A85852B8C9F4200770254 /* acckpUITests */,
 				5CD75FED2BB0BB1700F2F6C3 /* acckp.xctestplan */,
+				5C5A85852B8C9F4200770254 /* acckpUITests */,
+				5CBB96742C7C6E0B00CE7FCF /* acckpTests */,
 				5C5A85672B8C9F4100770254 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -247,6 +250,14 @@
 				5C72EF882C72389F001DF748 /* ת.mp4 */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		5CBB96742C7C6E0B00CE7FCF /* acckpTests */ = {
+			isa = PBXGroup;
+			children = (
+				5CBB96752C7C6E4400CE7FCF /* acckpTests.swift */,
+			);
+			path = acckpTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,6 +334,7 @@
 					};
 					5C5A85772B8C9F4200770254 = {
 						CreatedOnToolsVersion = 15.2;
+						LastSwiftMigration = 1530;
 						TestTargetID = 5C5A85652B8C9F4100770254;
 					};
 					5C5A85812B8C9F4200770254 = {
@@ -430,6 +442,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CBB96762C7C6E4400CE7FCF /* acckpTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,6 +660,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -655,6 +669,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = sce.acckpTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/acckp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/acckp";
@@ -666,6 +681,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

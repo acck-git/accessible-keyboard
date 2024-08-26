@@ -52,6 +52,7 @@ struct SettingsView: View {
         })
         if login {
           TeacherLoginInput(placeholder: "הקלד סיסמה...", text: $pass)
+            .accessibilityLabel("password")
         }
         HiddenButton().frame(maxWidth: .infinity)
         StudentPicker(array: students, onChange: {
@@ -78,6 +79,7 @@ struct SettingsView: View {
             subSet = subSet+6 >= currboard.count ? 0 : subSet+6
             tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
           })
+          .accessibilityIdentifier("leftarrow")
           //-------------------
           VStack(spacing:20) {
             HStack(spacing: 20) {

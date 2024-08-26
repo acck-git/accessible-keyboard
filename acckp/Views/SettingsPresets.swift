@@ -41,6 +41,7 @@ struct BackButton: View {
         .overlay(RoundedRectangle(cornerRadius: 50)
           .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
         )
+        .accessibilityIdentifier("settings")
     })
     .background(Color(hex:StaticData.settings_col[0]))
     .cornerRadius(50)
@@ -104,7 +105,7 @@ struct StudentPickerTeacher: View {
   var onChange: (() -> Void)
   @State var gVars = GlobalVars.get()
   var body: some View {
-    Picker(selection: $gVars.student_edit, label: Text("Picker")) {
+    Picker(selection: $gVars.student_edit, label: Text("")) {
       ForEach(array, id:\.self) {
         Text($0)
           .font(.largeTitle)
@@ -309,6 +310,7 @@ struct StudentEditInput: View {
         .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
       )
       .background(Color(hex:StaticData.bg1_col[0]))
+      .accessibilityIdentifier("studentnameinput")
   }
 }
 //[Save key]---------------------------------
@@ -364,6 +366,7 @@ struct ImageEditInput: View {
         .stroke(Color(hex:StaticData.text_col[0]), lineWidth: 2)
       )
       .background(Color(hex:StaticData.bg1_col[0]))
+      .accessibilityIdentifier("imagename")
   }
 }
 //[DeleteTeacher key]---------------------------------
@@ -426,5 +429,6 @@ struct BoardPickerImages: View {
     .frame(maxWidth: .infinity)
     .background(Color(hex:StaticData.bg1_col[0]))
     .border(Color(hex:StaticData.text_col[0]))
+    .accessibilityIdentifier("boardpicker")
   }
 }

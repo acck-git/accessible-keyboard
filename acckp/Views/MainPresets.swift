@@ -149,6 +149,7 @@ struct SettingsButton: View {
         .overlay(RoundedRectangle(cornerRadius: 50)
           .stroke(Color(hex:StaticData.text_col[GlobalVars.get().colorSet]), lineWidth: 2)
         )
+        .accessibilityIdentifier("settings")
     })
     .background(Color(hex:StaticData.settings_col[GlobalVars.get().colorSet]))
     .cornerRadius(50)

@@ -62,6 +62,7 @@ struct TeacherView: View {
               else { students = students_plain }
               gVars.swapStudent(login: false)
             })
+            .accessibilityIdentifier("studentpicker")
             //-------------------
             HStack(spacing:10) {
               StudentEditInput(placeholder: "הקלד שם...", text: $newName)
@@ -123,6 +124,7 @@ struct TeacherView: View {
                 ToggleBoard(text: "לוח " + StaticData.boardNames[index], ison: $boards[index], onChange: {
                   gVars.updateBoard(index: index, state: boards[index])
                 })
+                .disabled(index == 0)
               }
             }
           }
@@ -166,6 +168,7 @@ struct TeacherView: View {
               subSet = subSet+6 >= currboard.count ? 0 : subSet+6
               tempboard = Array(currboard.suffix(currboard.count - subSet).prefix(6))
             })
+            .accessibilityIdentifier("leftarrow")
             VStack(spacing:20) {
               HStack(spacing: 20) {
                 ForEach((0..<3).reversed(), id: \.self) { i in
