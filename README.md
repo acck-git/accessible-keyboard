@@ -1,10 +1,13 @@
-# LIAM keyboard - Accessible Keyboard Project
+# LIAM keyboard
+### Accessible Keyboard Project
 
 <img align="right" style="width:100px; height:auto;" src="https://github.com/user-attachments/assets/c35f25f4-8944-4df3-8d29-08e1636d42cc">
 
 A final college project written in Swift using Xcode and SwiftData.<br>
 Description: an iPad app application featuring a specialized keyboard designed to teach reading using the LIAM (ליע"ם) method, tailored for children and adults with special needs and communication difficulties.<br>
-Includes real-time auditory feedback, image-based writing exercises, and progress tracking capabilities.
+
+> [!NOTE]
+> Includes real-time auditory feedback, image-based writing exercises, and progress tracking capabilities.
 
 
 <img align="right" style="width:300px; height:auto;" src="https://github.com/user-attachments/assets/e98e58d1-a962-42fa-8fd4-585ce204cfca">
